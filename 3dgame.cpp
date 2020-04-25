@@ -3174,25 +3174,27 @@ BOOL CALLBACK EnumFFJoysticksCallback( LPCDIDEVICEINSTANCE pInst,
 //-----------------------------------------------------------------------------
 BOOL HasForceFeedbackJoystick( HINSTANCE hInst )
 {
-    LPDIRECTINPUT pDI;
+	// removing for now -tkidd
+    //LPDIRECTINPUT pDI;
     BOOL    bHasFFDevice = FALSE;
-    HRESULT hr;
+	// removing for now -tkidd
+	//HRESULT hr;
 
-    // Initialize DirectInput
-    if( SUCCEEDED( DirectInputCreate( hInst,
-                                      DIRECTINPUT_VERSION, 
-                                      &pDI, NULL ) ) )
-    {
-        // Enumerate all DirectInput devices
-        hr = pDI->EnumDevices( DIDEVTYPE_JOYSTICK,
-                               EnumFFJoysticksCallback,
-                               &bHasFFDevice,
-                               DIEDFL_ATTACHEDONLY | DIEDFL_FORCEFEEDBACK );
+    //// Initialize DirectInput
+    //if( SUCCEEDED( DirectInputCreate( hInst,
+    //                                  DIRECTINPUT_VERSION, 
+    //                                  &pDI, NULL ) ) )
+    //{
+    //    // Enumerate all DirectInput devices
+    //    hr = pDI->EnumDevices( DIDEVTYPE_JOYSTICK,
+    //                           EnumFFJoysticksCallback,
+    //                           &bHasFFDevice,
+    //                           DIEDFL_ATTACHEDONLY | DIEDFL_FORCEFEEDBACK );
 
-        pDI->Release();
-    }
+    //    pDI->Release();
+    //}
 
-    if( FAILED(hr) )
+    //if( FAILED(hr) )
         return FALSE;
 /*
 

@@ -10,16 +10,16 @@
 
 HWND	hwndMp3 = NULL;
 
-const MP3_NEXTTRACK		= 40048;
-const MP3_PREVTRACK		= 40044;
-const MP3_PAUSE			= 40046;
-const MP3_VOLUMEUP		= 40058;
-const MP3_VOLUMEDOWN		= 40059;
+const int MP3_NEXTTRACK		= 40048;
+const int MP3_PREVTRACK		= 40044;
+const int MP3_PAUSE			= 40046;
+const int MP3_VOLUMEUP		= 40058;
+const int MP3_VOLUMEDOWN		= 40059;
 
-const MP3PLAYER_INIT = 0;
-const MP3PLAYER_WINAMP = 1;
-const MP3PLAYER_SONIQUE = 2;
-const MP3PLAYER_NONE = 99;
+const int MP3PLAYER_INIT = 0;
+const int MP3PLAYER_WINAMP = 1;
+const int MP3PLAYER_SONIQUE = 2;
+const int MP3PLAYER_NONE = 99;
 int	nMp3Player = MP3PLAYER_INIT;
 
 

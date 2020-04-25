@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{a2d4679a-68b6-47b2-8440-6059486c5043}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{152d7f0c-cb03-4e97-9f66-9516f61d4b51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource File">
+      <UniqueIdentifier>{fb649205-f6b8-494c-b1f8-310db4460478}</UniqueIdentifier>
+      <Extensions>rc</Extensions>
+    </Filter>
+    <Filter Include="Info">
+      <UniqueIdentifier>{7b1382a9-9b33-4b1e-aef7-7f37d4a78e65}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="3dgame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3dglasses.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="commands.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cvars.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="diutil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dsutil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="menus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mp3control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="renderflags.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tokenize.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="3dglasses.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="commands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="console.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cvars.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="diutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LookupTables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="menus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="modeldata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mp3control.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderflags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tokenize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Res\blast.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\disasteroids 3d.ico">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\extraship.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\font.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\logo.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\rock.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\saucer.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\shield.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\ship.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\smoke.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\space_ll.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\space_lr.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\space_ul.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\space_ur.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+    <Image Include="Res\Star.bmp">
+      <Filter>Resource File</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Disasteroids.rc">
+      <Filter>Resource File</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Res\explode1.wav">
+      <Filter>Resource File</Filter>
+    </Media>
+    <Media Include="Res\explode2.wav">
+      <Filter>Resource File</Filter>
+    </Media>
+    <Media Include="Res\explode3.wav">
+      <Filter>Resource File</Filter>
+    </Media>
+    <Media Include="Res\fire.wav">
+      <Filter>Resource File</Filter>
+    </Media>
+    <Media Include="Res\life.wav">
+      <Filter>Resource File</Filter>
+    </Media>
+    <Media Include="Res\lsaucer.wav">
+      <Filter>Resource File</Filter>
+    </Media>
+    <Media Include="Res\menubeep.wav">
+      <Filter>Resource File</Filter>
+    </Media>
+    <Media Include="Res\sfire.wav">
+      <Filter>Resource File</Filter>
+    </Media>
+    <Media Include="Res\ssaucer.wav">
+      <Filter>Resource File</Filter>
+    </Media>
+    <Media Include="Res\thrust.wav">
+      <Filter>Resource File</Filter>
+    </Media>
+    <Media Include="Res\thumphi.wav">
+      <Filter>Resource File</Filter>
+    </Media>
+    <Media Include="Res\thumplo.wav">
+      <Filter>Resource File</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt">
+      <Filter>Info</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

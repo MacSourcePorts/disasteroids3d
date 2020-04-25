@@ -72,21 +72,22 @@ BOOL CALLBACK EnumDeviceProc( DIDEVICEINSTANCE* pdidi, VOID* )
 //-----------------------------------------------------------------------------
 HRESULT DIUtil_Initialize( HWND hWnd )
 {
-    HRESULT hr;
+	// removing for now -tkidd
+ //   HRESULT hr;
 
-    // Create the base DirectInput object
-    hr = DirectInputCreate( (HINSTANCE)GetWindowLong( hWnd,GWL_HINSTANCE ),
-		                    DIRECTINPUT_VERSION, &g_pDI, NULL );
-    if( FAILED(hr) )
-		return E_FAIL;
+ //   // Create the base DirectInput object
+ //   hr = DirectInputCreate( (HINSTANCE)GetWindowLong( hWnd,GWL_HINSTANCE ),
+	//	                    DIRECTINPUT_VERSION, &g_pDI, NULL );
+ //   if( FAILED(hr) )
+	//	return E_FAIL;
 
-    // Enumerate all DirectInput devices
-	hr = g_pDI->EnumDevices( 0, (LPDIENUMDEVICESCALLBACK)EnumDeviceProc, NULL,
-                             DIEDFL_ATTACHEDONLY );
-    if( FAILED(hr) )
+ //   // Enumerate all DirectInput devices
+	//hr = g_pDI->EnumDevices( 0, (LPDIENUMDEVICESCALLBACK)EnumDeviceProc, NULL,
+ //                            DIEDFL_ATTACHEDONLY );
+ //   if( FAILED(hr) )
         return E_FAIL;
 
-	return S_OK;
+	//return S_OK;
 }
 
 
