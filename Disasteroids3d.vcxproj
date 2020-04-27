@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>lesson12</ProjectName>
+    <ProjectName>Disasteroids3d</ProjectName>
     <SccProjectName />
     <SccLocalPath />
     <ProjectGuid>{2BE2D992-4618-48A7-949D-3F073ADBEAD3}</ProjectGuid>
