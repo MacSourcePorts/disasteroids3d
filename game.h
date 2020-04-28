@@ -1,6 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <SDL.h>
+
 #include <windows.h>			// Header File For Windows
 #include <stdio.h>			// Header File For Standard Input/Output
 #include <math.h>				// Header File For Math Library
