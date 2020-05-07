@@ -49,6 +49,9 @@ const char csConsoleDumpFilename[] = "Disasteroids3d.log";
 // Lookup table code
 #include "LookupTables.h"
 
+// SDL variables
+SDL_Window* SDL_window = NULL;
+static SDL_GLContext SDL_glContext = NULL;
 
 // Function declarations
 LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaration For WndProc
@@ -2589,6 +2592,104 @@ GLvoid KillGLWindow(GLvoid)						// Properly Kill The Window
 */
 BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscreenflag)
 {
+	int x = SDL_WINDOWPOS_UNDEFINED, y = SDL_WINDOWPOS_UNDEFINED;
+	SDL_DisplayMode desktopMode;
+	Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
+
+	// Destroy existing state if it exists
+	if (SDL_glContext != NULL)
+	{
+		SDL_GL_DeleteContext(SDL_glContext);
+		SDL_glContext = NULL;
+	}
+
+	if (SDL_window != NULL)
+	{
+		SDL_GetWindowPosition(SDL_window, &x, &y);
+		SDL_DestroyWindow(SDL_window);
+		SDL_window = NULL;
+	}
+
+	memset(&desktopMode, 0, sizeof(SDL_DisplayMode));
+
+	if (fullscreenflag)
+	{
+		flags |= SDL_WINDOW_FULLSCREEN;
+	}
+	else
+	{
+		flags |= SDL_WINDOW_BORDERLESS;
+	}
+
+	int perChannelColorBits;
+
+	if (bits == 24)
+		perChannelColorBits = 8;
+	else
+		perChannelColorBits = 4;
+
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, perChannelColorBits);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, perChannelColorBits);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, perChannelColorBits);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+
+	if (g_cv3dglasses.value != 0)
+	{
+		SDL_GL_SetAttribute(SDL_GL_STEREO, 1);
+	}
+	else
+	{
+		SDL_GL_SetAttribute(SDL_GL_STEREO, 0);
+	}
+
+	if ((SDL_window = SDL_CreateWindow(title, x, y, width, height, flags)) == NULL)
+	{
+		printf("SDL_CreateWindow failed: %s\n", SDL_GetError());
+		return false;
+	}
+
+	if (fullscreenflag)
+	{
+		SDL_DisplayMode mode;
+
+		switch (bits)
+		{
+		case 16: mode.format = SDL_PIXELFORMAT_RGB565; break;
+		case 32: mode.format = SDL_PIXELFORMAT_RGB24;  break;
+		default: printf("bits is %d, can't fullscreen\n", bits); return false;
+		}
+
+		mode.w = width;
+		mode.h = height;
+		mode.refresh_rate = 60; //??
+		mode.driverdata = NULL;
+
+		if (SDL_SetWindowDisplayMode(SDL_window, &mode) < 0)
+		{
+			printf("SDL_SetWindowDisplayMode failed: %s\n", SDL_GetError());
+			return false;
+		}
+
+		if ((SDL_glContext = SDL_GL_CreateContext(SDL_window)) == NULL)
+		{
+			printf("SDL_GL_CreateContext failed: %s\n", SDL_GetError());
+			SDL_DestroyWindow(SDL_window);
+			SDL_window = NULL;
+			return false;
+		}
+
+		glClearColor(0, 0, 0, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
+		SDL_GL_SwapWindow(SDL_window);
+
+		if (SDL_GL_SetSwapInterval(0) == -1)
+		{
+			printf("SDL_GL_SetSwapInterval failed: %s\n", SDL_GetError());
+		}
+	}
+
+	///------------
+
 	GLuint	PixelFormat;				// Holds The Results After Searching For A Match
 	WNDCLASS	wc;							// Windows Class Structure
 	DWORD		dwExStyle;					// Window Extended Style
@@ -4101,6 +4202,19 @@ BOOL InitializeGame(void)
 		Cvar_SetValue("ColorDepths", 0);
 	}
 	nColorDepth = colordepths[(int)g_cvColorDepth.value];
+
+	if (!SDL_WasInit(SDL_INIT_VIDEO))
+	{
+		const char* driverName;
+
+		if (SDL_Init(SDL_INIT_VIDEO) != 0)
+		{
+			printf("SDL_Init( SDL_INIT_VIDEO ) FAILED (%s)\n", SDL_GetError());
+		}
+
+		driverName = SDL_GetCurrentVideoDriver();
+		printf("SDL using driver \"%s\"\n", driverName);
+	}
 		
 
 	// Create Our OpenGL Window -- quit if window was not created
