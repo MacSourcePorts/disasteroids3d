@@ -54,17 +54,17 @@ SDL_Window* SDL_window = NULL;
 static SDL_GLContext SDL_glContext = NULL;
 
 // Function declarations
-LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaration For WndProc
+//LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaration For WndProc
 
 // Windows variables
-HDC		hDC					= NULL;	// Private GDI Device Context
-HGLRC		hRC					= NULL;	// Permanent Rendering Context
-HWND		hWnd					= NULL;	// Holds Our Window Handle
-HINSTANCE	hInstance		= NULL;	// Holds The Instance Of The Application
-PIXELFORMATDESCRIPTOR pfd;				// Pixel Format Descriptor variable
-BOOL g_bGLAccelerated = FALSE;		// Flag that's TRUE when hardware supports
-DEVMODE			DMsaved;					// Saves The Previous Screen Settings ( NEW )
-												// OpenGL acceleration
+//HDC		hDC					= NULL;	// Private GDI Device Context
+//HGLRC		hRC					= NULL;	// Permanent Rendering Context
+//HWND		hWnd					= NULL;	// Holds Our Window Handle
+//HINSTANCE	hInstance		= NULL;	// Holds The Instance Of The Application
+//PIXELFORMATDESCRIPTOR pfd;				// Pixel Format Descriptor variable
+//BOOL g_bGLAccelerated = FALSE;		// Flag that's TRUE when hardware supports
+//DEVMODE			DMsaved;					// Saves The Previous Screen Settings ( NEW )
+//												// OpenGL acceleration
 
 BOOL	g_bActive		= TRUE;			// Window active flag
 
@@ -99,7 +99,7 @@ int colordepths[COLORDEPTHS_COUNT] = { 16, 32 };
 cvar_t g_cvColorDepth = {"ColorDepth", "0", TRUE};
 
 // Gamma ramp stuff
-static WORD old_gamma_ramp[768];
+static Uint16 old_gamma_ramp[3][256];
 cvar_t g_cvGammaGamma		= {"GammaGamma",			"0.5", TRUE};
 cvar_t g_cvGammaBrightness = {"GammaBrightness",	"0.5", TRUE};
 cvar_t g_cvGammaContrast	= {"GammaContrast",		"0.5", TRUE};
@@ -1185,10 +1185,10 @@ BOOL SetVsync(const BOOL value)
 	discussion boards on OpenGL.org.
 
 */
+
 void SetGammaRamp(double gamma, double bright, double contrast)
 {
-
-	static WORD gamma_ramp[768];
+	static Uint16 gamma_ramp[3][256];
 	double v;
 	const double ft = 2.0 / 255.0;
 	static bool savedramp = false;
@@ -1197,7 +1197,7 @@ void SetGammaRamp(double gamma, double bright, double contrast)
 	// FIXME: should get the gamma ramp anyway to see if it has been changed from what was	last set	
 	if (!savedramp)
 	{
-		GetDeviceGammaRamp(hDC, old_gamma_ramp);
+		SDL_GetWindowGammaRamp(SDL_window, old_gamma_ramp[0], old_gamma_ramp[1], old_gamma_ramp[2]);
 		savedramp = true;
 	}
 	
@@ -1224,14 +1224,12 @@ void SetGammaRamp(double gamma, double bright, double contrast)
 				v=65535;
 		}
 				
-		gamma_ramp[x] = (WORD)v;
+		gamma_ramp[0][x] = v;
+		gamma_ramp[1][x] = v;
+		gamma_ramp[2][x] = v;
 	}
-
-	memcpy(gamma_ramp + 256, gamma_ramp, 512);
-	memcpy(gamma_ramp + 512, gamma_ramp, 512);
 	
-	SetDeviceGammaRamp(hDC, gamma_ramp);
-	
+	SDL_SetWindowGammaRamp(SDL_window, gamma_ramp[0], gamma_ramp[1], gamma_ramp[2]);	
 }
 
 
@@ -1271,7 +1269,7 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	
 	glShadeModel(GL_FLAT);								// Enable Flat Shading
 	
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);			// Black Background
+	glClearColor(0.0f, 1.0f, 0.0f, 0.0f);			// Black Background
 
 	glClearDepth(1.0f);									// Depth Buffer Setup
 
@@ -2533,7 +2531,8 @@ GLvoid KillGLWindow(GLvoid)						// Properly Kill The Window
 		if (!ChangeDisplaySettings(NULL, CDS_TEST)) 
 		{ 		
 			ChangeDisplaySettings(NULL, CDS_RESET);		// Do It Anyway (To Get The Values Out Of The Registry) ( NEW )
-			ChangeDisplaySettings(&DMsaved, CDS_RESET);	// Change It To The Saved Settings ( NEW )
+			// TODO: removing this for now -tkidd
+			//ChangeDisplaySettings(&DMsaved, CDS_RESET);	// Change It To The Saved Settings ( NEW )
 		} 
 		else 
 		{
@@ -2543,41 +2542,48 @@ GLvoid KillGLWindow(GLvoid)						// Properly Kill The Window
 		ShowCursor(TRUE);					// Show Mouse Pointer
 	}
 
-	if (hRC)							// Do We Have A Rendering Context?
+	if (SDL_glContext)							// Do We Have A Rendering Context?
 	{
-		if (!wglMakeCurrent(NULL,NULL))				// Are We Able To Release The DC And RC Contexts?
-		{
-			MessageBox(NULL,"Release Of DC And RC Failed.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
-		}
+		//if (!wglMakeCurrent(NULL,NULL))				// Are We Able To Release The DC And RC Contexts?
+		//{
+		//	MessageBox(NULL,"Release Of DC And RC Failed.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
+		//}
 
-		if (!wglDeleteContext(hRC))				// Are We Able To Delete The RC?
-		{
-			MessageBox(NULL,"Release Rendering Context Failed.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
-		}
-		hRC=NULL;						// Set RC To NULL
+		SDL_GL_DeleteContext(SDL_glContext);
+		SDL_glContext = NULL;
+
+		//if (!wglDeleteContext(hRC))				// Are We Able To Delete The RC?
+		//{
+		//	MessageBox(NULL,"Release Rendering Context Failed.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
+		//}
+		//hRC=NULL;						// Set RC To NULL
 	}
 
-	if (hDC && !ReleaseDC(hWnd,hDC))				// Are We Able To Release The DC
-	{
-		MessageBox(NULL,"Release Device Context Failed.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
-		hDC=NULL;						// Set DC To NULL
-	}
+	//if (hDC && !ReleaseDC(hWnd,hDC))				// Are We Able To Release The DC
+	//{
+	//	MessageBox(NULL,"Release Device Context Failed.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
+	//	hDC=NULL;						// Set DC To NULL
+	//}
+
+	SDL_DestroyWindow(SDL_window);
+	SDL_window = NULL;
 	
 	// 2002.01.15
 	// Added to make sure TaskBar icon goes away
-	ShowWindow (hWnd, SW_HIDE);
+	// TODO: not sure if necessary with SDL -tkidd
+	//ShowWindow (hWnd, SW_HIDE);
 
-	if (hWnd && !DestroyWindow(hWnd))				// Are We Able To Destroy The Window?
-	{
-		MessageBox(NULL,"Could Not Release hWnd.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
-		hWnd=NULL;						// Set hWnd To NULL
-	}
+	//if (hWnd && !DestroyWindow(hWnd))				// Are We Able To Destroy The Window?
+	//{
+	//	MessageBox(NULL,"Could Not Release hWnd.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
+	//	hWnd=NULL;						// Set hWnd To NULL
+	//}
 
-	if (!UnregisterClass("OpenGL",hInstance))			// Are We Able To Unregister Class
-	{
-		MessageBox(NULL,"Could Not Unregister Class.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
-		hInstance=NULL;						// Set hInstance To NULL
-	}
+	//if (!UnregisterClass("OpenGL",hInstance))			// Are We Able To Unregister Class
+	//{
+	//	MessageBox(NULL,"Could Not Unregister Class.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
+	//	hInstance=NULL;						// Set hInstance To NULL
+	//}
 }
 
 
@@ -2618,7 +2624,7 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 	}
 	else
 	{
-		flags |= SDL_WINDOW_BORDERLESS;
+		flags |= SDL_WINDOW_SHOWN;
 	}
 
 	int perChannelColorBits;
@@ -2648,7 +2654,7 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 		return false;
 	}
 
-	if (fullscreenflag)
+	//if (fullscreenflag)
 	{
 		SDL_DisplayMode mode;
 
@@ -2678,6 +2684,7 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 			return false;
 		}
 
+		glViewport(0, 0, width, height);
 		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 		SDL_GL_SwapWindow(SDL_window);
@@ -2690,195 +2697,199 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 
 	///------------
 
-	GLuint	PixelFormat;				// Holds The Results After Searching For A Match
-	WNDCLASS	wc;							// Windows Class Structure
-	DWORD		dwExStyle;					// Window Extended Style
-	DWORD		dwStyle;						// Window Style
-	RECT		WindowRect;					// Grabs Rectangle Upper Left / Lower Right Values
-
-	WindowRect.left=(long)0;			// Set Left Value To 0
-	WindowRect.right=(long)width;		// Set Right Value To Requested Width
-	WindowRect.top=(long)0;				// Set Top Value To 0
-	WindowRect.bottom=(long)height;	// Set Bottom Value To Requested Height
-
-	// Set The Global Fullscreen Flag
-	Cvar_SetValue("Fullscreen", (float)fullscreenflag);
-
-	hInstance			= GetModuleHandle(NULL);			// Grab An Instance For Our Window
-	wc.style				= CS_HREDRAW | CS_VREDRAW | CS_OWNDC;	// Redraw On Size, And Own DC For Window.
-	wc.lpfnWndProc		= (WNDPROC) WndProc;					// WndProc Handles Messages
-	wc.cbClsExtra		= 0;										// No Extra Window Data
-	wc.cbWndExtra		= 0;										// No Extra Window Data
-	wc.hInstance		= hInstance;							// Set The Instance
-	wc.hIcon				= LoadIcon(NULL, IDI_WINLOGO);	// Load The Default Icon
-	wc.hCursor			= LoadCursor(NULL, IDC_ARROW);	// Load The Arrow Pointer
-	wc.hbrBackground	= NULL;									// No Background Required For GL
-	wc.lpszMenuName	= NULL;									// We Don't Want A Menu
-	wc.lpszClassName	= "OpenGL";								// Set The Class Name
-
-	EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &DMsaved);	// Save The Current Display State ( NEW )
-
-	// Attempt Fullscreen Mode?
-	if (g_cvFullscreen.value)
-	{
-		
-		DEVMODE dmScreenSettings;								// Device Mode
-		memset(&dmScreenSettings,0,sizeof(dmScreenSettings));	// Makes Sure Memory's Cleared
-		dmScreenSettings.dmSize=sizeof(dmScreenSettings);		// Size Of The Devmode Structure
-		dmScreenSettings.dmPelsWidth	= width;				// Selected Screen Width
-		dmScreenSettings.dmPelsHeight	= height;			// Selected Screen Height
-		dmScreenSettings.dmBitsPerPel	= bits;				// Selected Bits Per Pixel
-		dmScreenSettings.dmFields=DM_BITSPERPEL|DM_PELSWIDTH|DM_PELSHEIGHT;
-
-		// Try To Set Selected Mode And Get Results.  NOTE: CDS_FULLSCREEN Gets Rid Of Start Bar.
-		if (ChangeDisplaySettings(&dmScreenSettings,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL)	{
-
-			// If The Mode Fails, Offer Two Options.  Quit Or Use Windowed Mode.
-			if (MessageBox(NULL,"The Requested Fullscreen Mode Is Not Supported By\nYour Video Card. Use Windowed Mode Instead?",APP_TITLE, MB_YESNO|MB_ICONEXCLAMATION)==IDYES)
-				// Windowed Mode Selected.  Fullscreen = FALSE
-				Cvar_SetValue("Fullscreen", 0);
-			else	{
-				// Pop Up A Message Box Letting User Know The Program Is Closing.
-				MessageBox(NULL,"Program Will Now Close.","ERROR",MB_OK|MB_ICONSTOP);
-				return FALSE;									// Return FALSE
-			}
-		}
-	}
-
-	
-	// Attempt To Register The Window Class
-	if (!RegisterClass(&wc))
-	{
-		// Display error message and exit routine if function fails
-		MessageBox(NULL,"Failed To Register The Window Class.","ERROR",MB_OK|MB_ICONEXCLAMATION);
-		return FALSE;
-	}
-	
-
-	// Setup window style for fullscreen window
-	if (g_cvFullscreen.value) 
-	{
-		dwExStyle = WS_EX_APPWINDOW;							// Window Extended Style
-		dwStyle = WS_POPUP;										// Windows style
-		ShowCursor (FALSE);										// Hide Mouse Pointer
-	}
-	// Setup window style for window
-	else	
-	{
-		dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;	// Window Extended Style
-		dwStyle = WS_OVERLAPPEDWINDOW;						// Windows Style
-
-		// Adjust Window To True Requested Size
-		AdjustWindowRectEx(&WindowRect, dwStyle, FALSE, dwExStyle);		
-	}
-	
-
-	// Create The Window
-	if (!(hWnd = CreateWindowEx(	dwExStyle,		// Extended Style For The Window
-											"OpenGL",		// Class Name
-											title,			// Window Title
-											dwStyle |		// Window Style
-												WS_CLIPSIBLINGS |		// Required Window Style
-												WS_CLIPCHILDREN,		// Required Window Style
-											0, 0,				// Window Position
-											WindowRect.right - WindowRect.left, // Calculate Window Width
-											WindowRect.bottom - WindowRect.top,	// Calculate Window Height
-											NULL,				// No Parent Window
-											NULL,				// No Menu
-											hInstance,		// Instance
-											NULL)))			// Dont Pass Anything To WM_CREATE
-	{
-		KillGLWindow();									// Reset The Display
-		MessageBox(NULL,"Window Creation Error.","ERROR",MB_OK|MB_ICONEXCLAMATION);
-		return FALSE;										// Return FALSE
-	}
-
-	// Rewritten for C
-	ZeroMemory(&pfd, sizeof(PIXELFORMATDESCRIPTOR));
-
-	pfd.nSize				= sizeof(PIXELFORMATDESCRIPTOR);
-   pfd.nVersion			= 1;							// Version number
-   pfd.dwFlags				= PFD_DRAW_TO_WINDOW |	// Format Must Support Window
-									PFD_SUPPORT_OPENGL |	// Format Must Support OpenGL
-									PFD_DOUBLEBUFFER,		// Must Support Double Buffering
-   pfd.iPixelType			= PFD_TYPE_RGBA;			// Request an RGBA format
-   pfd.cColorBits			= bits;						// Select our color depth
-   pfd.cDepthBits			= 16; 
-   pfd.iLayerType			= PFD_MAIN_PLANE;
-
-	// Try to get a device context	
-	if (!(hDC=GetDC(hWnd)))							// Did We Get A Device Context?
-	{
-		KillGLWindow();								// Reset The Display
-		MessageBox(NULL,"Can't Create A GL Device Context.","ERROR",MB_OK|MB_ICONEXCLAMATION);
-		return FALSE;									// Return FALSE
-	}
-
-	if (!(PixelFormat = ChoosePixelFormat(hDC,&pfd)))	// Did Windows Find A Matching Pixel Format?
-	{
-		KillGLWindow();							// Reset The Display
-		MessageBox(NULL,"Can't Find A Suitable PixelFormat.","ERROR",MB_OK|MB_ICONEXCLAMATION);
-		return FALSE;								// Return FALSE
-	}
-
-	// Set pixel format
-	if(!SetPixelFormat(hDC,PixelFormat,&pfd))		// Are We Able To Set The Pixel Format?
-	{
-		KillGLWindow();							// Reset The Display
-		MessageBox(NULL,"Can't Set The PixelFormat.","ERROR",MB_OK|MB_ICONEXCLAMATION);
-		return FALSE;								// Return FALSE
-	}
-
-	// Read back pfd_new to see if the hardware 
-	// supports OpenGL acceleration
-	PIXELFORMATDESCRIPTOR pfd_new;
-	DescribePixelFormat (hDC, PixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd_new);
-	int generic_format = pfd_new.dwFlags & PFD_GENERIC_FORMAT;
-	int generic_accelerated = pfd_new.dwFlags & PFD_GENERIC_ACCELERATED;
-	if (generic_format && ! generic_accelerated)
-	{
-		// software
-		g_bGLAccelerated = FALSE;
-	}
-	else if (generic_format && generic_accelerated)
-	{
-		// hardware - MCD
-		g_bGLAccelerated = TRUE;
-	}
-	else if (! generic_format && ! generic_accelerated)
-	{
-		// hardware - ICD
-		g_bGLAccelerated = TRUE;
-	}
-
-/*
-	// Check that OpenGL acceleration is present and dump out if not
-	if (!g_bGLAccelerated)
-	{
-		KillGLWindow();
-		MessageBox(NULL, "This program requires an OpenGL accelerator.", "ERROR", MB_OK|MB_ICONEXCLAMATION);
-		return FALSE;
-	}
-*/	
-		
-	if (!(hRC = wglCreateContext(hDC)))				// Are We Able To Get A Rendering Context?
-	{
-		KillGLWindow();							// Reset The Display
-		MessageBox(NULL,"Can't Create A GL Rendering Context.","ERROR",MB_OK|MB_ICONEXCLAMATION);
-		return FALSE;								// Return FALSE
-	}
-
-	if(!wglMakeCurrent(hDC,hRC))					// Try To Activate The Rendering Context
-	{
-		KillGLWindow();							// Reset The Display
-		MessageBox(NULL,"Can't Activate The GL Rendering Context.","ERROR",MB_OK|MB_ICONEXCLAMATION);
-		return FALSE;								// Return FALSE
-	}
-
-	ShowWindow(hWnd,SW_SHOW);						// Show The Window
-	SetForegroundWindow(hWnd);						// Slightly Higher Priority
-	SetFocus(hWnd);									// Sets Keyboard Focus To The Window
+//	GLuint	PixelFormat;				// Holds The Results After Searching For A Match
+//	WNDCLASS	wc;							// Windows Class Structure
+//	DWORD		dwExStyle;					// Window Extended Style
+//	DWORD		dwStyle;						// Window Style
+//	RECT		WindowRect;					// Grabs Rectangle Upper Left / Lower Right Values
+//
+//	WindowRect.left=(long)0;			// Set Left Value To 0
+//	WindowRect.right=(long)width;		// Set Right Value To Requested Width
+//	WindowRect.top=(long)0;				// Set Top Value To 0
+//	WindowRect.bottom=(long)height;	// Set Bottom Value To Requested Height
+//
+//	// Set The Global Fullscreen Flag
+//	Cvar_SetValue("Fullscreen", (float)fullscreenflag);
+//
+//	hInstance			= GetModuleHandle(NULL);			// Grab An Instance For Our Window
+//	wc.style				= CS_HREDRAW | CS_VREDRAW | CS_OWNDC;	// Redraw On Size, And Own DC For Window.
+//	wc.lpfnWndProc		= (WNDPROC) WndProc;					// WndProc Handles Messages
+//	wc.cbClsExtra		= 0;										// No Extra Window Data
+//	wc.cbWndExtra		= 0;										// No Extra Window Data
+//	wc.hInstance		= hInstance;							// Set The Instance
+//	wc.hIcon				= LoadIcon(NULL, IDI_WINLOGO);	// Load The Default Icon
+//	wc.hCursor			= LoadCursor(NULL, IDC_ARROW);	// Load The Arrow Pointer
+//	wc.hbrBackground	= NULL;									// No Background Required For GL
+//	wc.lpszMenuName	= NULL;									// We Don't Want A Menu
+//	wc.lpszClassName	= "OpenGL";								// Set The Class Name
+//
+//	EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &DMsaved);	// Save The Current Display State ( NEW )
+//
+//	// Attempt Fullscreen Mode?
+//	if (g_cvFullscreen.value)
+//	{
+//		
+//		DEVMODE dmScreenSettings;								// Device Mode
+//		memset(&dmScreenSettings,0,sizeof(dmScreenSettings));	// Makes Sure Memory's Cleared
+//		dmScreenSettings.dmSize=sizeof(dmScreenSettings);		// Size Of The Devmode Structure
+//		dmScreenSettings.dmPelsWidth	= width;				// Selected Screen Width
+//		dmScreenSettings.dmPelsHeight	= height;			// Selected Screen Height
+//		dmScreenSettings.dmBitsPerPel	= bits;				// Selected Bits Per Pixel
+//		dmScreenSettings.dmFields=DM_BITSPERPEL|DM_PELSWIDTH|DM_PELSHEIGHT;
+//
+//		// Try To Set Selected Mode And Get Results.  NOTE: CDS_FULLSCREEN Gets Rid Of Start Bar.
+//		if (ChangeDisplaySettings(&dmScreenSettings,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL)	{
+//
+//			// If The Mode Fails, Offer Two Options.  Quit Or Use Windowed Mode.
+//			if (MessageBox(NULL,"The Requested Fullscreen Mode Is Not Supported By\nYour Video Card. Use Windowed Mode Instead?",APP_TITLE, MB_YESNO|MB_ICONEXCLAMATION)==IDYES)
+//				// Windowed Mode Selected.  Fullscreen = FALSE
+//				Cvar_SetValue("Fullscreen", 0);
+//			else	{
+//				// Pop Up A Message Box Letting User Know The Program Is Closing.
+//				MessageBox(NULL,"Program Will Now Close.","ERROR",MB_OK|MB_ICONSTOP);
+//				return FALSE;									// Return FALSE
+//			}
+//		}
+//	}
+//
+//	
+//	// Attempt To Register The Window Class
+//	if (!RegisterClass(&wc))
+//	{
+//		// Display error message and exit routine if function fails
+//		MessageBox(NULL,"Failed To Register The Window Class.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+//		return FALSE;
+//	}
+//	
+//
+//	// Setup window style for fullscreen window
+//	if (g_cvFullscreen.value) 
+//	{
+//		dwExStyle = WS_EX_APPWINDOW;							// Window Extended Style
+//		dwStyle = WS_POPUP;										// Windows style
+//		ShowCursor (FALSE);										// Hide Mouse Pointer
+//	}
+//	// Setup window style for window
+//	else	
+//	{
+//		dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;	// Window Extended Style
+//		dwStyle = WS_OVERLAPPEDWINDOW;						// Windows Style
+//
+//		// Adjust Window To True Requested Size
+//		AdjustWindowRectEx(&WindowRect, dwStyle, FALSE, dwExStyle);		
+//	}
+//	
+//
+//	// Create The Window
+//	if (!(hWnd = CreateWindowEx(	dwExStyle,		// Extended Style For The Window
+//											"OpenGL",		// Class Name
+//											title,			// Window Title
+//											dwStyle |		// Window Style
+//												WS_CLIPSIBLINGS |		// Required Window Style
+//												WS_CLIPCHILDREN,		// Required Window Style
+//											0, 0,				// Window Position
+//											WindowRect.right - WindowRect.left, // Calculate Window Width
+//											WindowRect.bottom - WindowRect.top,	// Calculate Window Height
+//											NULL,				// No Parent Window
+//											NULL,				// No Menu
+//											hInstance,		// Instance
+//											NULL)))			// Dont Pass Anything To WM_CREATE
+//	{
+//		KillGLWindow();									// Reset The Display
+//		MessageBox(NULL,"Window Creation Error.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+//		return FALSE;										// Return FALSE
+//	}
+//
+//	// Rewritten for C
+//	ZeroMemory(&pfd, sizeof(PIXELFORMATDESCRIPTOR));
+//
+//	pfd.nSize				= sizeof(PIXELFORMATDESCRIPTOR);
+//   pfd.nVersion			= 1;							// Version number
+//   pfd.dwFlags				= PFD_DRAW_TO_WINDOW |	// Format Must Support Window
+//									PFD_SUPPORT_OPENGL |	// Format Must Support OpenGL
+//									PFD_DOUBLEBUFFER,		// Must Support Double Buffering
+//   pfd.iPixelType			= PFD_TYPE_RGBA;			// Request an RGBA format
+//   pfd.cColorBits			= bits;						// Select our color depth
+//   pfd.cDepthBits			= 16; 
+//   pfd.iLayerType			= PFD_MAIN_PLANE;
+//
+//	// Try to get a device context	
+//	if (!(hDC=GetDC(hWnd)))							// Did We Get A Device Context?
+//	{
+//		KillGLWindow();								// Reset The Display
+//		MessageBox(NULL,"Can't Create A GL Device Context.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+//		return FALSE;									// Return FALSE
+//	}
+//
+//	if (!(PixelFormat = ChoosePixelFormat(hDC,&pfd)))	// Did Windows Find A Matching Pixel Format?
+//	{
+//		KillGLWindow();							// Reset The Display
+//		MessageBox(NULL,"Can't Find A Suitable PixelFormat.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+//		return FALSE;								// Return FALSE
+//	}
+//
+//	// Set pixel format
+//	if(!SetPixelFormat(hDC,PixelFormat,&pfd))		// Are We Able To Set The Pixel Format?
+//	{
+//		KillGLWindow();							// Reset The Display
+//		MessageBox(NULL,"Can't Set The PixelFormat.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+//		return FALSE;								// Return FALSE
+//	}
+//
+//	// Read back pfd_new to see if the hardware 
+//	// supports OpenGL acceleration
+//	PIXELFORMATDESCRIPTOR pfd_new;
+//	DescribePixelFormat (hDC, PixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd_new);
+//	int generic_format = pfd_new.dwFlags & PFD_GENERIC_FORMAT;
+//	int generic_accelerated = pfd_new.dwFlags & PFD_GENERIC_ACCELERATED;
+//	if (generic_format && ! generic_accelerated)
+//	{
+//		// software
+//		g_bGLAccelerated = FALSE;
+//	}
+//	else if (generic_format && generic_accelerated)
+//	{
+//		// hardware - MCD
+//		g_bGLAccelerated = TRUE;
+//	}
+//	else if (! generic_format && ! generic_accelerated)
+//	{
+//		// hardware - ICD
+//		g_bGLAccelerated = TRUE;
+//	}
+//
+///*
+//	// Check that OpenGL acceleration is present and dump out if not
+//	if (!g_bGLAccelerated)
+//	{
+//		KillGLWindow();
+//		MessageBox(NULL, "This program requires an OpenGL accelerator.", "ERROR", MB_OK|MB_ICONEXCLAMATION);
+//		return FALSE;
+//	}
+//*/	
+//		
+//	if (!(hRC = wglCreateContext(hDC)))				// Are We Able To Get A Rendering Context?
+//	{
+//		KillGLWindow();							// Reset The Display
+//		MessageBox(NULL,"Can't Create A GL Rendering Context.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+//		return FALSE;								// Return FALSE
+//	}
+//
+//	if(!wglMakeCurrent(hDC,hRC))					// Try To Activate The Rendering Context
+//	{
+//		KillGLWindow();							// Reset The Display
+//		MessageBox(NULL,"Can't Activate The GL Rendering Context.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+//		return FALSE;								// Return FALSE
+//	}
+//
+//	ShowWindow(hWnd,SW_SHOW);						// Show The Window
+//	SetForegroundWindow(hWnd);						// Slightly Higher Priority
+//	SetFocus(hWnd);									// Sets Keyboard Focus To The Window
+	SDL_SetWindowInputFocus(SDL_window);
 	ReSizeGLScene(width, height);					// Set Up Our Perspective GL Screen
+
+	// this might be the wrong spot for this -tkidd
+	SDL_StartTextInput();
 
 	if (!InitGL())										// Initialize Our Newly Created GL Window
 	{
@@ -3003,8 +3014,9 @@ inline int FindFreeActor(const int& StartIdx, const int& EndIdx) {
 //-----------------------------------------------------------------------------
 HRESULT InitializeGameSounds()
 {
-    if (FAILED(DSUtil_InitDirectSound(hWnd)))
-        return E_FAIL;
+	// TODO: Removing DirectSound, will replace with SDL -tkidd
+    //if (FAILED(DSUtil_InitDirectSound(hWnd)))
+    //    return E_FAIL;
 
 	g_pShipThrustSound		= DSUtil_CreateSound(TEXT("THRUST"),	1);
 	g_pLSaucerSound			= DSUtil_CreateSound(TEXT("LSAUCER"),	1);
@@ -4128,13 +4140,15 @@ float GetRefreshTimingRate(void)
 	{
 
 		// Swap buffers
-		SwapBuffers(hDC);
+		//SwapBuffers(hDC);
+		SDL_GL_SwapWindow(SDL_window);
 
 		// Get current time
 		fTime = TimerGetTime();
 
 		// Swap buffers again
-		SwapBuffers(hDC);
+		//SwapBuffers(hDC);
+		SDL_GL_SwapWindow(SDL_window);
 
 		// Calc time between swaps
 		fTime = TimerGetTime() - fTime;
@@ -4238,24 +4252,27 @@ BOOL InitializeGame(void)
 	SetVolume(g_cvVolume.value);
 		
 	// Attempt to setup DirectInput.  Don't exit if it fails
-	if( FAILED(InitializeInput(hWnd)))
-	{
-		g_bDirectInputEnabled = FALSE;
-	}
-	else
-	{
-		g_bDirectInputEnabled = TRUE;
 
-		// Enable joystick by default
-		Cvar_SetString("JoystickEnabled", "-1");
-		
-		// Attempt to activate force feedback and enable it if it's present
-		g_bForceFeedbackCapable = BOOL(HasForceFeedbackJoystick(hInstance) == TRUE);
+	// TODO: Removing DirectInput, will replace with SDL -tkidd
+	//if( FAILED(InitializeInput(hWnd)))
+	//{
+	//	g_bDirectInputEnabled = FALSE;
+	//}
+	//else
+	//{
+	//	g_bDirectInputEnabled = TRUE;
 
-		// If the joystick is capable of force feedback, enable it 
-		Cvar_SetValue("ForceFeedbackEnabled", (g_bForceFeedbackCapable != 0));
-		
-	}
+	//	// Enable joystick by default
+	//	Cvar_SetString("JoystickEnabled", "-1");
+	//	
+	//	// Attempt to activate force feedback and enable it if it's present
+	//	// TODO: put this back when we get SDL input in place -tkidd
+	//	//g_bForceFeedbackCapable = BOOL(HasForceFeedbackJoystick(hInstance) == TRUE);
+
+	//	// If the joystick is capable of force feedback, enable it 
+	//	Cvar_SetValue("ForceFeedbackEnabled", (g_bForceFeedbackCapable != 0));
+	//	
+	//}
 
 	// Setup rendering flags
 	renderinit();
@@ -4293,7 +4310,7 @@ void TerminateGame(void)
 	DestroyInput();
 
 	// Restore gamma ramp before exit
-	SetDeviceGammaRamp(hDC, old_gamma_ramp);
+	SDL_SetWindowGammaRamp(SDL_window, old_gamma_ramp[0], old_gamma_ramp[1], old_gamma_ramp[2]);
 
 	// Kill The Window
 	KillGLWindow();
@@ -4700,7 +4717,8 @@ int main(int argc, char* args[])
 			{
 
 				// Swap the buffers
-				SwapBuffers(hDC);
+				//SwapBuffers(hDC);
+				SDL_GL_SwapWindow(SDL_window);
 
 				// Check to make sure that the SwapBuffers() call
 				// wasn't too early and increment the consec missed
@@ -4770,7 +4788,8 @@ int main(int argc, char* args[])
 				}
 				else
 				{
-					SwapBuffers(hDC);
+					//SwapBuffers(hDC);
+					SDL_GL_SwapWindow(SDL_window);
 				}
 			}
 

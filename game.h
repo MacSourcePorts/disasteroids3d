@@ -21,7 +21,7 @@
 #include "command.h"
 #include "commands.h"
 
-	extern HWND		hWnd;
+	//extern HWND		hWnd;
 
 	void AdjustRockColor(const int&);
 
