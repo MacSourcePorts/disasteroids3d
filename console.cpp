@@ -587,7 +587,7 @@ void con_update()
 	char asc = 0;
 
 	// Test console toggle key
-	if (KeyDown(192))
+	if (KeyDown(126))
 	{
 		// Toggle console
 		g_con_active = !g_con_active;

@@ -351,6 +351,10 @@ const int JOYSTICK_FIRE			= 16;
 const int JOYSTICK_SHIELDS		= 32;
 const int JOYSTICK_HYPERSPACE	= 64;
 
+// SDL Input stuff
+void handleKey(SDL_KeyboardEvent key, BOOL keydown);
+
+
 // Mouse variables
 LPDIRECTINPUTDEVICE	g_pdidMouse	= NULL;
 DIMOUSESTATE g_dims;
@@ -418,12 +422,12 @@ char g_asKeyBindsText[NUM_KEY_BINDS][40] =
 };
 cvar_t g_cvKeyThrust[2]			= {{"KeyBind_Thrust", "38", TRUE},	{"KeyBind_ThrustAlt", "0", TRUE}};
 cvar_t g_cvKeyShields[2]		= {{"KeyBind_Shields", "40", TRUE},	{"KeyBind_ShieldsAlt", "0", TRUE}};
-cvar_t g_cvKeyHyperspace[2]	= {{"KeyBind_Hyperspace", "72", TRUE}, {"KeyBind_HyperspaceAlt", "0", TRUE}};
+cvar_t g_cvKeyHyperspace[2]	= {{"KeyBind_Hyperspace", "104", TRUE}, {"KeyBind_HyperspaceAlt", "0", TRUE}};
 cvar_t g_cvKeyRotateLeft[2]	= {{"KeyBind_RotateLeft", "37", TRUE},	{"KeyBind_RotateLeftAlt", "0", TRUE}};
 cvar_t g_cvKeyRotateRight[2]	= {{"KeyBind_RotateRight", "39", TRUE}, {"KeyBind_RotateRightAlt", "0",	TRUE}};
 cvar_t g_cvKeyFire[2]			= {{"KeyBind_Fire", "32", TRUE}, {"KeyBind_FireAlt", "0", TRUE}};
 cvar_t g_cvKeyStartGame[2]		= {{"KeyBind_StartGame", "49", TRUE}, {"KeyBind_StartGameAlt", "0", TRUE}};
-cvar_t g_cvKeyPause[2]			= {{"KeyBind_Pause", "80", TRUE}, {"KeyBind_PauseAlt", "0", TRUE}};
+cvar_t g_cvKeyPause[2]			= {{"KeyBind_Pause", "112", TRUE}, {"KeyBind_PauseAlt", "0", TRUE}};
 
 // Array of keybind console variables.  This is used for the menu system.
 // In the future, I need to create a keybind type that contains both the 
@@ -462,6 +466,46 @@ typedef struct _starinfo {
 } starinfo;
 starinfo stars[NUM_STARS];
 
+void handleKey(SDL_KeyboardEvent key, BOOL keydown)
+{
+	printf("key.keysym.sym: %i\n", key.keysym.sym);
+	printf("key.keysym.scancode: %i\n", key.keysym.scancode);
+	printf("SDL_SCANCODE_TO_KEYCODE: %i\n", SDL_SCANCODE_TO_KEYCODE(key.keysym.scancode));
+
+	if (key.keysym.scancode == SDL_SCANCODE_GRAVE) {
+		keys[126] = keydown; // "~"
+	}
+	else if (key.keysym.sym >= SDLK_SPACE && key.keysym.sym < SDLK_DELETE) {
+		keys[key.keysym.sym] = keydown;
+	}
+	else if (key.keysym.sym == SDLK_RETURN || key.keysym.sym == SDLK_BACKSPACE || key.keysym.sym == SDLK_ESCAPE) {
+		keys[key.keysym.sym] = keydown;
+	}
+	else if (key.keysym.scancode == SDL_SCANCODE_LEFT) {
+		if (g_cvKeyRotateLeft[0].value)
+			keys[int(g_cvKeyRotateLeft[0].value)] = keydown;
+		if (g_cvKeyRotateLeft[1].value)
+			keys[int(g_cvKeyRotateLeft[1].value)] = keydown;
+	}
+	else if (key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+		if (g_cvKeyRotateRight[0].value)
+			keys[int(g_cvKeyRotateRight[0].value)] = keydown;
+		if (g_cvKeyRotateRight[1].value)
+			keys[int(g_cvKeyRotateRight[1].value)] = keydown;
+	}
+	else if (key.keysym.scancode == SDL_SCANCODE_UP) {
+		if (g_cvKeyThrust[0].value)
+			keys[int(g_cvKeyThrust[0].value)] = keydown;
+		if (g_cvKeyThrust[1].value)
+			keys[int(g_cvKeyThrust[1].value)] = keydown;
+	}
+	else if (key.keysym.scancode == SDL_SCANCODE_DOWN) {
+		if (g_cvKeyShields[0].value)
+			keys[int(g_cvKeyShields[0].value)] = keydown;
+		if (g_cvKeyShields[1].value)
+			keys[int(g_cvKeyShields[1].value)] = keydown;
+	}
+}
 
 //--------------------------------------------------------
 // TCW
@@ -2888,9 +2932,6 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 	SDL_SetWindowInputFocus(SDL_window);
 	ReSizeGLScene(width, height);					// Set Up Our Perspective GL Screen
 
-	// this might be the wrong spot for this -tkidd
-	SDL_StartTextInput();
-
 	if (!InitGL())										// Initialize Our Newly Created GL Window
 	{
 		KillGLWindow();								// Reset The Display
@@ -4421,7 +4462,13 @@ void InitCvars()
 	Cvar_Register(&g_cvKeyFire[1]);
 	Cvar_Register(&g_cvKeyStartGame[0]);
 	Cvar_Register(&g_cvKeyStartGame[1]);
+
+	printf("1: g_cvKeyPause[0].value: %f\n", g_cvKeyPause[0].value);
+
 	Cvar_Register(&g_cvKeyPause[0]);
+
+	printf("2: g_cvKeyPause[0].value: %f\n", g_cvKeyPause[0].value);
+
 	Cvar_Register(&g_cvKeyPause[1]);
 
 	Cvar_Register(&g_cvShipRotateAdjust);
@@ -4663,11 +4710,33 @@ int main(int argc, char* args[])
 	// initialization into its own routine
 	InitActors();
 
+	//Event handler
+	SDL_Event e;
 
+	SDL_StartTextInput();
 
 	// Main program loop
 	while(!g_bExitApp)
 	{
+
+		//Handle events on queue
+		while (SDL_PollEvent(&e) != 0)
+		{
+			//User requests quit
+			if (e.type == SDL_QUIT)
+			{
+				g_bExitApp = true;
+			}
+			//Handle keypress with current mouse position
+			else if (e.type == SDL_KEYDOWN)
+			{
+				handleKey(e.key, TRUE);
+			}
+			else if (e.type == SDL_KEYUP)
+			{
+				handleKey(e.key, FALSE);
+			}
+		}
 
 		// Update time
 		if (!g_bGamePaused)
@@ -4869,7 +4938,7 @@ int main(int argc, char* args[])
 				{
 
 					// Check for backspace -- clears initials
-					if (KeyDown(VK_BACK))
+					if (KeyDown(SDLK_BACKSPACE))
 					{
 						if (g_nHighScoreInitialsIdx > 0)
 						{
@@ -4881,7 +4950,7 @@ int main(int argc, char* args[])
 
 					}
 					// Check for enter
-					else if (KeyDown(VK_RETURN))
+					else if (KeyDown(SDLK_RETURN))
 					{
 						g_bEnteringHighScoreInitials = FALSE;
 						playerhighscore = NULL;
@@ -4889,19 +4958,52 @@ int main(int argc, char* args[])
 						PlayMenuExplosionSound();
 					}
 					// Check for legal initial chars
+					// TODO: figure out the right way to do this with SDL -tkidd
 					else if (g_nHighScoreInitialsIdx <= 2)
-					{			
-						for (i = 0; i < 37; i++) 
+					{
+						if (KeyDown(SDLK_SPACE))
 						{
-							if (KeyDown(g_cLegalHighScoreChars[i]))
+							playerhighscore->Initials[g_nHighScoreInitialsIdx] = g_cLegalHighScoreChars[0];
+							g_nHighScoreInitialsIdx++;
+
+							PlayMenuBeepSound();
+
+							break;
+						}
+
+						int cpointer = 1;
+
+						// numbers
+						for (i = SDLK_0; i <= SDLK_9; i++) 
+						{
+							if (KeyDown(i))
 							{
-								playerhighscore->Initials[g_nHighScoreInitialsIdx] = g_cLegalHighScoreChars[i];
+								playerhighscore->Initials[g_nHighScoreInitialsIdx] = g_cLegalHighScoreChars[cpointer];
 								g_nHighScoreInitialsIdx++;
 
 								PlayMenuBeepSound();
 
 								break;
 							}
+
+							cpointer++;
+						}
+
+						cpointer = 11;
+
+						for (i = SDLK_a; i <= SDLK_z; i++)
+						{
+							if (KeyDown(i))
+							{
+								playerhighscore->Initials[g_nHighScoreInitialsIdx] = g_cLegalHighScoreChars[cpointer];
+								g_nHighScoreInitialsIdx++;
+
+								PlayMenuBeepSound();
+
+								break;
+							}
+
+							cpointer++;
 						}
 					}
 				}
@@ -5011,6 +5113,7 @@ int main(int argc, char* args[])
 				{
 					if (KeyDown(int(g_cvKeyPause[0].value)) || KeyDown(int(g_cvKeyPause[1].value)))
 					{
+						printf("pause game hit\n");
 						if (g_bGamePaused)
 							PauseGame(FALSE);
 						else
@@ -5672,7 +5775,7 @@ int main(int argc, char* args[])
 									if (g_cvSoundEnabled.value)
 									{
 										// DSUtil_PlaySound(g_pSaucerFireSound, 0);
-										DSUtil_PlayPannedSound(g_pSaucerFireSound, actors[i].x / WORLD_HALFWIDTH * cStereoSeperation);
+ 										DSUtil_PlayPannedSound(g_pSaucerFireSound, actors[i].x / WORLD_HALFWIDTH * cStereoSeperation);
 										
 									}
 								}
