@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <SDL.h>
+#include <SDL_mixer.h>
 
 #include <windows.h>			// Header File For Windows
 #include <stdio.h>			// Header File For Standard Input/Output

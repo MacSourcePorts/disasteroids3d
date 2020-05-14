@@ -38,9 +38,6 @@
     <ClCompile Include="diutil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dsutil.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="menus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,9 +71,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="diutil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="dsutil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game.h">

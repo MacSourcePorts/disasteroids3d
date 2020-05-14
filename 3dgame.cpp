@@ -32,10 +32,20 @@ const char csConsoleDumpFilename[] = "Disasteroids3d.log";
 
 // DirectSound
 #define INITGUID
-#include <dsound.h>
-#include "dsutil.h"
+//#include <dsound.h>
+//#include "dsutil.h"
+
+// Reserving channels for being able to stop/pan them later
+const int channelBulletFiringSound = 1;
+const int channelSmallExplodeSound = 2;
+const int channelMediumExplodeSound = 3;
+const int channelLargeExplodeSound = 4;
+const int channelShipThrustSound = 5;
+const int channelLSaucerSound = 6;
+const int channelSaucerFireSound = 7;
 
 // DirectInput
+#include <windows.h>
 #include <cguid.h>			// GUID Header required by DirectInput
 #include "diutil.h"			// DirectInput utility header file
 
@@ -319,17 +329,17 @@ GLfloat g_fBackgroundRot = 0.0f;
 BOOL g_bDirectSoundEnabled = FALSE;
 cvar_t g_cvSoundEnabled					= {"SoundEnabled", "2", TRUE};
 cvar_t g_cvVolume							= {"Volume", "1.0", TRUE};
-SoundObject* g_pBulletFiringSound	= NULL;
-SoundObject* g_pSmallExplodeSound	= NULL;
-SoundObject* g_pMediumExplodeSound  = NULL;
-SoundObject* g_pLargeExplodeSound	= NULL;
-SoundObject* g_pShipThrustSound		= NULL;
-SoundObject* g_pThumpHiSound			= NULL;
-SoundObject* g_pThumpLoSound			= NULL;
-SoundObject* g_pLSaucerSound			= NULL;
-SoundObject* g_pSaucerFireSound		= NULL;
-SoundObject* g_pLifeSound				= NULL;
-SoundObject* g_pMenuBeepSound			= NULL;
+Mix_Chunk* g_pBulletFiringSound	= NULL;
+Mix_Chunk* g_pSmallExplodeSound	= NULL;
+Mix_Chunk* g_pMediumExplodeSound  = NULL;
+Mix_Chunk* g_pLargeExplodeSound	= NULL;
+Mix_Chunk* g_pShipThrustSound		= NULL;
+Mix_Chunk* g_pThumpHiSound			= NULL;
+Mix_Chunk* g_pThumpLoSound			= NULL;
+Mix_Chunk* g_pLSaucerSound			= NULL;
+Mix_Chunk* g_pSaucerFireSound		= NULL;
+Mix_Chunk* g_pLifeSound				= NULL;
+Mix_Chunk* g_pMenuBeepSound			= NULL;
 const int NUM_SHIP_TYPES				= 9;
 BOOL g_bThrustSoundOn					= FALSE;
 const float cStereoSeperation = 0.1f;
@@ -468,9 +478,9 @@ starinfo stars[NUM_STARS];
 
 void handleKey(SDL_KeyboardEvent key, BOOL keydown)
 {
-	printf("key.keysym.sym: %i\n", key.keysym.sym);
-	printf("key.keysym.scancode: %i\n", key.keysym.scancode);
-	printf("SDL_SCANCODE_TO_KEYCODE: %i\n", SDL_SCANCODE_TO_KEYCODE(key.keysym.scancode));
+	//printf("key.keysym.sym: %i\n", key.keysym.sym);
+	//printf("key.keysym.scancode: %i\n", key.keysym.scancode);
+	//printf("SDL_SCANCODE_TO_KEYCODE: %i\n", SDL_SCANCODE_TO_KEYCODE(key.keysym.scancode));
 
 	if (key.keysym.scancode == SDL_SCANCODE_GRAVE) {
 		keys[126] = keydown; // "~"
@@ -3053,25 +3063,29 @@ inline int FindFreeActor(const int& StartIdx, const int& EndIdx) {
 // Name: InitializeGameSounds()
 // Desc: Ripped from Duel and modified to init my game sounds
 //-----------------------------------------------------------------------------
-HRESULT InitializeGameSounds()
+bool InitializeGameSounds()
 {
-	// TODO: Removing DirectSound, will replace with SDL -tkidd
-    //if (FAILED(DSUtil_InitDirectSound(hWnd)))
-    //    return E_FAIL;
+	//Initialize SDL_mixer
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+		return false;
+	}
 
-	g_pShipThrustSound		= DSUtil_CreateSound(TEXT("THRUST"),	1);
-	g_pLSaucerSound			= DSUtil_CreateSound(TEXT("LSAUCER"),	1);
-	g_pBulletFiringSound		= DSUtil_CreateSound(TEXT("FIRE"),		NUM_SHIP_TYPES);
-	g_pSmallExplodeSound		= DSUtil_CreateSound(TEXT("EXPLODE3"),	NUM_SHIP_TYPES);
-	g_pMediumExplodeSound	= DSUtil_CreateSound(TEXT("EXPLODE2"),	NUM_SHIP_TYPES);
-	g_pLargeExplodeSound		= DSUtil_CreateSound(TEXT("EXPLODE1"),	NUM_SHIP_TYPES);
-	g_pSaucerFireSound		= DSUtil_CreateSound(TEXT("SFIRE"),		3);
-	g_pLifeSound				= DSUtil_CreateSound(TEXT("LIFE"),		2);
-	g_pThumpHiSound			= DSUtil_CreateSound(TEXT("THUMPHI"),	1);
-	g_pThumpLoSound			= DSUtil_CreateSound(TEXT("THUMPLO"),	1);
-	g_pMenuBeepSound			= DSUtil_CreateSound(TEXT("MENUBEEP"), 1);
+	// TODO: See if these can be loaded from the resources like before
+	g_pShipThrustSound		= Mix_LoadWAV("thrust.wav");
+	g_pLSaucerSound			= Mix_LoadWAV("lsaucer.wav");
+	g_pBulletFiringSound		= Mix_LoadWAV("fire.wav");
+	g_pSmallExplodeSound		= Mix_LoadWAV("explode3.wav");
+	g_pMediumExplodeSound	= Mix_LoadWAV("explode2.wav");
+	g_pLargeExplodeSound		= Mix_LoadWAV("explode1.wav");
+	g_pSaucerFireSound		= Mix_LoadWAV("sfire.wav");
+	g_pLifeSound				= Mix_LoadWAV("life.wav");
+	g_pThumpHiSound			= Mix_LoadWAV("thumphi.wav");
+	g_pThumpLoSound			= Mix_LoadWAV("thumplo.wav");
+	g_pMenuBeepSound			= Mix_LoadWAV("menubeep.wav");
 
-    return S_OK;
+    return true;
 }
 
 
@@ -3081,23 +3095,25 @@ HRESULT InitializeGameSounds()
 void SetVolume(float NewValue)
 {
 
-	#define DSVOLUME_TO_DB(volume) ((DWORD)(-30 * (100 - int(volume * 100.0f))))
-	
-	LONG lVolume = 0;
+	//#define DSVOLUME_TO_DB(volume) ((DWORD)(-30 * (100 - int(volume * 100.0f))))
+	//
+	//LONG lVolume = 0;
 
-	lVolume = DSVOLUME_TO_DB(NewValue);
+	//lVolume = DSVOLUME_TO_DB(NewValue);
 
-	DSUtil_SetVolume(g_pShipThrustSound,		lVolume);
-	DSUtil_SetVolume(g_pLSaucerSound,			lVolume);
-	DSUtil_SetVolume(g_pBulletFiringSound,		lVolume);
-	DSUtil_SetVolume(g_pSmallExplodeSound,		lVolume);
-	DSUtil_SetVolume(g_pMediumExplodeSound,	lVolume);
-	DSUtil_SetVolume(g_pLargeExplodeSound,		lVolume);
-	DSUtil_SetVolume(g_pSaucerFireSound,		lVolume);
-	DSUtil_SetVolume(g_pLifeSound,				lVolume);
-	DSUtil_SetVolume(g_pThumpHiSound,			lVolume);
-	DSUtil_SetVolume(g_pThumpLoSound,			lVolume);
-	DSUtil_SetVolume(g_pMenuBeepSound,			lVolume);
+	int iVolume = NewValue * 128;
+
+	Mix_VolumeChunk(g_pShipThrustSound, iVolume);
+	Mix_VolumeChunk(g_pLSaucerSound, iVolume);
+	Mix_VolumeChunk(g_pBulletFiringSound, iVolume);
+	Mix_VolumeChunk(g_pSmallExplodeSound, iVolume);
+	Mix_VolumeChunk(g_pMediumExplodeSound, iVolume);
+	Mix_VolumeChunk(g_pLargeExplodeSound, iVolume);
+	Mix_VolumeChunk(g_pSaucerFireSound, iVolume);
+	Mix_VolumeChunk(g_pLifeSound, iVolume);
+	Mix_VolumeChunk(g_pThumpHiSound, iVolume);
+	Mix_VolumeChunk(g_pThumpLoSound, iVolume);
+	Mix_VolumeChunk(g_pMenuBeepSound, iVolume);
 
 }
 
@@ -3109,17 +3125,17 @@ void SetVolume(float NewValue)
 VOID CleanupGameSounds()
 {
    
-	DSUtil_DestroySound (g_pBulletFiringSound);
-	DSUtil_DestroySound (g_pSmallExplodeSound);
-	DSUtil_DestroySound (g_pMediumExplodeSound);
-	DSUtil_DestroySound (g_pLargeExplodeSound);
-	DSUtil_DestroySound (g_pShipThrustSound);
-	DSUtil_DestroySound (g_pThumpHiSound);
-	DSUtil_DestroySound (g_pThumpLoSound);
-	DSUtil_DestroySound (g_pLSaucerSound);
-	DSUtil_DestroySound (g_pSaucerFireSound);
-	DSUtil_DestroySound (g_pLifeSound);
-	DSUtil_DestroySound (g_pMenuBeepSound);
+	Mix_FreeChunk(g_pBulletFiringSound);
+	Mix_FreeChunk(g_pSmallExplodeSound);
+	Mix_FreeChunk(g_pMediumExplodeSound);
+	Mix_FreeChunk(g_pLargeExplodeSound);
+	Mix_FreeChunk(g_pShipThrustSound);
+	Mix_FreeChunk(g_pThumpHiSound);
+	Mix_FreeChunk(g_pThumpLoSound);
+	Mix_FreeChunk(g_pLSaucerSound);
+	Mix_FreeChunk(g_pSaucerFireSound);
+	Mix_FreeChunk(g_pLifeSound);
+	Mix_FreeChunk(g_pMenuBeepSound);
 
 	g_pBulletFiringSound		= NULL;
 	g_pSmallExplodeSound		= NULL;
@@ -3133,7 +3149,7 @@ VOID CleanupGameSounds()
 	g_pLifeSound				= NULL;
 	g_pMenuBeepSound			= NULL;
 
-	DSUtil_FreeDirectSound();
+	Mix_Quit();
 
 }
 
@@ -3153,19 +3169,19 @@ VOID CleanupGameSounds()
 void PlayMenuBeepSound()
 {
 	if (g_cvSoundEnabled.value)
-		DSUtil_PlaySound(g_pMenuBeepSound, 0);
+		Mix_PlayChannel(-1, g_pMenuBeepSound, 0);
 }
 
 void PlayMenuLowSound()
 {
 	if (g_cvSoundEnabled.value) 
-		DSUtil_PlaySound(g_pThumpLoSound, 0);
+		Mix_PlayChannel(-1, g_pThumpLoSound, 0);
 }
 
 void PlayMenuExplosionSound()
 {
 	if (g_cvSoundEnabled.value)
-		DSUtil_PlaySound(g_pLargeExplodeSound, 0);
+		Mix_PlayChannel(channelLargeExplodeSound, g_pLargeExplodeSound, 0);
 }
 
 
@@ -3182,9 +3198,9 @@ void ResumeLoopingSounds(void)
 {
 	// Start playing looped sounds
 	if (g_bThrustSoundOn)
-		DSUtil_PlaySound(g_pShipThrustSound, DSBPLAY_LOOPING);
+		Mix_PlayChannel(channelShipThrustSound, g_pShipThrustSound, -1);
 	if (actors[IDX_LSAUCER].active == TRUE)
-		DSUtil_PlaySound(g_pLSaucerSound, DSBPLAY_LOOPING);
+		Mix_PlayChannel(channelLSaucerSound, g_pLSaucerSound, -1);
 }	
 
 
@@ -3193,9 +3209,9 @@ void KillLoopingSounds(void)
 {
 	// Stop playing looped sounds
 	if (g_bThrustSoundOn)
-		DSUtil_StopSound(g_pShipThrustSound);
+		Mix_HaltChannel(channelShipThrustSound);
 	if (actors[IDX_LSAUCER].active == TRUE)
-		DSUtil_StopSound(g_pLSaucerSound);
+		Mix_HaltChannel(channelLSaucerSound);
 }
 
 
@@ -3634,7 +3650,7 @@ BOOL CreateSaucer(const long& IDX)
 
 	if (g_cvSoundEnabled.value)
 	{
-		DSUtil_PlaySound( g_pLSaucerSound, DSBPLAY_LOOPING );
+		Mix_PlayChannel(channelLSaucerSound, g_pLSaucerSound, -1);
 	}
 
 	return(TRUE);
@@ -3652,7 +3668,7 @@ void DestroySaucer(const long& IDX)
 
 	if (g_cvSoundEnabled.value)
 	{
-		DSUtil_StopSound(g_pLSaucerSound);
+		Mix_HaltChannel(channelLSaucerSound);
 	}
 }
 
@@ -3945,7 +3961,7 @@ void CollisionDetection(actorinfo *actor, const int& LBound, const int& UBound)
 					// Player death sound
 					if (g_cvSoundEnabled.value) 
 					{
-						DSUtil_PlaySound(g_pLargeExplodeSound, 0);
+						Mix_PlayChannel(channelLargeExplodeSound, g_pLargeExplodeSound, 0);
 					}
 						
 					// Player killed
@@ -3996,8 +4012,12 @@ void CollisionDetection(actorinfo *actor, const int& LBound, const int& UBound)
 
 						if (g_cvSoundEnabled.value) 
 						{
-							// DSUtil_PlaySound(g_pLargeExplodeSound, 0);
-							DSUtil_PlayPannedSound(g_pLargeExplodeSound, obj[i]->x / WORLD_HALFWIDTH * cStereoSeperation);
+							FLOAT fScreenXPos = actors[i].x / WORLD_HALFWIDTH;// *cStereoSeperation;
+							float fRight = (fScreenXPos * 127) + 127;
+							int iRight = (int)fRight;
+							int iLeft = 254 - iRight;
+							Mix_SetPanning(channelLargeExplodeSound, iLeft, iRight);
+							Mix_PlayChannel(channelLargeExplodeSound, g_pLargeExplodeSound, 0);
 						}
 						
 						// Activate force feedback
@@ -4015,8 +4035,12 @@ void CollisionDetection(actorinfo *actor, const int& LBound, const int& UBound)
 						
 						if (g_cvSoundEnabled.value)
 						{
-							// DSUtil_PlaySound(g_pMediumExplodeSound, 0);
-							DSUtil_PlayPannedSound(g_pMediumExplodeSound, obj[i]->x / WORLD_HALFWIDTH * cStereoSeperation);
+							FLOAT fScreenXPos = actors[i].x / WORLD_HALFWIDTH;// *cStereoSeperation;
+							float fRight = (fScreenXPos * 127) + 127;
+							int iRight = (int)fRight;
+							int iLeft = 254 - iRight;
+							Mix_SetPanning(channelMediumExplodeSound, iLeft, iRight);
+							Mix_PlayChannel(channelMediumExplodeSound, g_pMediumExplodeSound, 0);
 						}
 						
 						// Activate force feedback
@@ -4032,8 +4056,12 @@ void CollisionDetection(actorinfo *actor, const int& LBound, const int& UBound)
 
 						if (g_cvSoundEnabled.value)
 						{
-							// DSUtil_PlaySound(g_pSmallExplodeSound, 0);
-							DSUtil_PlayPannedSound(g_pSmallExplodeSound, obj[i]->x / WORLD_HALFWIDTH * cStereoSeperation);
+							FLOAT fScreenXPos = actors[i].x / WORLD_HALFWIDTH;// *cStereoSeperation;
+							float fRight = (fScreenXPos * 127) + 127;
+							int iRight = (int)fRight;
+							int iLeft = 254 - iRight;
+							Mix_SetPanning(channelSmallExplodeSound, iLeft, iRight);
+							Mix_PlayChannel(channelSmallExplodeSound, g_pSmallExplodeSound, 0);
 						}
 						
 						// Activate force feedback
@@ -4124,8 +4152,12 @@ void CollisionDetection(actorinfo *actor, const int& LBound, const int& UBound)
 					player->Score += 500;
 					if (g_cvSoundEnabled.value) 
 					{
-						// DSUtil_PlaySound(g_pLargeExplodeSound, 0); 
-						DSUtil_PlayPannedSound(g_pLargeExplodeSound, obj[i]->x / WORLD_HALFWIDTH * cStereoSeperation);
+						FLOAT fScreenXPos = actors[i].x / WORLD_HALFWIDTH;// *cStereoSeperation;
+						float fRight = (fScreenXPos * 127) + 127;
+						int iRight = (int)fRight;
+						int iLeft = 254 - iRight;
+						Mix_SetPanning(channelLargeExplodeSound, iLeft, iRight);
+						Mix_PlayChannel(channelLargeExplodeSound, g_pLargeExplodeSound, 0);
 					}
 					
 					// Create blast
@@ -4258,13 +4290,18 @@ BOOL InitializeGame(void)
 	}
 	nColorDepth = colordepths[(int)g_cvColorDepth.value];
 
-	if (!SDL_WasInit(SDL_INIT_VIDEO))
+	if (!SDL_WasInit(SDL_INIT_VIDEO | SDL_INIT_AUDIO))
 	{
 		const char* driverName;
 
 		if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		{
 			printf("SDL_Init( SDL_INIT_VIDEO ) FAILED (%s)\n", SDL_GetError());
+		}
+
+		if (SDL_Init(SDL_INIT_AUDIO) != 0)
+		{
+			printf("SDL_Init( SDL_INIT_AUDIO ) FAILED (%s)\n", SDL_GetError());
 		}
 
 		driverName = SDL_GetCurrentVideoDriver();
@@ -4885,9 +4922,9 @@ int main(int argc, char* args[])
 			// Play the thump
 			if ((g_fNow > fNextThumpTime) && (g_cvSoundEnabled.value)) {
 				if (bPlayThump)
-					DSUtil_PlaySound( g_pThumpLoSound, 0 );
+					Mix_PlayChannel(-1, g_pThumpLoSound, 0);
 				else
-					DSUtil_PlaySound( g_pThumpHiSound, 0 );
+					Mix_PlayChannel(-1, g_pThumpHiSound, 0);
 
 				// Alternate thumps
 				bPlayThump = !bPlayThump;
@@ -5391,8 +5428,12 @@ int main(int argc, char* args[])
 								// Play sound
 								if (g_cvSoundEnabled.value)
 								{
-									// DSUtil_PlaySound(g_pBulletFiringSound, 0); 
-									DSUtil_PlayPannedSound(g_pBulletFiringSound, actors[i].x / WORLD_HALFWIDTH * cStereoSeperation);
+									FLOAT fScreenXPos = actors[i].x / WORLD_HALFWIDTH;// *cStereoSeperation;
+									float fRight = (fScreenXPos * 127) + 127;
+									int iRight = (int)fRight;
+									int iLeft = 254 - iRight;
+									Mix_SetPanning(channelBulletFiringSound, iLeft, iRight);
+									Mix_PlayChannel(channelBulletFiringSound, g_pBulletFiringSound, 0);
 								}
 							}
 						}
@@ -5462,7 +5503,7 @@ int main(int argc, char* args[])
 
 					if (g_cvSoundEnabled.value)
 					{
-						DSUtil_PlaySound(g_pLifeSound, 0);
+						Mix_PlayChannel(-1, g_pLifeSound, 0);
 					}
 				}
 
@@ -5484,18 +5525,18 @@ int main(int argc, char* args[])
 				}
 
 				// Apply Player velocity 
-				if (bPlayerThrust) 
+				if (bPlayerThrust)
 				{
 
 
 #define use_old_thrust 0
-				
+
 #if use_old_thrust
 					float velocity = 0.05f * fDeltaTime;
 #else
 					float velocity = 0.075f * fDeltaTime;
 #endif
-					
+
 					// Set vx and vy
 					player->vx += (float)CosLookup(player->rz) * velocity;
 					player->vy += (float)SinLookup(player->rz) * velocity;
@@ -5518,8 +5559,8 @@ int main(int argc, char* args[])
 							actors[k].rz += 180 + randInt(-20, 20);
 							actors[k].x += (float)CosLookup(actors[k].rz) * 0.55f;
 							actors[k].y += (float)SinLookup(actors[k].rz) * 0.55f;
-							actors[k].vx = 0.0005f; 
-							actors[k].vy = 0.0005f; 
+							actors[k].vx = 0.0005f;
+							actors[k].vy = 0.0005f;
 							actors[k].vz = 0;
 							actors[k].LifeStartTime = g_fNow;
 							// actors[k].LifeEndTime = g_fNow + randFloat(0.06f, 0.180f);
@@ -5527,13 +5568,13 @@ int main(int argc, char* args[])
 							actors[k].size = 0.6f;
 						}
 					}
-					
+
 					// Spawn smoke
 					if (fThrustDebrisTime < g_fNow)
 					{
-					
+
 						k = FindFreeActor(IDX_FIRST_PARTICLE, IDX_LAST_PARTICLE);
-						if (k) 
+						if (k)
 						{
 							// Don't allow more thrust for ... ms
 							fThrustDebrisTime = g_fNow + randFloat(0.005f, 0.025f);
@@ -5548,7 +5589,7 @@ int main(int argc, char* args[])
 							actors[k].vx = (GLfloat)fabs(actors[k].vx * 0.25f);
 							actors[k].vy = (GLfloat)fabs(actors[k].vy * 0.25f);
 							actors[k].vz = 0.01f;
-							actors[k].color.r = actors[k].color.g = actors[k].color.b = randInt(16,64);
+							actors[k].color.r = actors[k].color.g = actors[k].color.b = randInt(16, 64);
 							actors[k].LifeStartTime = g_fNow;
 							actors[k].LifeEndTime = g_fNow + randFloat(0, 1.25f);
 							actors[k].size = 1;
@@ -5558,10 +5599,10 @@ int main(int argc, char* args[])
 					// Play thrust sound
 					if (g_cvSoundEnabled.value)
 						if (g_bThrustSoundOn == FALSE)
-							DSUtil_PlaySound( g_pShipThrustSound, DSBPLAY_LOOPING );
+							Mix_PlayChannel(channelShipThrustSound, g_pShipThrustSound, -1);
 					g_bThrustSoundOn = TRUE;
 
-				} 
+				}
 				else {
 
 #if use_old_thrust 
@@ -5581,7 +5622,7 @@ int main(int argc, char* args[])
 					// Stop sound of player thrust
 					if (g_cvSoundEnabled.value)
 					{
-						DSUtil_StopSound(g_pShipThrustSound);
+						Mix_HaltChannel(channelShipThrustSound);
 					}
 					
 					// Flag thrust sound is now off
@@ -5774,9 +5815,12 @@ int main(int argc, char* args[])
 									// Play fire sound
 									if (g_cvSoundEnabled.value)
 									{
-										// DSUtil_PlaySound(g_pSaucerFireSound, 0);
- 										DSUtil_PlayPannedSound(g_pSaucerFireSound, actors[i].x / WORLD_HALFWIDTH * cStereoSeperation);
-										
+										FLOAT fScreenXPos = actors[i].x / WORLD_HALFWIDTH;// *cStereoSeperation;
+										float fRight = (fScreenXPos * 127) + 127;
+										int iRight = (int)fRight;
+										int iLeft = 254 - iRight;
+										Mix_SetPanning(channelSaucerFireSound, iLeft, iRight);
+										Mix_PlayChannel(channelSaucerFireSound, g_pSaucerFireSound, 0);
 									}
 								}
 							}
@@ -5961,7 +6005,7 @@ int main(int argc, char* args[])
 					// Stop thruster sound
 					if (g_cvSoundEnabled.value)
 					{
-						DSUtil_StopSound(g_pShipThrustSound);
+						Mix_HaltChannel(channelShipThrustSound);
 					}
 					g_bThrustSoundOn = FALSE;
 
