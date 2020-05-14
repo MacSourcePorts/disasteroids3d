@@ -47,7 +47,7 @@ const int channelSaucerFireSound = 7;
 // DirectInput
 #include <windows.h>
 #include <cguid.h>			// GUID Header required by DirectInput
-#include "diutil.h"			// DirectInput utility header file
+//#include "diutil.h"			// DirectInput utility header file
 
 #include "game.h"
 
@@ -346,8 +346,8 @@ const float cStereoSeperation = 0.1f;
 
 // DirectInput stuff (ripped from DirectX SDK FFDonuts and modified)
 BOOL g_bDirectInputEnabled							= FALSE;
-LPDIRECTINPUTDEVICE2 g_pdidJoystick				= NULL;
-FFEffectObject*      g_pExplodeFFEffect		= NULL;
+SDL_Joystick* g_pdidJoystick = NULL;
+SDL_Haptic* g_pdidFFJoystick = NULL;
 DWORD                g_dwForceFeedbackGain	= 100L;
 cvar_t g_cvJoystickEnabled			= {"JoystickEnabled", "-1", FALSE};
 cvar_t g_cvForceFeedbackEnabled	= {"ForcefeedbackEnabled", "0", TRUE};
@@ -363,11 +363,12 @@ const int JOYSTICK_HYPERSPACE	= 64;
 
 // SDL Input stuff
 void handleKey(SDL_KeyboardEvent key, BOOL keydown);
-
+void playExplodeFFEffect();
 
 // Mouse variables
-LPDIRECTINPUTDEVICE	g_pdidMouse	= NULL;
-DIMOUSESTATE g_dims;
+// TODO: Mouse later -tkidd
+//LPDIRECTINPUTDEVICE	g_pdidMouse	= NULL;
+//DIMOUSESTATE g_dims;
 cvar_t g_cvMouseEnabled				= {"MouseEnabled", "-1", TRUE};
 cvar_t g_cvMouseSensitivity		= {"MouseSensitivity", "0.5", TRUE};
 
@@ -517,6 +518,13 @@ void handleKey(SDL_KeyboardEvent key, BOOL keydown)
 	}
 }
 
+void playExplodeFFEffect() {
+	if (SDL_HapticRumblePlay(g_pdidFFJoystick, 0.75, 500) != 0)
+	{
+		printf("Warning: Unable to play rumble! %s\n", SDL_GetError());
+	}
+}
+
 //--------------------------------------------------------
 // TCW
 //
@@ -535,8 +543,9 @@ void PauseGame(const BOOL& Start)
 			g_bGamePaused = TRUE;
 
 			// Unacquire mouse
-			if (NULL != g_pdidMouse)
-				g_pdidMouse->Unacquire();
+			// TODO: Mouse later -tkidd
+			//if (NULL != g_pdidMouse)
+			//	g_pdidMouse->Unacquire();
 		}
 	}
 	else
@@ -547,11 +556,12 @@ void PauseGame(const BOOL& Start)
 			g_bGamePaused = FALSE;
 
 			// Reacquire mouse
-			if (NULL != g_pdidMouse)
+			// TODO: Mouse later -tkidd
+			/*if (NULL != g_pdidMouse)
 			{
 				g_pdidMouse->Unacquire();
 				g_pdidMouse->Acquire();
-			}
+			}*/
 
 		}
 	}
@@ -3263,23 +3273,24 @@ void SetMouse(const BOOL value)
 		Cvar_SetValue("MouseEnabled", (FLOAT)value);
 	
 		// Based on value, enable the mouse
-		if (value)
-		{
-			if (g_pdidMouse)
-			{
-				g_pdidMouse->Unacquire();
-				g_pdidMouse->Acquire();
-			}
-			// UpdateMessage("MOUSE ENABLED");
-		}
-		else
-		{
-			if (g_pdidMouse) 
-			{
-				g_pdidMouse->Unacquire();
-			}
-			// UpdateMessage("MOUSE DISABLED");
-		}
+		// TODO: Mouse later -tkidd
+		//if (value)
+		//{
+		//	if (g_pdidMouse)
+		//	{
+		//		g_pdidMouse->Unacquire();
+		//		g_pdidMouse->Acquire();
+		//	}
+		//	// UpdateMessage("MOUSE ENABLED");
+		//}
+		//else
+		//{
+		//	if (g_pdidMouse) 
+		//	{
+		//		g_pdidMouse->Unacquire();
+		//	}
+		//	// UpdateMessage("MOUSE DISABLED");
+		//}
 	}
 }
 
@@ -3290,8 +3301,9 @@ void SetMouse(const BOOL value)
 */
 void UnacquireMouse()
 {
-	if (g_pdidMouse)
-		g_pdidMouse->Unacquire();
+	// TODO: Mouse later -tkidd
+	//if (g_pdidMouse)
+	//	g_pdidMouse->Unacquire();
 }
 
 
@@ -3301,42 +3313,41 @@ void UnacquireMouse()
 //-----------------------------------------------------------------------------
 void DestroyInput()
 {
-	// Delete effect objects
-	DIUtil_DeleteEffect( g_pExplodeFFEffect );
-
 	// Unacquire and release joystick
 	if( g_pdidJoystick )
 	{
-		g_pdidJoystick->Unacquire();
-		g_pdidJoystick->Release();
+		SDL_JoystickClose(g_pdidJoystick);
 		g_pdidJoystick = NULL;
 	}
 
-	// Unacquire and release mouse
-	if (g_pdidMouse)
+	if (g_pdidFFJoystick)
 	{
-		g_pdidMouse->Unacquire();
-		g_pdidMouse->Release();
-		g_pdidMouse = NULL;
+		SDL_HapticClose(g_pdidFFJoystick);
 	}
 
-	// Release DirectInput
-	DIUtil_CleanupDirectInput();
+	// Unacquire and release mouse
+	// TODO: Mouse later -tkidd
+	//if (g_pdidMouse)
+	//{
+	//	g_pdidMouse->Unacquire();
+	//	g_pdidMouse->Release();
+	//	g_pdidMouse = NULL;
+	//}
 }
 
 //-----------------------------------------------------------------------------
 // Name: 
 // Desc: Ripped from FFDonuts (unmodified)
 //-----------------------------------------------------------------------------
-BOOL CALLBACK EnumFFJoysticksCallback( LPCDIDEVICEINSTANCE pInst, 
-                                       LPVOID pbHasFFDevice )
-{
-
-    if( FALSE == IsEqualIID( pInst->guidInstance, GUID_NULL ) )
-        *((BOOL*)pbHasFFDevice) = TRUE;
-
-    return DIENUM_CONTINUE;
-}
+//BOOL CALLBACK EnumFFJoysticksCallback( LPCDIDEVICEINSTANCE pInst, 
+//                                       LPVOID pbHasFFDevice )
+//{
+//
+//    if( FALSE == IsEqualIID( pInst->guidInstance, GUID_NULL ) )
+//        *((BOOL*)pbHasFFDevice) = TRUE;
+//
+//    return DIENUM_CONTINUE;
+//}
 
 //-----------------------------------------------------------------------------
 // Name: HasForceFeedbackJoystick()
@@ -3382,54 +3393,97 @@ BOOL HasForceFeedbackJoystick( HINSTANCE hInst )
 // Name: InitializeInput()
 // Desc: Ripped from FFDonuts and modified
 //-----------------------------------------------------------------------------
-HRESULT InitializeInput( HWND hWnd )
+BOOL InitializeInput()
 {
+	// Initialize SDL Joystick
+	if (SDL_Init(SDL_INIT_JOYSTICK) != 0)
+	{
+		printf("SDL_Init( SDL_INIT_JOYSTICK ) FAILED (%s)\n", SDL_GetError());
+		return false;
+	}
 
-    // Initialize DirectInput
-    if( FAILED( DIUtil_Initialize( hWnd ) ) )
-    {
-        // MessageBox( hWnd, "Can't Initialize DirectInput", APP_TITLE, MB_OK );
-        return E_FAIL;
-    }
+	// Initialize SDL haptics
+	if (SDL_Init(SDL_INIT_HAPTIC) != 0)
+	{
+		printf("SDL_Init( SDL_INIT_HAPTIC ) FAILED (%s)\n", SDL_GetError());
+		return false;
+	}
+
+	if (SDL_NumJoysticks() < 1)
+	{
+		printf("Warning: No joysticks connected!\n");
+	}
+	else
+	{
+		//Load joystick
+		g_pdidJoystick = SDL_JoystickOpen(0);
+		if (g_pdidJoystick == NULL)
+		{
+			printf("Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());
+		}
+		else
+		{
+			//Get controller haptic device
+			// Try to find and initialize force feedback
+			g_pdidFFJoystick = SDL_HapticOpenFromJoystick(g_pdidJoystick);
+			if (g_pdidFFJoystick == NULL)
+			{
+				printf("Warning: Controller does not support haptics! SDL Error: %s\n", SDL_GetError());				
+			}
+			else
+			{
+				//Get initialize rumble
+				if (SDL_HapticRumbleInit(g_pdidFFJoystick) < 0)
+				{
+					printf("Warning: Unable to initialize rumble! SDL Error: %s\n", SDL_GetError());
+				}
+				else 
+				{
+					// Make the stick shake on startup
+					playExplodeFFEffect();
+				}
+			}
+		}
+	}
 
     // Get the list of DirectInput devices
-    DIDEVICEINSTANCE* pDevices;
-    DWORD             dwNumDevices;
-    DIUtil_GetDevices( &pDevices, &dwNumDevices );
+  //  DIDEVICEINSTANCE* pDevices;
+  //  DWORD             dwNumDevices;
+  //  DIUtil_GetDevices( &pDevices, &dwNumDevices );
 
-    // Search through the list, looking for a joystick
-    for( DWORD i=0; i< dwNumDevices; i++ )
-    {
-        DWORD dwDevType = pDevices[i].dwDevType & 0x000000ff;
+  //  // Search through the list, looking for a joystick
+  //  for( DWORD i=0; i< dwNumDevices; i++ )
+  //  {
+  //      DWORD dwDevType = pDevices[i].dwDevType & 0x000000ff;
 
-        if( dwDevType == DIDEVTYPE_JOYSTICK )
-        {
-            g_pdidJoystick = DIUtil_CreateDevice( hWnd, &pDevices[i] );
-        }
-		  else if (dwDevType == DIDEVTYPE_MOUSE)
-		  {
-			  g_pdidMouse = DIUtil_CreateDevice(hWnd, &pDevices[i]);
-		  }
-    }
-	 
-    // Try to find and initialize force feedback
-    if(g_pdidJoystick != NULL)
-    {
-		 // If the joystick is force feedback, ask user for options and setup effects
-		 if(DIUtil_IsForceFeedback(g_pdidJoystick))
-		 {
-			  // Create force feedback effects
-			  g_pExplodeFFEffect = DIUtil_CreateEffect();
-			  g_pExplodeFFEffect->diEffect.dwGain = (g_dwForceFeedbackGain * 100L);
-			  DIUtil_SetupPeriodicEffect(g_pExplodeFFEffect, g_pdidJoystick);
+  //      if( dwDevType == DIDEVTYPE_JOYSTICK )
+  //      {
+  //          g_pdidJoystick = DIUtil_CreateDevice( hWnd, &pDevices[i] );
+  //      }
+		//  else if (dwDevType == DIDEVTYPE_MOUSE)
+		//  {
+		//	  g_pdidMouse = DIUtil_CreateDevice(hWnd, &pDevices[i]);
+		//  }
+  //  }
+	 //
+  //  // Try to find and initialize force feedback
+  //  if(g_pdidJoystick != NULL)
+  //  {
+		// // If the joystick is force feedback, ask user for options and setup effects
+		// if(DIUtil_IsForceFeedback(g_pdidJoystick))
+		// {
+		//	  // Create force feedback effects
+		//	  g_pExplodeFFEffect = DIUtil_CreateEffect();
+		//	  g_pExplodeFFEffect->diEffect.dwGain = (g_dwForceFeedbackGain * 100L);
+		//	  DIUtil_SetupPeriodicEffect(g_pExplodeFFEffect, g_pdidJoystick);
 
-			  // Make the stick shake on startup
-			  DIUtil_PlayEffect( g_pExplodeFFEffect );
+		//	  // Make the stick shake on startup
+		//	  DIUtil_PlayEffect( g_pExplodeFFEffect );
 
-		 }
-	 }
+		// }
+	 //}
 
-    return S_OK;
+    return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -3438,91 +3492,84 @@ HRESULT InitializeInput( HWND hWnd )
 //		 Ripped from FFDonuts and modified.  I also added mouse handling
 //		code from one of the samples as well.
 //-----------------------------------------------------------------------------
-DWORD GetDeviceInput()
+unsigned long GetDeviceInput()
 {
-    HRESULT     hr;
-    DIJOYSTATE  dijs;
     DWORD       dwInput = 0;
 
 	 // Make sure a joystick exists
 	 if ((g_pdidJoystick != NULL) && (g_cvJoystickEnabled.value != 0))
 	 {
 
-		 // Poll the joystick to read the current state
-		 hr = g_pdidJoystick->Poll();
-
-		 // Read the device state
-		 hr = g_pdidJoystick->GetDeviceState( sizeof(DIJOYSTATE), &dijs );
-		 if( FAILED(hr) )
-		 {
-			  if( hr == DIERR_INPUTLOST )
-			  {
-					// Reacquire the device
-					g_pdidJoystick->Acquire();
-			  }
-			  // We did not read anything, return no motion
-			  return 0;
-		 }
-
 /*
 TODO:
 	Implement joystick deadzone 
 */
 
+//Analog joystick dead zone
+		 const int JOYSTICK_DEAD_ZONE = 8000;
+
 		// 2002.01.15 -- Forgot to remove this in V1.3
 		// UpdateMessage("%d %d", dijs.lX, dijs.lY);
 		
 		 // Process device state
-		 // x-axis (left)
-		 if( dijs.lX < 0 )
-			  dwInput |= JOYSTICK_LEFT;
-			
-		 // x-axis (right)
-		 if( dijs.lX > 0 )
-			  dwInput |= JOYSTICK_RIGHT;
 
-		 // y-axis (forward)
-		 if( dijs.lY < 0 )
-			  dwInput |= JOYSTICK_UP;
+		 Sint16 x_move = SDL_JoystickGetAxis(g_pdidJoystick, 0);
+		 Sint16 y_move = SDL_JoystickGetAxis(g_pdidJoystick, 1);
 
-		 // y-axis (backward)
-		 if( dijs.lY > 0 )
-			  dwInput |= JOYSTICK_DOWN;
+		 //Left of dead zone
+		 if (x_move < -JOYSTICK_DEAD_ZONE)
+		 {
+			 dwInput |= JOYSTICK_LEFT;
+		 }
+		 //Right of dead zone
+		 else if (x_move > JOYSTICK_DEAD_ZONE)
+		 {
+			 dwInput |= JOYSTICK_RIGHT;
+		 }
+		 //Below of dead zone
+		 if (y_move < -JOYSTICK_DEAD_ZONE)
+		 {
+			 dwInput |= JOYSTICK_DOWN;
+		 }
+		 //Above of dead zone
+		 else if (y_move > JOYSTICK_DEAD_ZONE)
+		 {
+			 dwInput |= JOYSTICK_UP;
+		 }
 
-		 // button 0 (fire)
-		 if( dijs.rgbButtons[0] & 0x80 )
-			  dwInput |= JOYSTICK_FIRE;
-
-		 // button 1 (shield)
-		 if( dijs.rgbButtons[1] & 0x80 )
-			  dwInput |= JOYSTICK_SHIELDS;
-
-		 if (dijs.rgbButtons[2] & 0x80)
+		 if (SDL_JoystickGetButton(g_pdidJoystick, 0)) {
+			 dwInput |= JOYSTICK_FIRE;
+		 }
+		 else if (SDL_JoystickGetButton(g_pdidJoystick, 1)) {
+			 dwInput |= JOYSTICK_SHIELDS;
+		 }
+		 else if (SDL_JoystickGetButton(g_pdidJoystick, 2)) {
 			 dwInput |= JOYSTICK_HYPERSPACE;
-
+		 }
 	 }
 	 
 
 	// Do mouse
-	if ((g_pdidMouse != NULL) && (g_cvMouseEnabled.value != 0))
-	{
-		// get the input's device state, and put the state in dims
-		hr = g_pdidMouse->GetDeviceState(sizeof(DIMOUSESTATE), &g_dims);
+	// TODO: Mouse later -tkidd
+	// if ((g_pdidMouse != NULL) && (g_cvMouseEnabled.value != 0))
+	//{
+	//	// get the input's device state, and put the state in dims
+	//	hr = g_pdidMouse->GetDeviceState(sizeof(DIMOUSESTATE), &g_dims);
 
-		// If the mouse input is lost, try to reacquire it
-		if (hr == DIERR_INPUTLOST)
-		{
-			// DirectInput is telling us that the input stream has
-			// been interrupted.  We aren't tracking any state
-			// between polls, so we don't have any special reset
-			// that needs to be done.  We just re-acquire and
-			// try again.
-			g_pdidMouse->Acquire();
+	//	// If the mouse input is lost, try to reacquire it
+	//	if (hr == DIERR_INPUTLOST)
+	//	{
+	//		// DirectInput is telling us that the input stream has
+	//		// been interrupted.  We aren't tracking any state
+	//		// between polls, so we don't have any special reset
+	//		// that needs to be done.  We just re-acquire and
+	//		// try again.
+	//		g_pdidMouse->Acquire();
 
-			// Nothing was read - exit until next loop
-			return 0;
-		}
-	}
+	//		// Nothing was read - exit until next loop
+	//		return 0;
+	//	}
+	//}
 
 /*
 	// Mouse debug message
@@ -3535,10 +3582,11 @@ TODO:
 */
 	
 	// Cheat and map mouse buttons to keys for user binds
-	keys[252] = (g_dims.rgbButtons[0] & 0x80);
-	keys[253] = (g_dims.rgbButtons[1] & 0x80);
-	keys[254] = (g_dims.rgbButtons[2] & 0x80);
-	keys[255] = (g_dims.rgbButtons[3] & 0x80);
+	// TODO: Mouse later -tkidd
+	// keys[252] = (g_dims.rgbButtons[0] & 0x80);
+	//keys[253] = (g_dims.rgbButtons[1] & 0x80);
+	//keys[254] = (g_dims.rgbButtons[2] & 0x80);
+	//keys[255] = (g_dims.rgbButtons[3] & 0x80);
 	
     // return the new device state
     return dwInput;
@@ -3955,7 +4003,7 @@ void CollisionDetection(actorinfo *actor, const int& LBound, const int& UBound)
 					// Activate force feedback
 					if ((g_cvJoystickEnabled.value != 0) && (g_cvForceFeedbackEnabled.value != 0))
 					{
-						DIUtil_PlayEffect( g_pExplodeFFEffect );
+						playExplodeFFEffect();
 					}
 
 					// Player death sound
@@ -4023,7 +4071,7 @@ void CollisionDetection(actorinfo *actor, const int& LBound, const int& UBound)
 						// Activate force feedback
 						if ((g_cvJoystickEnabled.value != 0) && (g_cvForceFeedbackEnabled.value != 0))
 						{
-							DIUtil_PlayEffect( g_pExplodeFFEffect );
+							playExplodeFFEffect();
 						}
 						
 						break;
@@ -4045,8 +4093,8 @@ void CollisionDetection(actorinfo *actor, const int& LBound, const int& UBound)
 						
 						// Activate force feedback
 						if ((g_cvJoystickEnabled.value != 0) && (g_cvForceFeedbackEnabled.value != 0))
-							DIUtil_PlayEffect( g_pExplodeFFEffect );
-						
+							playExplodeFFEffect();
+
 						break;
 
 					// Small rock
@@ -4066,8 +4114,8 @@ void CollisionDetection(actorinfo *actor, const int& LBound, const int& UBound)
 						
 						// Activate force feedback
 						if ((g_cvJoystickEnabled.value != 0) && (g_cvForceFeedbackEnabled.value != 0))
-							DIUtil_PlayEffect( g_pExplodeFFEffect );
-						
+							playExplodeFFEffect();
+
 						break;
 								
 				}
@@ -4145,7 +4193,7 @@ void CollisionDetection(actorinfo *actor, const int& LBound, const int& UBound)
 					// Activate force feedback
 					if ((g_cvJoystickEnabled.value != 0) && (g_cvForceFeedbackEnabled.value != 0))
 					{
-						DIUtil_PlayEffect( g_pExplodeFFEffect );
+						playExplodeFFEffect();
 					}
 
 					// Increase score and play explosion sound
@@ -4332,25 +4380,25 @@ BOOL InitializeGame(void)
 	// Attempt to setup DirectInput.  Don't exit if it fails
 
 	// TODO: Removing DirectInput, will replace with SDL -tkidd
-	//if( FAILED(InitializeInput(hWnd)))
-	//{
-	//	g_bDirectInputEnabled = FALSE;
-	//}
-	//else
-	//{
-	//	g_bDirectInputEnabled = TRUE;
+	if( !InitializeInput())
+	{
+		g_bDirectInputEnabled = FALSE;
+	}
+	else
+	{
+		g_bDirectInputEnabled = TRUE;
 
-	//	// Enable joystick by default
-	//	Cvar_SetString("JoystickEnabled", "-1");
-	//	
-	//	// Attempt to activate force feedback and enable it if it's present
-	//	// TODO: put this back when we get SDL input in place -tkidd
-	//	//g_bForceFeedbackCapable = BOOL(HasForceFeedbackJoystick(hInstance) == TRUE);
+		// Enable joystick by default
+		Cvar_SetString("JoystickEnabled", "-1");
+		
+		// Attempt to activate force feedback and enable it if it's present
+		// TODO: put this back when we get SDL input in place -tkidd
+		//g_bForceFeedbackCapable = BOOL(HasForceFeedbackJoystick(hInstance) == TRUE);
 
-	//	// If the joystick is capable of force feedback, enable it 
-	//	Cvar_SetValue("ForceFeedbackEnabled", (g_bForceFeedbackCapable != 0));
-	//	
-	//}
+		// If the joystick is capable of force feedback, enable it 
+		Cvar_SetValue("ForceFeedbackEnabled", (g_bForceFeedbackCapable != 0));
+		
+	}
 
 	// Setup rendering flags
 	renderinit();
@@ -4654,7 +4702,7 @@ int main(int argc, char* args[])
 	float	fProgramStartTime			= 0;
 
 	// DirectInput variables
-	DWORD	DirectInput					= 0;
+	unsigned long	DirectInput					= 0;
 //	DWORD	LastDirectInput			= 0;
 
 	// Automatic framerate adjust variables
@@ -4772,6 +4820,10 @@ int main(int argc, char* args[])
 			else if (e.type == SDL_KEYUP)
 			{
 				handleKey(e.key, FALSE);
+			}
+			else if (e.type == SDL_JOYBUTTONDOWN) 
+			{
+
 			}
 		}
 
@@ -5244,14 +5296,15 @@ int main(int argc, char* args[])
 						}
 
 						// Move player based on mouse position
-						if (g_cvMouseEnabled.value != 0)
+						// TODO: Mouse later -tkidd
+						/*if (g_cvMouseEnabled.value != 0)
 						{
 							if (g_dims.lX)
 							{
 								player->rz += float(-g_dims.lX) * 0.5f * g_cvMouseSensitivity.value;
 								fPlayerRxChange = -g_dims.lX * 3.0f * fDeltaTime;
 							}
-						}
+						}*/
 
 
 						// If fPlayerRxChange is 0, set it to a value 

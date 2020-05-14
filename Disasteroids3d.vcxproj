@@ -133,7 +133,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OutputFile>.\Debug\Disasteroids3d.exe</OutputFile>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;dinput8.lib;winmm.lib;odbc32.lib;odbccp32.lib;SDL2.lib;SDL2main.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;odbc32.lib;odbccp32.lib;SDL2.lib;SDL2main.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -143,7 +143,6 @@
     <ClCompile Include="commands.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="cvars.cpp" />
-    <ClCompile Include="diutil.cpp" />
     <ClCompile Include="menus.cpp" />
     <ClCompile Include="mp3control.cpp" />
     <ClCompile Include="renderflags.cpp" />
@@ -156,7 +155,6 @@
     <ClInclude Include="commands.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="cvars.h" />
-    <ClInclude Include="diutil.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="glext.h" />
     <ClInclude Include="LookupTables.h" />
