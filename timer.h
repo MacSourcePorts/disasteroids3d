@@ -9,10 +9,6 @@
 
 #ifdef __APPLE__
 typedef long long __int64;
-#include <sys/types.h>
-#include <sys/time.h>
-
-unsigned long timeGetTime();
 #endif
 
 #include <SDL.h>
