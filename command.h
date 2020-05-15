@@ -3,7 +3,9 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 // command structure
 typedef struct command_s {

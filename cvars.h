@@ -1,8 +1,21 @@
 #ifndef CVARS_H
 #define CVARS_H
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
 #include <stdio.h>
+
+#include <SDL.h>
+
+#ifdef __APPLE__
+#define stricmp strcasecmp
+#define strnicmp strncasecmp
+#define TRUE 1
+#define FALSE 0
+typedef bool BOOL;
+typedef float FLOAT;
+#endif
 
 // cvar storage struct definition
 typedef struct cvar_s {

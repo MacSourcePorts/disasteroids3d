@@ -1,0 +1,491 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A118DA0A246E58C000184600 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A118DA09246E58C000184600 /* AppDelegate.swift */; };
+		A118DA0C246E58C300184600 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A118DA0B246E58C300184600 /* Assets.xcassets */; };
+		A118DA3B246E5B2600184600 /* 3dglasses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA19246E5B2500184600 /* 3dglasses.cpp */; };
+		A118DA3C246E5B2600184600 /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA1F246E5B2500184600 /* timer.cpp */; };
+		A118DA3D246E5B2600184600 /* tokenize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA23246E5B2500184600 /* tokenize.cpp */; };
+		A118DA3E246E5B2600184600 /* cvars.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA26246E5B2500184600 /* cvars.cpp */; };
+		A118DA40246E5B2600184600 /* command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA28246E5B2500184600 /* command.cpp */; };
+		A118DA43246E5B2600184600 /* renderflags.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA2C246E5B2500184600 /* renderflags.cpp */; };
+		A118DA44246E5B2600184600 /* menus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA2D246E5B2500184600 /* menus.cpp */; };
+		A118DA46246E5B2600184600 /* console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA31246E5B2500184600 /* console.cpp */; };
+		A118DA47246E5B2600184600 /* 3dgame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA32246E5B2500184600 /* 3dgame.cpp */; };
+		A118DA4A246E5B2600184600 /* commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA37246E5B2600184600 /* commands.cpp */; };
+		A118DA4D246E5BD000184600 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A118DA4C246E5BD000184600 /* OpenGL.framework */; };
+		A118DA54246EE85000184600 /* libSDL2_mixer-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A118DA51246EE85000184600 /* libSDL2_mixer-2.0.0.dylib */; };
+		A118DA55246EE85000184600 /* libSDL2_mixer-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = A118DA51246EE85000184600 /* libSDL2_mixer-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		A118DA56246EE85000184600 /* libSDL2_image-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A118DA52246EE85000184600 /* libSDL2_image-2.0.0.dylib */; };
+		A118DA57246EE85000184600 /* libSDL2_image-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = A118DA52246EE85000184600 /* libSDL2_image-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		A118DA61246F061200184600 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A118DA5C246F039300184600 /* libSDL2-2.0.0.dylib */; };
+		A118DA62246F061200184600 /* libSDL2-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = A118DA5C246F039300184600 /* libSDL2-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		A118DA64246F064800184600 /* Res in Resources */ = {isa = PBXBuildFile; fileRef = A118DA63246F064800184600 /* Res */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A118DA5A246EE85000184600 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A118DA62246F061200184600 /* libSDL2-2.0.0.dylib in Embed Libraries */,
+				A118DA57246EE85000184600 /* libSDL2_image-2.0.0.dylib in Embed Libraries */,
+				A118DA55246EE85000184600 /* libSDL2_mixer-2.0.0.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A118DA06246E58BF00184600 /* disasteroids3d.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = disasteroids3d.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A118DA09246E58C000184600 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A118DA0B246E58C300184600 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A118DA10246E58C400184600 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A118DA11246E58C400184600 /* disasteroids3d.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = disasteroids3d.entitlements; sourceTree = "<group>"; };
+		A118DA18246E5B2400184600 /* disasteroids3d-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "disasteroids3d-Bridging-Header.h"; sourceTree = "<group>"; };
+		A118DA19246E5B2500184600 /* 3dglasses.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = 3dglasses.cpp; path = ../3dglasses.cpp; sourceTree = "<group>"; };
+		A118DA1A246E5B2500184600 /* commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = commands.h; path = ../commands.h; sourceTree = "<group>"; };
+		A118DA1B246E5B2500184600 /* glext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = glext.h; path = ../glext.h; sourceTree = "<group>"; };
+		A118DA1C246E5B2500184600 /* modeldata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = modeldata.h; path = ../modeldata.h; sourceTree = "<group>"; };
+		A118DA1D246E5B2500184600 /* 3dglasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = 3dglasses.h; path = ../3dglasses.h; sourceTree = "<group>"; };
+		A118DA1E246E5B2500184600 /* game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game.h; path = ../game.h; sourceTree = "<group>"; };
+		A118DA1F246E5B2500184600 /* timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = timer.cpp; path = ../timer.cpp; sourceTree = "<group>"; };
+		A118DA20246E5B2500184600 /* console.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = console.h; path = ../console.h; sourceTree = "<group>"; };
+		A118DA21246E5B2500184600 /* LookupTables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LookupTables.h; path = ../LookupTables.h; sourceTree = "<group>"; };
+		A118DA22246E5B2500184600 /* timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = timer.h; path = ../timer.h; sourceTree = "<group>"; };
+		A118DA23246E5B2500184600 /* tokenize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tokenize.cpp; path = ../tokenize.cpp; sourceTree = "<group>"; };
+		A118DA24246E5B2500184600 /* renderflags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = renderflags.h; path = ../renderflags.h; sourceTree = "<group>"; };
+		A118DA25246E5B2500184600 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = resource.h; path = ../resource.h; sourceTree = "<group>"; };
+		A118DA26246E5B2500184600 /* cvars.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cvars.cpp; path = ../cvars.cpp; sourceTree = "<group>"; };
+		A118DA27246E5B2500184600 /* commands.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = commands.c; path = ../commands.c; sourceTree = "<group>"; };
+		A118DA28246E5B2500184600 /* command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = command.cpp; path = ../command.cpp; sourceTree = "<group>"; };
+		A118DA29246E5B2500184600 /* game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = game.cpp; path = ../game.cpp; sourceTree = "<group>"; };
+		A118DA2A246E5B2500184600 /* diutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = diutil.cpp; path = ../diutil.cpp; sourceTree = "<group>"; };
+		A118DA2B246E5B2500184600 /* command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = command.h; path = ../command.h; sourceTree = "<group>"; };
+		A118DA2C246E5B2500184600 /* renderflags.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = renderflags.cpp; path = ../renderflags.cpp; sourceTree = "<group>"; };
+		A118DA2D246E5B2500184600 /* menus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = menus.cpp; path = ../menus.cpp; sourceTree = "<group>"; };
+		A118DA2E246E5B2500184600 /* mp3control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mp3control.h; path = ../mp3control.h; sourceTree = "<group>"; };
+		A118DA2F246E5B2500184600 /* diutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = diutil.h; path = ../diutil.h; sourceTree = "<group>"; };
+		A118DA30246E5B2500184600 /* font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = font.cpp; path = ../font.cpp; sourceTree = "<group>"; };
+		A118DA31246E5B2500184600 /* console.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = console.cpp; path = ../console.cpp; sourceTree = "<group>"; };
+		A118DA32246E5B2500184600 /* 3dgame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = 3dgame.cpp; path = ../3dgame.cpp; sourceTree = "<group>"; };
+		A118DA33246E5B2500184600 /* menus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = menus.h; path = ../menus.h; sourceTree = "<group>"; };
+		A118DA34246E5B2500184600 /* cvars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cvars.h; path = ../cvars.h; sourceTree = "<group>"; };
+		A118DA35246E5B2600184600 /* dsutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dsutil.cpp; path = ../dsutil.cpp; sourceTree = "<group>"; };
+		A118DA36246E5B2600184600 /* mp3control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mp3control.cpp; path = ../mp3control.cpp; sourceTree = "<group>"; };
+		A118DA37246E5B2600184600 /* commands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = commands.cpp; path = ../commands.cpp; sourceTree = "<group>"; };
+		A118DA38246E5B2600184600 /* tokenize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tokenize.h; path = ../tokenize.h; sourceTree = "<group>"; };
+		A118DA39246E5B2600184600 /* vec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vec.h; path = ../vec.h; sourceTree = "<group>"; };
+		A118DA3A246E5B2600184600 /* dsutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dsutil.h; path = ../dsutil.h; sourceTree = "<group>"; };
+		A118DA4C246E5BD000184600 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		A118DA51246EE85000184600 /* libSDL2_mixer-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2_mixer-2.0.0.dylib"; path = "../../../../../../usr/local/Cellar/sdl2_mixer/2.0.4/lib/libSDL2_mixer-2.0.0.dylib"; sourceTree = "<group>"; };
+		A118DA52246EE85000184600 /* libSDL2_image-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2_image-2.0.0.dylib"; path = "../../../../../../usr/local/Cellar/sdl2_image/2.0.5/lib/libSDL2_image-2.0.0.dylib"; sourceTree = "<group>"; };
+		A118DA53246EE85000184600 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../usr/local/Cellar/sdl2/2.0.12_1/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
+		A118DA5C246F039300184600 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../opt/local/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
+		A118DA63246F064800184600 /* Res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Res; path = ../Res; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A118DA03246E58BF00184600 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A118DA61246F061200184600 /* libSDL2-2.0.0.dylib in Frameworks */,
+				A118DA56246EE85000184600 /* libSDL2_image-2.0.0.dylib in Frameworks */,
+				A118DA54246EE85000184600 /* libSDL2_mixer-2.0.0.dylib in Frameworks */,
+				A118DA4D246E5BD000184600 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A118D9FD246E58BF00184600 = {
+			isa = PBXGroup;
+			children = (
+				A118DA63246F064800184600 /* Res */,
+				A118DA17246E5A6400184600 /* disasteroids3d */,
+				A118DA08246E58C000184600 /* disasteroids3d-macOS */,
+				A118DA07246E58C000184600 /* Products */,
+				A118DA4B246E5BD000184600 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A118DA07246E58C000184600 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A118DA06246E58BF00184600 /* disasteroids3d.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A118DA08246E58C000184600 /* disasteroids3d-macOS */ = {
+			isa = PBXGroup;
+			children = (
+				A118DA09246E58C000184600 /* AppDelegate.swift */,
+				A118DA0B246E58C300184600 /* Assets.xcassets */,
+				A118DA10246E58C400184600 /* Info.plist */,
+				A118DA11246E58C400184600 /* disasteroids3d.entitlements */,
+			);
+			path = "disasteroids3d-macOS";
+			sourceTree = "<group>";
+		};
+		A118DA17246E5A6400184600 /* disasteroids3d */ = {
+			isa = PBXGroup;
+			children = (
+				A118DA32246E5B2500184600 /* 3dgame.cpp */,
+				A118DA19246E5B2500184600 /* 3dglasses.cpp */,
+				A118DA1D246E5B2500184600 /* 3dglasses.h */,
+				A118DA28246E5B2500184600 /* command.cpp */,
+				A118DA2B246E5B2500184600 /* command.h */,
+				A118DA27246E5B2500184600 /* commands.c */,
+				A118DA37246E5B2600184600 /* commands.cpp */,
+				A118DA1A246E5B2500184600 /* commands.h */,
+				A118DA31246E5B2500184600 /* console.cpp */,
+				A118DA20246E5B2500184600 /* console.h */,
+				A118DA26246E5B2500184600 /* cvars.cpp */,
+				A118DA34246E5B2500184600 /* cvars.h */,
+				A118DA2A246E5B2500184600 /* diutil.cpp */,
+				A118DA2F246E5B2500184600 /* diutil.h */,
+				A118DA35246E5B2600184600 /* dsutil.cpp */,
+				A118DA3A246E5B2600184600 /* dsutil.h */,
+				A118DA30246E5B2500184600 /* font.cpp */,
+				A118DA29246E5B2500184600 /* game.cpp */,
+				A118DA1E246E5B2500184600 /* game.h */,
+				A118DA1B246E5B2500184600 /* glext.h */,
+				A118DA21246E5B2500184600 /* LookupTables.h */,
+				A118DA2D246E5B2500184600 /* menus.cpp */,
+				A118DA33246E5B2500184600 /* menus.h */,
+				A118DA1C246E5B2500184600 /* modeldata.h */,
+				A118DA36246E5B2600184600 /* mp3control.cpp */,
+				A118DA2E246E5B2500184600 /* mp3control.h */,
+				A118DA2C246E5B2500184600 /* renderflags.cpp */,
+				A118DA24246E5B2500184600 /* renderflags.h */,
+				A118DA25246E5B2500184600 /* resource.h */,
+				A118DA1F246E5B2500184600 /* timer.cpp */,
+				A118DA22246E5B2500184600 /* timer.h */,
+				A118DA23246E5B2500184600 /* tokenize.cpp */,
+				A118DA38246E5B2600184600 /* tokenize.h */,
+				A118DA39246E5B2600184600 /* vec.h */,
+				A118DA18246E5B2400184600 /* disasteroids3d-Bridging-Header.h */,
+			);
+			name = disasteroids3d;
+			sourceTree = "<group>";
+		};
+		A118DA4B246E5BD000184600 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A118DA5C246F039300184600 /* libSDL2-2.0.0.dylib */,
+				A118DA52246EE85000184600 /* libSDL2_image-2.0.0.dylib */,
+				A118DA51246EE85000184600 /* libSDL2_mixer-2.0.0.dylib */,
+				A118DA53246EE85000184600 /* libSDL2-2.0.0.dylib */,
+				A118DA4C246E5BD000184600 /* OpenGL.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A118DA05246E58BF00184600 /* disasteroids3d */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A118DA14246E58C400184600 /* Build configuration list for PBXNativeTarget "disasteroids3d" */;
+			buildPhases = (
+				A118DA02246E58BF00184600 /* Sources */,
+				A118DA03246E58BF00184600 /* Frameworks */,
+				A118DA04246E58BF00184600 /* Resources */,
+				A118DA5A246EE85000184600 /* Embed Libraries */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = disasteroids3d;
+			productName = disasteroids3d;
+			productReference = A118DA06246E58BF00184600 /* disasteroids3d.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A118D9FE246E58BF00184600 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = "Tom Kidd";
+				TargetAttributes = {
+					A118DA05246E58BF00184600 = {
+						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1140;
+					};
+				};
+			};
+			buildConfigurationList = A118DA01246E58BF00184600 /* Build configuration list for PBXProject "disasteroids3d" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A118D9FD246E58BF00184600;
+			productRefGroup = A118DA07246E58C000184600 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A118DA05246E58BF00184600 /* disasteroids3d */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A118DA04246E58BF00184600 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A118DA0C246E58C300184600 /* Assets.xcassets in Resources */,
+				A118DA64246F064800184600 /* Res in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A118DA02246E58BF00184600 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A118DA0A246E58C000184600 /* AppDelegate.swift in Sources */,
+				A118DA4A246E5B2600184600 /* commands.cpp in Sources */,
+				A118DA3B246E5B2600184600 /* 3dglasses.cpp in Sources */,
+				A118DA3D246E5B2600184600 /* tokenize.cpp in Sources */,
+				A118DA3E246E5B2600184600 /* cvars.cpp in Sources */,
+				A118DA46246E5B2600184600 /* console.cpp in Sources */,
+				A118DA40246E5B2600184600 /* command.cpp in Sources */,
+				A118DA47246E5B2600184600 /* 3dgame.cpp in Sources */,
+				A118DA43246E5B2600184600 /* renderflags.cpp in Sources */,
+				A118DA3C246E5B2600184600 /* timer.cpp in Sources */,
+				A118DA44246E5B2600184600 /* menus.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A118DA12246E58C400184600 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A118DA13246E58C400184600 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		A118DA15246E58C400184600 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "disasteroids3d-macOS/disasteroids3d.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					GL_SILENCE_DEPRECATION,
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = /opt/local/include/SDL2;
+				INFOPLIST_FILE = "disasteroids3d-macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/sdl2_mixer/2.0.4/lib,
+					/usr/local/Cellar/sdl2_image/2.0.5/lib,
+					/usr/local/Cellar/sdl2/2.0.12_1/lib,
+					/opt/local/lib,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomkiddconsulting.disasteroids3d;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A118DA16246E58C400184600 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "disasteroids3d-macOS/disasteroids3d.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = GL_SILENCE_DEPRECATION;
+				HEADER_SEARCH_PATHS = /opt/local/include/SDL2;
+				INFOPLIST_FILE = "disasteroids3d-macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/sdl2_mixer/2.0.4/lib,
+					/usr/local/Cellar/sdl2_image/2.0.5/lib,
+					/usr/local/Cellar/sdl2/2.0.12_1/lib,
+					/opt/local/lib,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomkiddconsulting.disasteroids3d;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A118DA01246E58BF00184600 /* Build configuration list for PBXProject "disasteroids3d" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A118DA12246E58C400184600 /* Debug */,
+				A118DA13246E58C400184600 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A118DA14246E58C400184600 /* Build configuration list for PBXNativeTarget "disasteroids3d" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A118DA15246E58C400184600 /* Debug */,
+				A118DA16246E58C400184600 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A118D9FE246E58BF00184600 /* Project object */;
+}

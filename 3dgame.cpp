@@ -348,7 +348,7 @@ const float cStereoSeperation = 0.1f;
 BOOL g_bDirectInputEnabled							= FALSE;
 SDL_Joystick* g_pdidJoystick = NULL;
 SDL_Haptic* g_pdidFFJoystick = NULL;
-DWORD                g_dwForceFeedbackGain	= 100L;
+unsigned long                g_dwForceFeedbackGain	= 100L;
 cvar_t g_cvJoystickEnabled			= {"JoystickEnabled", "-1", FALSE};
 cvar_t g_cvForceFeedbackEnabled	= {"ForcefeedbackEnabled", "0", TRUE};
 cvar_t g_cvJoystickDeadzone		= {"JoystickDeadzone", "0.2", TRUE};
@@ -2653,22 +2653,22 @@ int DrawGLScene(GLvoid)
 // NeHe
 GLvoid KillGLWindow(GLvoid)						// Properly Kill The Window
 {
-	if (g_cvFullscreen.value)							// Are We In Fullscreen Mode?
-	{
-		// If The Shortcut Doesn't Work ( NEW )
-		if (!ChangeDisplaySettings(NULL, CDS_TEST)) 
-		{ 		
-			ChangeDisplaySettings(NULL, CDS_RESET);		// Do It Anyway (To Get The Values Out Of The Registry) ( NEW )
-			// TODO: removing this for now -tkidd
-			//ChangeDisplaySettings(&DMsaved, CDS_RESET);	// Change It To The Saved Settings ( NEW )
-		} 
-		else 
-		{
-			ChangeDisplaySettings(NULL,CDS_RESET);		// If It Works, Go Right Ahead ( NEW )
-		}
-			
-		ShowCursor(TRUE);					// Show Mouse Pointer
-	}
+//	if (g_cvFullscreen.value)							// Are We In Fullscreen Mode?
+//	{
+//		// If The Shortcut Doesn't Work ( NEW )
+//		if (!ChangeDisplaySettings(NULL, CDS_TEST))
+//		{
+//			ChangeDisplaySettings(NULL, CDS_RESET);		// Do It Anyway (To Get The Values Out Of The Registry) ( NEW )
+//			// TODO: removing this for now -tkidd
+//			//ChangeDisplaySettings(&DMsaved, CDS_RESET);	// Change It To The Saved Settings ( NEW )
+//		}
+//		else
+//		{
+//			ChangeDisplaySettings(NULL,CDS_RESET);		// If It Works, Go Right Ahead ( NEW )
+//		}
+//
+//		ShowCursor(TRUE);					// Show Mouse Pointer
+//	}
 
 	if (SDL_glContext)							// Do We Have A Rendering Context?
 	{
@@ -3019,7 +3019,9 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 	if (!InitGL())										// Initialize Our Newly Created GL Window
 	{
 		KillGLWindow();								// Reset The Display
+#ifdef _WIN32
 		MessageBox(NULL,"Initialization Failed.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+#endif
 		return FALSE;									// Return FALSE
 	}
 	
@@ -3196,7 +3198,7 @@ void SetVolume(float NewValue)
 // Name: CleanupGameSounds()
 // Desc: Ripped from Duel and modified to cleanup my game sounds
 //-----------------------------------------------------------------------------
-VOID CleanupGameSounds()
+void CleanupGameSounds()
 {
    
 	Mix_FreeChunk(g_pBulletFiringSound);
@@ -3417,41 +3419,41 @@ void DestroyInput()
 // Name: HasForceFeedbackJoystick()
 // Desc: Ripped from FFDonuts and modified
 //-----------------------------------------------------------------------------
-BOOL HasForceFeedbackJoystick( HINSTANCE hInst )
-{
-	// removing for now -tkidd
-    //LPDIRECTINPUT pDI;
-    BOOL    bHasFFDevice = FALSE;
-	// removing for now -tkidd
-	//HRESULT hr;
-
-    //// Initialize DirectInput
-    //if( SUCCEEDED( DirectInputCreate( hInst,
-    //                                  DIRECTINPUT_VERSION, 
-    //                                  &pDI, NULL ) ) )
-    //{
-    //    // Enumerate all DirectInput devices
-    //    hr = pDI->EnumDevices( DIDEVTYPE_JOYSTICK,
-    //                           EnumFFJoysticksCallback,
-    //                           &bHasFFDevice,
-    //                           DIEDFL_ATTACHEDONLY | DIEDFL_FORCEFEEDBACK );
-
-    //    pDI->Release();
-    //}
-
-    //if( FAILED(hr) )
-        return FALSE;
-/*
-
-	Don't display message -- just return FALSE -- FF isn't required
-
-    if( FALSE == bHasFFDevice )
-        MessageBox( NULL, "This sample requires a force feedback\n"
-                    "input device.\n\nThis sample will now exit.", 
-                    "FFDonuts", MB_ICONERROR );
-*/
-    return bHasFFDevice;
-}
+// removing for now -tkidd
+//BOOL HasForceFeedbackJoystick( HINSTANCE hInst )
+//{
+//    LPDIRECTINPUT pDI;
+//    BOOL    bHasFFDevice = FALSE;
+//	 removing for now -tkidd
+//	HRESULT hr;
+//
+//    // Initialize DirectInput
+//    if( SUCCEEDED( DirectInputCreate( hInst,
+//                                      DIRECTINPUT_VERSION,
+//                                      &pDI, NULL ) ) )
+//    {
+//        // Enumerate all DirectInput devices
+//        hr = pDI->EnumDevices( DIDEVTYPE_JOYSTICK,
+//                               EnumFFJoysticksCallback,
+//                               &bHasFFDevice,
+//                               DIEDFL_ATTACHEDONLY | DIEDFL_FORCEFEEDBACK );
+//
+//        pDI->Release();
+//    }
+//
+//    if( FAILED(hr) )
+//        return FALSE;
+///*
+//
+//	Don't display message -- just return FALSE -- FF isn't required
+//
+//    if( FALSE == bHasFFDevice )
+//        MessageBox( NULL, "This sample requires a force feedback\n"
+//                    "input device.\n\nThis sample will now exit.",
+//                    "FFDonuts", MB_ICONERROR );
+//*/
+//    return bHasFFDevice;
+//}
 
 //-----------------------------------------------------------------------------
 // Name: InitializeInput()
@@ -3558,7 +3560,7 @@ BOOL InitializeInput()
 //-----------------------------------------------------------------------------
 unsigned long GetDeviceInput()
 {
-    DWORD       dwInput = 0;
+    unsigned long       dwInput = 0;
 
 	 // Make sure a joystick exists
 	 if ((g_pdidJoystick != NULL) && (g_cvJoystickEnabled.value != 0))
@@ -4426,7 +4428,7 @@ BOOL InitializeGame(void)
 		return FALSE;
 
 	// Can play game without sound. Do not exit
-	if(FAILED(InitializeGameSounds())) 
+	if(!InitializeGameSounds())
 		g_bDirectSoundEnabled = FALSE;
 	else 
 		g_bDirectSoundEnabled = TRUE;
@@ -4824,10 +4826,15 @@ int main(int argc, char* args[])
 	// program defaults to the console variable value.
 	if (Cvar_GetValue("Fullscreen") == 2) 
 	{
+        // TODO: figure out macOS/SDL equivalent -tkidd
+#ifdef _WIN32
 		if (MessageBox(NULL,"Would You Like To Run In Fullscreen Mode?", "Start FullScreen?",MB_YESNO|MB_ICONQUESTION) == IDNO)
+#endif
 			Cvar_SetValue("Fullscreen", FALSE);
+#ifdef _WIN32
 		else
 			Cvar_SetValue("Fullscreen", TRUE);
+#endif
 	}
 
 	// Setup graphics, controls and sounds
@@ -4925,10 +4932,12 @@ int main(int argc, char* args[])
 		//}
 
 		// Don't hog processor when game isn't active
+#ifdef _WIN32
 		if (!g_bActive)
 		{
 			WaitMessage();
 		}
+#endif
 
 		// Swap buffers -- control max frame rate when
 		// vsync is enabled
@@ -5568,7 +5577,8 @@ int main(int argc, char* args[])
 			} // if (g_bEnteringHighScoreInitials)
 
 			// Handle mp3 player controls
-			mp3control();
+            // Removing this as per ThomW - tkidd
+//			mp3control();
 
 		} // if (!g_con_active)
 		

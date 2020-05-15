@@ -3,7 +3,9 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
 #include <stdio.h>
 
 #include "game.h"

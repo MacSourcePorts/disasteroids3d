@@ -2,8 +2,20 @@
 #ifndef TIMER_H
 #define TIMER_H
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
 #include <time.h>
+
+#ifdef __APPLE__
+typedef long long __int64;
+#include <sys/types.h>
+#include <sys/time.h>
+
+unsigned long timeGetTime();
+#endif
+
+#include <SDL.h>
 
 // Create A Structure For The Timer Information
 typedef struct timer_s

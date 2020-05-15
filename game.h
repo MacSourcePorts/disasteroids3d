@@ -5,11 +5,34 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
-#include <windows.h>			// Header File For Windows
+#ifdef _WIN32
+#include <windows.h>            // Header File For Windows
+#include <GL\gl.h>            // Header File For The OpenGL32 Library
+#include <GL\glu.h>            // Header File For The GLu32 Library
+#endif
+
+#ifdef __APPLE__
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#include <OpenGL/glext.h>
+#include <GLUT/glut.h>
+
+typedef unsigned char BYTE;
+#define TRUE 1
+#define FALSE 0
+
+// TODO: Replace these with SDL equivalents -tkidd
+#define VK_LEFT           0x25
+#define VK_UP             0x26
+#define VK_RIGHT          0x27
+#define VK_DOWN           0x28
+#define VK_ESCAPE         0x1B
+#define VK_RETURN         0x0D
+
+#endif
+
 #include <stdio.h>			// Header File For Standard Input/Output
 #include <math.h>				// Header File For Math Library
-#include <GL\gl.h>			// Header File For The OpenGL32 Library
-#include <GL\glu.h>			// Header File For The GLu32 Library
 #include "glext.h"
 
 #include "3dglasses.h"
