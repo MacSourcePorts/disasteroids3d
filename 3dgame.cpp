@@ -31,7 +31,7 @@ const char csConfigFilename[] = "Disasteroids3D.cfg";
 const char csConsoleDumpFilename[] = "Disasteroids3d.log";
 
 // DirectSound
-#define INITGUID
+//#define INITGUID
 //#include <dsound.h>
 //#include "dsutil.h"
 
@@ -45,8 +45,8 @@ const int channelLSaucerSound = 6;
 const int channelSaucerFireSound = 7;
 
 // DirectInput
-#include <windows.h>
-#include <cguid.h>			// GUID Header required by DirectInput
+//#include <windows.h>
+//#include <cguid.h>			// GUID Header required by DirectInput
 //#include "diutil.h"			// DirectInput utility header file
 
 #include "game.h"
@@ -868,12 +868,66 @@ GLint Gen3DObjectList()
 	return player_list;
 }
 
+#define SDL_LOCKIFMUST(s) (SDL_MUSTLOCK(s) ? SDL_LockSurface(s) : 0)
+#define SDL_UNLOCKIFMUST(s) { if(SDL_MUSTLOCK(s)) SDL_UnlockSurface(s); }
+
+int invert_surface_vertical(SDL_Surface* surface)
+{
+	Uint8* t;
+	register Uint8* a, * b;
+	Uint8* last;
+	register Uint16 pitch;
+
+	if (SDL_LOCKIFMUST(surface) < 0)
+		return -2;
+
+	/* do nothing unless at least two lines */
+	if (surface->h < 2) {
+		SDL_UNLOCKIFMUST(surface);
+		return 0;
+	}
+
+	/* get a place to store a line */
+	pitch = surface->pitch;
+	t = (Uint8*)malloc(pitch);
+
+	if (t == NULL) {
+		SDL_UNLOCKIFMUST(surface);
+		return -2;
+	}
+
+	/* get first line; it's about to be trampled */
+	memcpy(t, surface->pixels, pitch);
+
+	/* now, shuffle the rest so it's almost correct */
+	a = (Uint8*)surface->pixels;
+	last = a + pitch * (surface->h - 1);
+	b = last;
+
+	while (a < b) {
+		memcpy(a, b, pitch);
+		a += pitch;
+		memcpy(b, a, pitch);
+		b -= pitch;
+	}
+
+	/* in this shuffled state, the bottom slice is too far down */
+	memmove(b, b + pitch, last - b);
+
+	/* now we can put back that first row--in the last place */
+	memcpy(last, t, pitch);
+
+	/* everything is in the right place; close up. */
+	free(t);
+	SDL_UNLOCKIFMUST(surface);
+
+	return 0;
+}
 
 int LoadGLTextures()		
 {
 /////////////////////
-	HBITMAP hBMP;
-	BITMAP	BMP;
+	SDL_Surface* Surface;
 /////////////////////
 
 
@@ -886,26 +940,36 @@ int LoadGLTextures()
 
 	int		loop = 0;
 	int		Status = TRUE;
-	byte	Texture[]={	IDB_PLAYER,	IDB_STAR,	IDB_SHIELD,
-						IDB_BLAST,	IDB_SMOKE,	IDB_FONT,
-						IDB_ROCK,	IDB_SPACEUL,IDB_SPACEUR,
-						IDB_SPACELL,IDB_SPACELR,IDB_SAUCER,
-						IDB_LOGO, IDB_EXTRASHIP};
+	const char* Texture[] = {	
+								"Res/ship.bmp",			//0
+								"Res/Star.bmp",			//1
+								"Res/shield.bmp",		//2
+								"Res/blast.bmp",		//3
+								"Res/smoke.bmp",		//4
+								"Res/font.bmp",			//5
+								"Res/rock.bmp",			//6
+								"Res/space_ul.bmp",		//7 *
+								"Res/space_ur.bmp",		//8 *
+								"Res/space_ll.bmp",		//9 *
+								"Res/space_lr.bmp",		//10 *						
+								"Res/saucer.bmp",		//11
+								"Res/logo.bmp",			//12 *
+								"Res/extraship.bmp" };	//13
 
-	glGenTextures(sizeof(Texture), &texture[0]);
+	glGenTextures(NUM_TEXTURES, &texture[0]);
 
-	for (loop = 0; loop < sizeof(Texture); loop++)
+	for (loop = 0; loop < NUM_TEXTURES; loop++)
 	{
-		hBMP = (HBITMAP)LoadImage(GetModuleHandle(NULL),MAKEINTRESOURCE(Texture[loop]), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION);
+		Surface = IMG_Load(Texture[loop]);
+		invert_surface_vertical(Surface);
 
-		if (hBMP)
+		if (Surface)
 		{
-			GetObject(hBMP,sizeof(BMP), &BMP);
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 			glBindTexture(GL_TEXTURE_2D, texture[loop]);
 			if ((loop > 6) && (loop < 11) || (loop == 12))
 			{
-				glTexImage2D(GL_TEXTURE_2D, 0, 3, BMP.bmWidth, BMP.bmHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, BMP.bmBits);
+				glTexImage2D(GL_TEXTURE_2D, 0, 3, Surface->w, Surface->h, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
 			}
@@ -913,7 +977,7 @@ int LoadGLTextures()
 			{
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);
-				gluBuild2DMipmaps(GL_TEXTURE_2D, 3, BMP.bmWidth, BMP.bmHeight, GL_BGR_EXT, GL_UNSIGNED_BYTE, BMP.bmBits);
+				gluBuild2DMipmaps(GL_TEXTURE_2D, 3, Surface->w, Surface->h, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
 			}
 		}
 		else
@@ -2965,81 +3029,81 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 
 
 // NeHe
-LRESULT CALLBACK WndProc(	HWND	hWindow,		// Handle For This Window
-							UINT	uMsg,					// Message For This Window
-							WPARAM	wParam,			// Additional Message Information
-							LPARAM	lParam)			// Additional Message Information
-{
-	switch (uMsg)									// Check For Windows Messages
-	{
-		case WM_ACTIVATE:							// Watch For Window Activate Message
-		{
-
-			// Check Minimization State
-			
-			// Program is active
-			if (!HIWORD(wParam))					
-			{
-				g_bActive = TRUE;					
-			}
-			// Program Is No Longer Active
-			else
-			{
-				g_bActive = FALSE;
-				PauseGame(TRUE);
-			}
-
-			// Reacquire DirectInput devices
-			// DIUtil_ReacquireInputDevices();
-
-			// Return To The Message Loop
-			return 0L;
-		}
-
-		case WM_SYSCOMMAND:						// Intercept System Commands
-		{
-			switch (wParam)						// Check System Calls
-			{
-				case SC_SCREENSAVE:				// Screensaver Trying To Start?
-				case SC_MONITORPOWER:			// Monitor Trying To Enter Powersave?
-				return 0L;							// Prevent From Happening
-			}
-			break;									// Exit
-		}
-
-		case WM_CLOSE:								// Did We Receive A Close Message?
-		{
-			PostQuitMessage(0);					// Send A Quit Message
-			return 0L;								// Jump Back
-		}
-
-		case WM_KEYDOWN:							// Is A Key Being Held Down?
-		{
-			if (g_bActive)
-				keys[wParam] = TRUE;				// If So, Mark It As TRUE
-			return 0L;								// Jump Back
-			
-		}
-
-		case WM_KEYUP:								// Has A Key Been Released?
-		{
-			if (g_bActive)
-				keys[wParam] = FALSE;			// If So, Mark It As FALSE
-			return 0L;								// Jump Back
-			
-		}
-
-		// Resize The OpenGL Window
-		case WM_SIZE:
-		{
-			ReSizeGLScene(LOWORD(lParam),HIWORD(lParam));  // LoWord=Width, HiWord=Height
-			return 0L;								// Jump Back
-		}
-	}
-
-	// Pass All Unhandled Messages To DefWindowProc
-	return DefWindowProc(hWindow, uMsg, wParam, lParam);
-}
+//LRESULT CALLBACK WndProc(	HWND	hWindow,		// Handle For This Window
+//							UINT	uMsg,					// Message For This Window
+//							WPARAM	wParam,			// Additional Message Information
+//							LPARAM	lParam)			// Additional Message Information
+//{
+//	switch (uMsg)									// Check For Windows Messages
+//	{
+//		case WM_ACTIVATE:							// Watch For Window Activate Message
+//		{
+//
+//			// Check Minimization State
+//			
+//			// Program is active
+//			if (!HIWORD(wParam))					
+//			{
+//				g_bActive = TRUE;					
+//			}
+//			// Program Is No Longer Active
+//			else
+//			{
+//				g_bActive = FALSE;
+//				PauseGame(TRUE);
+//			}
+//
+//			// Reacquire DirectInput devices
+//			// DIUtil_ReacquireInputDevices();
+//
+//			// Return To The Message Loop
+//			return 0L;
+//		}
+//
+//		case WM_SYSCOMMAND:						// Intercept System Commands
+//		{
+//			switch (wParam)						// Check System Calls
+//			{
+//				case SC_SCREENSAVE:				// Screensaver Trying To Start?
+//				case SC_MONITORPOWER:			// Monitor Trying To Enter Powersave?
+//				return 0L;							// Prevent From Happening
+//			}
+//			break;									// Exit
+//		}
+//
+//		case WM_CLOSE:								// Did We Receive A Close Message?
+//		{
+//			PostQuitMessage(0);					// Send A Quit Message
+//			return 0L;								// Jump Back
+//		}
+//
+//		case WM_KEYDOWN:							// Is A Key Being Held Down?
+//		{
+//			if (g_bActive)
+//				keys[wParam] = TRUE;				// If So, Mark It As TRUE
+//			return 0L;								// Jump Back
+//			
+//		}
+//
+//		case WM_KEYUP:								// Has A Key Been Released?
+//		{
+//			if (g_bActive)
+//				keys[wParam] = FALSE;			// If So, Mark It As FALSE
+//			return 0L;								// Jump Back
+//			
+//		}
+//
+//		// Resize The OpenGL Window
+//		case WM_SIZE:
+//		{
+//			ReSizeGLScene(LOWORD(lParam),HIWORD(lParam));  // LoWord=Width, HiWord=Height
+//			return 0L;								// Jump Back
+//		}
+//	}
+//
+//	// Pass All Unhandled Messages To DefWindowProc
+//	return DefWindowProc(hWindow, uMsg, wParam, lParam);
+//}
 
 
 //--------------------------------------------------------
@@ -3083,17 +3147,17 @@ bool InitializeGameSounds()
 	}
 
 	// TODO: See if these can be loaded from the resources like before
-	g_pShipThrustSound		= Mix_LoadWAV("thrust.wav");
-	g_pLSaucerSound			= Mix_LoadWAV("lsaucer.wav");
-	g_pBulletFiringSound		= Mix_LoadWAV("fire.wav");
-	g_pSmallExplodeSound		= Mix_LoadWAV("explode3.wav");
-	g_pMediumExplodeSound	= Mix_LoadWAV("explode2.wav");
-	g_pLargeExplodeSound		= Mix_LoadWAV("explode1.wav");
-	g_pSaucerFireSound		= Mix_LoadWAV("sfire.wav");
-	g_pLifeSound				= Mix_LoadWAV("life.wav");
-	g_pThumpHiSound			= Mix_LoadWAV("thumphi.wav");
-	g_pThumpLoSound			= Mix_LoadWAV("thumplo.wav");
-	g_pMenuBeepSound			= Mix_LoadWAV("menubeep.wav");
+	g_pShipThrustSound		= Mix_LoadWAV("Res/thrust.wav");
+	g_pLSaucerSound			= Mix_LoadWAV("Res/lsaucer.wav");
+	g_pBulletFiringSound		= Mix_LoadWAV("Res/fire.wav");
+	g_pSmallExplodeSound		= Mix_LoadWAV("Res/explode3.wav");
+	g_pMediumExplodeSound	= Mix_LoadWAV("Res/explode2.wav");
+	g_pLargeExplodeSound		= Mix_LoadWAV("Res/explode1.wav");
+	g_pSaucerFireSound		= Mix_LoadWAV("Res/sfire.wav");
+	g_pLifeSound				= Mix_LoadWAV("Res/life.wav");
+	g_pThumpHiSound			= Mix_LoadWAV("Res/thumphi.wav");
+	g_pThumpLoSound			= Mix_LoadWAV("Res/thumplo.wav");
+	g_pMenuBeepSound			= Mix_LoadWAV("Res/menubeep.wav");
 
     return true;
 }
@@ -4669,7 +4733,7 @@ void InitActors() {
 int main(int argc, char* args[])
 {
 
-	MSG	msg;							// Windows Message Structure
+	//MSG	msg;							// Windows Message Structure
 
 	int		i				= 0;		// i,j,k are counter variables
 	int		j				= 0;
@@ -4846,18 +4910,19 @@ int main(int argc, char* args[])
 
 
 		// Is There A Message Waiting?
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))	
-		{
-			if (msg.message==WM_QUIT)				// Have We Received A Quit Message?
-			{
-				g_bExitApp = TRUE;					// If So g_bExitApp=TRUE
-			}
-			else									// If Not, Deal With Window Messages
-			{
-				TranslateMessage(&msg);			// Translate The Message
-				DispatchMessage(&msg);			// Dispatch The Message
-			}
-		}
+		// SDL should make this unnecessary? -tkidd
+		//if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))	
+		//{
+		//	if (msg.message==WM_QUIT)				// Have We Received A Quit Message?
+		//	{
+		//		g_bExitApp = TRUE;					// If So g_bExitApp=TRUE
+		//	}
+		//	else									// If Not, Deal With Window Messages
+		//	{
+		//		TranslateMessage(&msg);			// Translate The Message
+		//		DispatchMessage(&msg);			// Dispatch The Message
+		//	}
+		//}
 
 		// Don't hog processor when game isn't active
 		if (!g_bActive)
@@ -6356,6 +6421,6 @@ int main(int argc, char* args[])
 	con_kill();
 
 	// Exit The Program
-	return (msg.wParam);
+	return 0;
 
 }
