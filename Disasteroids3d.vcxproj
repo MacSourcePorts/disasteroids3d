@@ -56,8 +56,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules />
     <CodeAnalysisRuleAssemblies />
-    <IncludePath>C:\Users\Tom\Downloads\SDL2-2.0.12\include;C:\Users\Tom\Downloads\SDL2_mixer-2.0.4;C:\Users\Tom\Downloads\SDL2_image-2.0.5;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Tom\Downloads\SDL2-2.0.12\VisualC\Win32\Debug;C:\Users\Tom\Downloads\SDL2_mixer-2.0.4\VisualC\Win32\Debug;C:\Users\Tom\Downloads\SDL2_image-2.0.5\VisualC\Win32\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Tom\Downloads\SDL2-2.0.12\include;C:\Users\Tom\Downloads\SDL2_mixer-2.0.4;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Tom\Downloads\SDL2-2.0.12\VisualC\Win32\Debug;C:\Users\Tom\Downloads\SDL2_mixer-2.0.4\VisualC\Win32\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -131,9 +131,9 @@
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <OutputFile>.\Debug\Disasteroids3d.exe</OutputFile>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;odbc32.lib;odbccp32.lib;SDL2.lib;SDL2main.lib;SDL2_mixer.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;odbc32.lib;odbccp32.lib;SDL2.lib;SDL2main.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

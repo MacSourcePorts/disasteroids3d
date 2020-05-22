@@ -2,7 +2,6 @@
 #define GAME_H
 
 #include <SDL.h>
-#include <SDL_image.h>
 #include <SDL_mixer.h>
 
 #ifdef _WIN32
