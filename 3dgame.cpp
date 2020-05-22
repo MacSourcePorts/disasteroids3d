@@ -960,7 +960,7 @@ int LoadGLTextures()
 
 	for (loop = 0; loop < NUM_TEXTURES; loop++)
 	{
-		Surface = IMG_Load(Texture[loop]);
+		Surface = SDL_LoadBMP(Texture[loop]);
 		invert_surface_vertical(Surface);
 
 		if (Surface)
