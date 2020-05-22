@@ -43,7 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A118DA06246E58BF00184600 /* disasteroids3d.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = disasteroids3d.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A118DA06246E58BF00184600 /* disasteroids3d-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "disasteroids3d-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A118DA09246E58C000184600 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A118DA0B246E58C300184600 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A118DA10246E58C400184600 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 		A118DA07246E58C000184600 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A118DA06246E58BF00184600 /* disasteroids3d.app */,
+				A118DA06246E58BF00184600 /* disasteroids3d-macOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -192,9 +192,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A118DA05246E58BF00184600 /* disasteroids3d */ = {
+		A118DA05246E58BF00184600 /* disasteroids3d-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A118DA14246E58C400184600 /* Build configuration list for PBXNativeTarget "disasteroids3d" */;
+			buildConfigurationList = A118DA14246E58C400184600 /* Build configuration list for PBXNativeTarget "disasteroids3d-macOS" */;
 			buildPhases = (
 				A118DA02246E58BF00184600 /* Sources */,
 				A118DA03246E58BF00184600 /* Frameworks */,
@@ -205,9 +205,9 @@
 			);
 			dependencies = (
 			);
-			name = disasteroids3d;
+			name = "disasteroids3d-macOS";
 			productName = disasteroids3d;
-			productReference = A118DA06246E58BF00184600 /* disasteroids3d.app */;
+			productReference = A118DA06246E58BF00184600 /* disasteroids3d-macOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -239,7 +239,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A118DA05246E58BF00184600 /* disasteroids3d */,
+				A118DA05246E58BF00184600 /* disasteroids3d-macOS */,
 			);
 		};
 /* End PBXProject section */
@@ -472,7 +472,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A118DA14246E58C400184600 /* Build configuration list for PBXNativeTarget "disasteroids3d" */ = {
+		A118DA14246E58C400184600 /* Build configuration list for PBXNativeTarget "disasteroids3d-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A118DA15246E58C400184600 /* Debug */,
