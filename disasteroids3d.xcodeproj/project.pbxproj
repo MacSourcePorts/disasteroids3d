@@ -416,7 +416,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/sdl2_mixer/2.0.4/lib,
-					/usr/local/Cellar/sdl2_image/2.0.5/lib,
 					/usr/local/Cellar/sdl2/2.0.12_1/lib,
 					/opt/local/lib,
 				);
@@ -450,7 +449,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/sdl2_mixer/2.0.4/lib,
-					/usr/local/Cellar/sdl2_image/2.0.5/lib,
 					/usr/local/Cellar/sdl2/2.0.12_1/lib,
 					/opt/local/lib,
 				);
