@@ -6,14 +6,17 @@
 
 #ifdef _WIN32
 #include <windows.h>
-#include <gl\gl.h>
+//#include <gl\gl.h>
 #endif
 
 #ifdef __APPLE__
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
+//#include <OpenGL/gl.h>
+//#include <OpenGL/glu.h>
 #include "cvars.h"
 #endif
+
+#include <SDL_opengl.h>
+
 
 #include <SDL_opengl.h>
 

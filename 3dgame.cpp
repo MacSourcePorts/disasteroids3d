@@ -975,9 +975,11 @@ int LoadGLTextures()
 			}
 			else
 			{
+                glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, true);
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);
-				gluBuild2DMipmaps(GL_TEXTURE_2D, 3, Surface->w, Surface->h, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
+                glTexImage2D(GL_TEXTURE_2D, 0, 3, Surface->w, Surface->h, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
+//				gluBuild2DMipmaps(GL_TEXTURE_2D, 3, Surface->w, Surface->h, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
 			}
 		}
 		else
@@ -1185,6 +1187,19 @@ void UpdateMessage(const char *string, ...)
 
 }
 
+// (NeHe: http://nehe.gamedev.net/article/replacement_for_gluperspective/21002/)
+void perspectiveGL( GLdouble fovY, GLdouble aspect, GLdouble zNear, GLdouble zFar )
+{
+    const GLdouble pi = 3.1415926535897932384626433832795;
+    GLdouble fW, fH;
+
+    //fH = tan( (fovY / 2) / 180 * pi ) * zNear;
+    fH = tan( fovY / 360 * pi ) * zNear;
+    fW = fH * aspect;
+
+    glFrustum( -fW, fW, -fH, fH, zNear, zFar );
+}
+
 
 // (NeHe)
 GLvoid ReSizeGLScene(GLsizei width, GLsizei height)		// Resize And Initialize The GL Window
@@ -1200,7 +1215,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)		// Resize And Initialize Th
 	glLoadIdentity();									// Reset The Projection Matrix
 
 	// Calculate The Aspect Ratio Of The Window
-	gluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
+	perspectiveGL(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
 
 	glMatrixMode(GL_MODELVIEW);					// Select The Modelview Matrix
 	glLoadIdentity();									// Reset The Modelview Matrix

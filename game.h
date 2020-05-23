@@ -3,19 +3,17 @@
 
 #include <SDL.h>
 #include <SDL_mixer.h>
+#include <SDL_opengl.h>
 
 #ifdef _WIN32
 #include <windows.h>            // Header File For Windows
-#include <GL\gl.h>            // Header File For The OpenGL32 Library
-#include <GL\glu.h>            // Header File For The GLu32 Library
+//#include <GL\gl.h>            // Header File For The OpenGL32 Library
+//#include <GL\glu.h>            // Header File For The GLu32 Library
 #endif
 
 #ifdef __APPLE__
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#include <OpenGL/glext.h>
-#include <GLUT/glut.h>
-
+//#include <OpenGL/gl.h>
+//#include <OpenGL/glu.h>
 typedef unsigned char BYTE;
 #define TRUE 1
 #define FALSE 0
