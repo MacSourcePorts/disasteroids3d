@@ -29,6 +29,7 @@ typedef unsigned char BYTE;
 #endif
 
 #include <stdio.h>			// Header File For Standard Input/Output
+#include <stdlib.h>
 #include <math.h>				// Header File For Math Library
 #include "glext.h"
 
