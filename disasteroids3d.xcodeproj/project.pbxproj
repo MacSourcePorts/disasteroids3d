@@ -19,13 +19,90 @@
 		A118DA46246E5B2600184600 /* console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA31246E5B2500184600 /* console.cpp */; };
 		A118DA47246E5B2600184600 /* 3dgame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA32246E5B2500184600 /* 3dgame.cpp */; };
 		A118DA4A246E5B2600184600 /* commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA37246E5B2600184600 /* commands.cpp */; };
-		A118DA4D246E5BD000184600 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A118DA4C246E5BD000184600 /* OpenGL.framework */; };
-		A118DA54246EE85000184600 /* libSDL2_mixer-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A118DA51246EE85000184600 /* libSDL2_mixer-2.0.0.dylib */; };
-		A118DA55246EE85000184600 /* libSDL2_mixer-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = A118DA51246EE85000184600 /* libSDL2_mixer-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		A118DA61246F061200184600 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A118DA5C246F039300184600 /* libSDL2-2.0.0.dylib */; };
-		A118DA62246F061200184600 /* libSDL2-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = A118DA5C246F039300184600 /* libSDL2-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A118DA64246F064800184600 /* Res in Resources */ = {isa = PBXBuildFile; fileRef = A118DA63246F064800184600 /* Res */; };
+		A1D0449D24788C6A00A90A5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D0449C24788C6A00A90A5A /* AppDelegate.swift */; };
+		A1D0449F24788C6A00A90A5A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D0449E24788C6A00A90A5A /* SceneDelegate.swift */; };
+		A1D044A124788C6A00A90A5A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D044A024788C6A00A90A5A /* ViewController.swift */; };
+		A1D044A424788C6A00A90A5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1D044A224788C6A00A90A5A /* Main.storyboard */; };
+		A1D044A624788C6C00A90A5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1D044A524788C6C00A90A5A /* Assets.xcassets */; };
+		A1D044A924788C6C00A90A5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1D044A724788C6C00A90A5A /* LaunchScreen.storyboard */; };
+		A1D044B424788CF100A90A5A /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044B024788CD000A90A5A /* libSDL2-2.0.0.dylib */; };
+		A1D044B524788CF300A90A5A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044B224788CD100A90A5A /* OpenGL.framework */; };
+		A1D044B724788CF700A90A5A /* libSDL2_mixer-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044AF24788CD000A90A5A /* libSDL2_mixer-2.0.0.dylib */; };
+		A1D044DC24788DB300A90A5A /* 3dgame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA32246E5B2500184600 /* 3dgame.cpp */; };
+		A1D044DD24788DD500A90A5A /* 3dglasses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA19246E5B2500184600 /* 3dglasses.cpp */; };
+		A1D044DE24788DF900A90A5A /* command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA28246E5B2500184600 /* command.cpp */; };
+		A1D044DF24788DF900A90A5A /* commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA37246E5B2600184600 /* commands.cpp */; };
+		A1D044E024788DF900A90A5A /* console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA31246E5B2500184600 /* console.cpp */; };
+		A1D044E124788DF900A90A5A /* cvars.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA26246E5B2500184600 /* cvars.cpp */; };
+		A1D044E224788DF900A90A5A /* menus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA2D246E5B2500184600 /* menus.cpp */; };
+		A1D044E324788DF900A90A5A /* renderflags.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA2C246E5B2500184600 /* renderflags.cpp */; };
+		A1D044E424788DF900A90A5A /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA1F246E5B2500184600 /* timer.cpp */; };
+		A1D044E524788DF900A90A5A /* tokenize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA23246E5B2500184600 /* tokenize.cpp */; };
+		A1D044F924788FEE00A90A5A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044F824788FEE00A90A5A /* OpenGLES.framework */; };
+		A1D044FA2478900100A90A5A /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044C624788D4800A90A5A /* libSDL2.a */; };
+		A1D044FB2478900100A90A5A /* libSDLmain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044CE24788D4800A90A5A /* libSDLmain.a */; };
+		A1D044FC2478900100A90A5A /* libSDL2_mixer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044D924788D5600A90A5A /* libSDL2_mixer.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A1D044C524788D4800A90A5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1D044B924788D4800A90A5A /* SDL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FD6526630DE8FCCB002AD96B;
+			remoteInfo = "libSDL-iOS";
+		};
+		A1D044C724788D4800A90A5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1D044B924788D4800A90A5A /* SDL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 52ED1E5C222889500061FCE0;
+			remoteInfo = "libSDL-iOS-dylib";
+		};
+		A1D044C924788D4800A90A5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1D044B924788D4800A90A5A /* SDL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAB598141BB5C1B100BE72C5;
+			remoteInfo = "libSDL-tvOS";
+		};
+		A1D044CB24788D4800A90A5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1D044B924788D4800A90A5A /* SDL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F3E3C7572241389A007D243C;
+			remoteInfo = "libSDL-tvOS-dylib";
+		};
+		A1D044CD24788D4800A90A5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1D044B924788D4800A90A5A /* SDL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F3E3C65222406928007D243C;
+			remoteInfo = "libSDLmain-iOS";
+		};
+		A1D044CF24788D4800A90A5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1D044B924788D4800A90A5A /* SDL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F3E3C75F224138AE007D243C;
+			remoteInfo = "libSDLmain-tvOS";
+		};
+		A1D044D824788D5600A90A5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1D044D124788D5600A90A5A /* SDL_mixer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BE1FA95407AF96B2004B6283;
+			remoteInfo = "libSDL_mixer-iOS";
+		};
+		A1D044DA24788D5600A90A5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1D044D124788D5600A90A5A /* SDL_mixer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AA5314F11FE0FE2E0025C9BE;
+			remoteInfo = "libSDL_mixer-tvOS";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		A118DA5A246EE85000184600 /* Embed Libraries */ = {
@@ -34,8 +111,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A118DA62246F061200184600 /* libSDL2-2.0.0.dylib in Embed Libraries */,
-				A118DA55246EE85000184600 /* libSDL2_mixer-2.0.0.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -83,12 +158,21 @@
 		A118DA38246E5B2600184600 /* tokenize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tokenize.h; sourceTree = "<group>"; };
 		A118DA39246E5B2600184600 /* vec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec.h; sourceTree = "<group>"; };
 		A118DA3A246E5B2600184600 /* dsutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsutil.h; sourceTree = "<group>"; };
-		A118DA4C246E5BD000184600 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		A118DA51246EE85000184600 /* libSDL2_mixer-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2_mixer-2.0.0.dylib"; path = "../../../../../../usr/local/Cellar/sdl2_mixer/2.0.4/lib/libSDL2_mixer-2.0.0.dylib"; sourceTree = "<group>"; };
-		A118DA52246EE85000184600 /* libSDL2_image-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2_image-2.0.0.dylib"; path = "../../../../../../usr/local/Cellar/sdl2_image/2.0.5/lib/libSDL2_image-2.0.0.dylib"; sourceTree = "<group>"; };
-		A118DA53246EE85000184600 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../usr/local/Cellar/sdl2/2.0.12_1/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
-		A118DA5C246F039300184600 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../opt/local/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
 		A118DA63246F064800184600 /* Res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Res; sourceTree = "<group>"; };
+		A1D0449A24788C6A00A90A5A /* disasteroids3d-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "disasteroids3d-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1D0449C24788C6A00A90A5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A1D0449E24788C6A00A90A5A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		A1D044A024788C6A00A90A5A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A1D044A324788C6A00A90A5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A1D044A524788C6C00A90A5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1D044A824788C6C00A90A5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A1D044AA24788C6C00A90A5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1D044AF24788CD000A90A5A /* libSDL2_mixer-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libSDL2_mixer-2.0.0.dylib"; sourceTree = "<group>"; };
+		A1D044B024788CD000A90A5A /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
+		A1D044B224788CD100A90A5A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		A1D044B924788D4800A90A5A /* SDL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL.xcodeproj; path = "SDL2/Xcode-iOS/SDL/SDL.xcodeproj"; sourceTree = "<group>"; };
+		A1D044D124788D5600A90A5A /* SDL_mixer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL_mixer.xcodeproj; path = "SDL2_mixer/Xcode-iOS/SDL_mixer.xcodeproj"; sourceTree = "<group>"; };
+		A1D044F824788FEE00A90A5A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.5.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,9 +180,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A118DA61246F061200184600 /* libSDL2-2.0.0.dylib in Frameworks */,
-				A118DA54246EE85000184600 /* libSDL2_mixer-2.0.0.dylib in Frameworks */,
-				A118DA4D246E5BD000184600 /* OpenGL.framework in Frameworks */,
+				A1D044B424788CF100A90A5A /* libSDL2-2.0.0.dylib in Frameworks */,
+				A1D044B724788CF700A90A5A /* libSDL2_mixer-2.0.0.dylib in Frameworks */,
+				A1D044B524788CF300A90A5A /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1D0449724788C6A00A90A5A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1D044FA2478900100A90A5A /* libSDL2.a in Frameworks */,
+				A1D044FB2478900100A90A5A /* libSDLmain.a in Frameworks */,
+				A1D044FC2478900100A90A5A /* libSDL2_mixer.a in Frameworks */,
+				A1D044F924788FEE00A90A5A /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +206,7 @@
 				A118DA63246F064800184600 /* Res */,
 				A118DA17246E5A6400184600 /* disasteroids3d */,
 				A118DA08246E58C000184600 /* disasteroids3d-macOS */,
+				A1D0449B24788C6A00A90A5A /* disasteroids3d-iOS */,
 				A118DA07246E58C000184600 /* Products */,
 				A118DA4B246E5BD000184600 /* Frameworks */,
 			);
@@ -120,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				A118DA06246E58BF00184600 /* disasteroids3d-macOS.app */,
+				A1D0449A24788C6A00A90A5A /* disasteroids3d-iOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -180,13 +277,66 @@
 		A118DA4B246E5BD000184600 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A118DA5C246F039300184600 /* libSDL2-2.0.0.dylib */,
-				A118DA52246EE85000184600 /* libSDL2_image-2.0.0.dylib */,
-				A118DA51246EE85000184600 /* libSDL2_mixer-2.0.0.dylib */,
-				A118DA53246EE85000184600 /* libSDL2-2.0.0.dylib */,
-				A118DA4C246E5BD000184600 /* OpenGL.framework */,
+				A1D044F824788FEE00A90A5A /* OpenGLES.framework */,
+				A1D044B824788D1900A90A5A /* iOS */,
+				A1D044AE24788CC800A90A5A /* macOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A1D0449B24788C6A00A90A5A /* disasteroids3d-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A1D0449C24788C6A00A90A5A /* AppDelegate.swift */,
+				A1D0449E24788C6A00A90A5A /* SceneDelegate.swift */,
+				A1D044A024788C6A00A90A5A /* ViewController.swift */,
+				A1D044A224788C6A00A90A5A /* Main.storyboard */,
+				A1D044A524788C6C00A90A5A /* Assets.xcassets */,
+				A1D044A724788C6C00A90A5A /* LaunchScreen.storyboard */,
+				A1D044AA24788C6C00A90A5A /* Info.plist */,
+			);
+			path = "disasteroids3d-iOS";
+			sourceTree = "<group>";
+		};
+		A1D044AE24788CC800A90A5A /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				A1D044AF24788CD000A90A5A /* libSDL2_mixer-2.0.0.dylib */,
+				A1D044B024788CD000A90A5A /* libSDL2-2.0.0.dylib */,
+				A1D044B224788CD100A90A5A /* OpenGL.framework */,
+			);
+			name = macOS;
+			sourceTree = "<group>";
+		};
+		A1D044B824788D1900A90A5A /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A1D044D124788D5600A90A5A /* SDL_mixer.xcodeproj */,
+				A1D044B924788D4800A90A5A /* SDL.xcodeproj */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		A1D044BA24788D4800A90A5A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1D044C624788D4800A90A5A /* libSDL2.a */,
+				A1D044C824788D4800A90A5A /* libSDL2.dylib */,
+				A1D044CA24788D4800A90A5A /* libSDL2.a */,
+				A1D044CC24788D4800A90A5A /* libSDL2.dylib */,
+				A1D044CE24788D4800A90A5A /* libSDLmain.a */,
+				A1D044D024788D4800A90A5A /* libSDLmain.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A1D044D224788D5600A90A5A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1D044D924788D5600A90A5A /* libSDL2_mixer.a */,
+				A1D044DB24788D5600A90A5A /* libSDL2_mixer.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,19 +360,39 @@
 			productReference = A118DA06246E58BF00184600 /* disasteroids3d-macOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A1D0449924788C6A00A90A5A /* disasteroids3d-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1D044AB24788C6C00A90A5A /* Build configuration list for PBXNativeTarget "disasteroids3d-iOS" */;
+			buildPhases = (
+				A1D0449624788C6A00A90A5A /* Sources */,
+				A1D0449724788C6A00A90A5A /* Frameworks */,
+				A1D0449824788C6A00A90A5A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "disasteroids3d-iOS";
+			productName = "disasteroids3d-iOS";
+			productReference = A1D0449A24788C6A00A90A5A /* disasteroids3d-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		A118D9FE246E58BF00184600 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1150;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Tom Kidd";
 				TargetAttributes = {
 					A118DA05246E58BF00184600 = {
 						CreatedOnToolsVersion = 11.4.1;
 						LastSwiftMigration = 1140;
+					};
+					A1D0449924788C6A00A90A5A = {
+						CreatedOnToolsVersion = 11.5;
 					};
 				};
 			};
@@ -237,12 +407,82 @@
 			mainGroup = A118D9FD246E58BF00184600;
 			productRefGroup = A118DA07246E58C000184600 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A1D044BA24788D4800A90A5A /* Products */;
+					ProjectRef = A1D044B924788D4800A90A5A /* SDL.xcodeproj */;
+				},
+				{
+					ProductGroup = A1D044D224788D5600A90A5A /* Products */;
+					ProjectRef = A1D044D124788D5600A90A5A /* SDL_mixer.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				A118DA05246E58BF00184600 /* disasteroids3d-macOS */,
+				A1D0449924788C6A00A90A5A /* disasteroids3d-iOS */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		A1D044C624788D4800A90A5A /* libSDL2.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDL2.a;
+			remoteRef = A1D044C524788D4800A90A5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A1D044C824788D4800A90A5A /* libSDL2.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDL2.dylib;
+			remoteRef = A1D044C724788D4800A90A5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A1D044CA24788D4800A90A5A /* libSDL2.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDL2.a;
+			remoteRef = A1D044C924788D4800A90A5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A1D044CC24788D4800A90A5A /* libSDL2.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDL2.dylib;
+			remoteRef = A1D044CB24788D4800A90A5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A1D044CE24788D4800A90A5A /* libSDLmain.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDLmain.a;
+			remoteRef = A1D044CD24788D4800A90A5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A1D044D024788D4800A90A5A /* libSDLmain.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDLmain.a;
+			remoteRef = A1D044CF24788D4800A90A5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A1D044D924788D5600A90A5A /* libSDL2_mixer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDL2_mixer.a;
+			remoteRef = A1D044D824788D5600A90A5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A1D044DB24788D5600A90A5A /* libSDL2_mixer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDL2_mixer.a;
+			remoteRef = A1D044DA24788D5600A90A5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A118DA04246E58BF00184600 /* Resources */ = {
@@ -251,6 +491,16 @@
 			files = (
 				A118DA0C246E58C300184600 /* Assets.xcassets in Resources */,
 				A118DA64246F064800184600 /* Res in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1D0449824788C6A00A90A5A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1D044A924788C6C00A90A5A /* LaunchScreen.storyboard in Resources */,
+				A1D044A624788C6C00A90A5A /* Assets.xcassets in Resources */,
+				A1D044A424788C6A00A90A5A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,7 +525,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A1D0449624788C6A00A90A5A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1D044E124788DF900A90A5A /* cvars.cpp in Sources */,
+				A1D044E524788DF900A90A5A /* tokenize.cpp in Sources */,
+				A1D044DF24788DF900A90A5A /* commands.cpp in Sources */,
+				A1D044E224788DF900A90A5A /* menus.cpp in Sources */,
+				A1D044DC24788DB300A90A5A /* 3dgame.cpp in Sources */,
+				A1D044DE24788DF900A90A5A /* command.cpp in Sources */,
+				A1D044A124788C6A00A90A5A /* ViewController.swift in Sources */,
+				A1D044E324788DF900A90A5A /* renderflags.cpp in Sources */,
+				A1D0449D24788C6A00A90A5A /* AppDelegate.swift in Sources */,
+				A1D0449F24788C6A00A90A5A /* SceneDelegate.swift in Sources */,
+				A1D044DD24788DD500A90A5A /* 3dglasses.cpp in Sources */,
+				A1D044E024788DF900A90A5A /* console.cpp in Sources */,
+				A1D044E424788DF900A90A5A /* timer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A1D044A224788C6A00A90A5A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1D044A324788C6A00A90A5A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A1D044A724788C6C00A90A5A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1D044A824788C6C00A90A5A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		A118DA12246E58C400184600 /* Debug */ = {
@@ -320,7 +609,9 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
+					GL_SILENCE_DEPRECATION,
 					"$(inherited)",
+					GLES_SILENCE_DEPRECATION,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -376,6 +667,10 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					GL_SILENCE_DEPRECATION,
+					GLES_SILENCE_DEPRECATION,
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -403,7 +698,6 @@
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					GL_SILENCE_DEPRECATION,
 					"DEBUG=1",
 					"$(inherited)",
 				);
@@ -418,6 +712,7 @@
 					/usr/local/Cellar/sdl2_mixer/2.0.4/lib,
 					/usr/local/Cellar/sdl2/2.0.12_1/lib,
 					/opt/local/lib,
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tomkiddconsulting.disasteroids3d;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -439,7 +734,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				ENABLE_HARDENED_RUNTIME = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = GL_SILENCE_DEPRECATION;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = /opt/local/include/SDL2;
 				INFOPLIST_FILE = "disasteroids3d-macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -451,12 +746,70 @@
 					/usr/local/Cellar/sdl2_mixer/2.0.4/lib,
 					/usr/local/Cellar/sdl2/2.0.12_1/lib,
 					/opt/local/lib,
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tomkiddconsulting.disasteroids3d;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
+			};
+			name = Release;
+		};
+		A1D044AC24788C6C00A90A5A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					GLES,
+				);
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/SDL2/include",
+					"${SRCROOT}/SDL2_mixer",
+				);
+				INFOPLIST_FILE = "disasteroids3d-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tomkiddconsulting.disasteroids3d-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A1D044AD24788C6C00A90A5A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					GLES,
+				);
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/SDL2/include",
+					"${SRCROOT}/SDL2_mixer",
+				);
+				INFOPLIST_FILE = "disasteroids3d-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tomkiddconsulting.disasteroids3d-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -477,6 +830,15 @@
 			buildConfigurations = (
 				A118DA15246E58C400184600 /* Debug */,
 				A118DA16246E58C400184600 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1D044AB24788C6C00A90A5A /* Build configuration list for PBXNativeTarget "disasteroids3d-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1D044AC24788C6C00A90A5A /* Debug */,
+				A1D044AD24788C6C00A90A5A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

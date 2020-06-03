@@ -397,12 +397,22 @@ void con_draw(const float fNow)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		renderdisable(render_lighting | render_depthtest | render_texture | render_blend);
 		glColor4ub(0, 0, 0, 0);
-		glBegin(GL_TRIANGLE_STRIP);
-			glVertex3f( 3.0f, 3.0f, -4.0f);
-			glVertex3f(-3.0f, 3.0f, -4.0f);
-			glVertex3f( 3.0f, -0.1f, -4.0f);
-			glVertex3f(-3.0f, -0.1f, -4.0f);
-		glEnd();
+        float square[4][3] = {
+            { 3.0f, 3.0f, -4.0f},
+            {-3.0f, 3.0f, -4.0f},
+            { 3.0f, -0.1f, -4.0f},
+            {-3.0f, -0.1f, -4.0f}
+        };
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glVertexPointer(3, GL_FLOAT, 0, square);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        glDisableClientState(GL_VERTEX_ARRAY);
+//		glBegin(GL_TRIANGLE_STRIP);
+//			glVertex3f( 3.0f, 3.0f, -4.0f);
+//			glVertex3f(-3.0f, 3.0f, -4.0f);
+//			glVertex3f( 3.0f, -0.1f, -4.0f);
+//			glVertex3f(-3.0f, -0.1f, -4.0f);
+//		glEnd();
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
 		// Color for console text
@@ -449,12 +459,22 @@ void con_draw(const float fNow)
 		glTranslatef(-13.2f + (nBufferPos * 0.6f), -0.1f, -30.0f);
 		renderenable(render_blend);
 		renderdisable(render_lighting | render_depthtest | render_texture);
-		glBegin(GL_TRIANGLE_STRIP);
-			glVertex3f( 0.3f,  0.3f, 0);
-			glVertex3f(-0.3f,  0.3f, 0);
-			glVertex3f( 0.3f, -0.3f, 0);
-			glVertex3f(-0.3f, -0.3f, 0);
-		glEnd();
+        float square2[4][3] = {
+            {0.3f,  0.3f, 0},
+            {-0.3f,  0.3f, 0},
+            {0.3f, -0.3f, 0},
+            {-0.3f, -0.3f, 0}
+        };
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glVertexPointer(3, GL_FLOAT, 0, square2);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        glDisableClientState(GL_VERTEX_ARRAY);
+//		glBegin(GL_TRIANGLE_STRIP);
+//			glVertex3f( 0.3f,  0.3f, 0);
+//			glVertex3f(-0.3f,  0.3f, 0);
+//			glVertex3f( 0.3f, -0.3f, 0);
+//			glVertex3f(-0.3f, -0.3f, 0);
+//		glEnd();
 		glColor3f(1.0f,1.0f,1.0f);
 
 		// Restore matrix

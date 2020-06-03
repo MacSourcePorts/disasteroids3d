@@ -813,12 +813,23 @@ void Menu_DrawGL()
 		const float fz = -30;
 		const float fWidth = 10;
 		float fHeight = (CurrentMenu->ListCount * 0.5f) + 2;
-		glBegin(GL_TRIANGLE_STRIP);
-			glVertex3f(fx + fWidth, fy + fHeight, fz);
-			glVertex3f(fx - fWidth, fy + fHeight, fz);
-			glVertex3f(fx + fWidth, fy - fHeight, fz);
-			glVertex3f(fx - fWidth, fy - fHeight, fz);
-		glEnd();
+        
+        float square[4][3] = {
+            {fx + fWidth, fy + fHeight, fz},
+            {fx - fWidth, fy + fHeight, fz},
+            {fx + fWidth, fy - fHeight, fz},
+            {fx - fWidth, fy - fHeight, fz}
+        };
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glVertexPointer(3, GL_FLOAT, 0, square);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        glDisableClientState(GL_VERTEX_ARRAY);
+//        glBegin(GL_TRIANGLE_STRIP);
+//            glVertex3f(fx + fWidth, fy + fHeight, fz);
+//            glVertex3f(fx - fWidth, fy + fHeight, fz);
+//            glVertex3f(fx + fWidth, fy - fHeight, fz);
+//            glVertex3f(fx - fWidth, fy - fHeight, fz);
+//        glEnd();
 
 		// Restore the blend func for translucency
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
@@ -948,12 +959,16 @@ void KeyBindMenu_DrawGL()
 	const float fWidth = 14;
 	float fHeight = ((NUM_KEY_BINDS + 2) * 0.5f) + 2;
 
-	glBegin(GL_TRIANGLE_STRIP);
-		glVertex3f(fx + fWidth, fy + fHeight, fz);
-		glVertex3f(fx - fWidth, fy + fHeight, fz);
-		glVertex3f(fx + fWidth, fy - fHeight, fz);
-		glVertex3f(fx - fWidth, fy - fHeight, fz);
-	glEnd();
+    float square[4][3] = {
+        {fx + fWidth, fy + fHeight, fz},
+        {fx - fWidth, fy + fHeight, fz},
+        {fx + fWidth, fy - fHeight, fz},
+        {fx - fWidth, fy - fHeight, fz}
+    };
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, square);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glDisableClientState(GL_VERTEX_ARRAY);
 
 	// Restore the blend func for translucency
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);

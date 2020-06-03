@@ -40,8 +40,11 @@ void renderenable(const int& flags)
 	if (((flags & render_lighting) == render_lighting) && ((renderflags & render_lighting) != render_lighting))
 		glEnable(GL_LIGHTING);
 
+#ifndef GLES
+    // OpenGL ES don't got this -tkidd
 	if (((flags & render_wireframe) == render_wireframe) && ((renderflags & render_wireframe) != render_wireframe))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+#endif
 
 	renderflags = renderflags | flags;
 }
@@ -60,8 +63,11 @@ void renderdisable(const int& flags)
 	if (((flags & render_lighting) == render_lighting) && ((renderflags & render_lighting) == render_lighting))
 		glDisable(GL_LIGHTING);
 
+#ifndef GLES
+// OpenGL ES don't got this -tkidd
 	if (((flags & render_wireframe) == render_wireframe) && ((renderflags & render_wireframe) == render_wireframe))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+#endif
 	
 	renderflags = renderflags - (renderflags & flags);
 }
@@ -99,10 +105,13 @@ void renderinit(void)
 	else
 		glDisable(GL_LIGHTING);
 
+#ifndef GLES
+    // OpenGL ES don't got this -tkidd
 	if ((renderflags & render_wireframe) == render_wireframe) 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+#endif
 
 }
  

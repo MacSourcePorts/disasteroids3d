@@ -4,6 +4,9 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 #include <SDL_opengl.h>
+#ifdef GLES
+#include <SDL_opengles2.h>
+#endif
 
 #ifdef _WIN32
 #include <windows.h>            // Header File For Windows
@@ -25,7 +28,12 @@ typedef unsigned char BYTE;
 #define VK_DOWN           0x28
 #define VK_ESCAPE         0x1B
 #define VK_RETURN         0x0D
+#endif
 
+#ifdef GLES
+#define glColor4fv(a) glColor4f(a[0], a[1], a[2], a[3])
+#define glColor3fv(a) glColor4f(a[0], a[1], a[2], 1.0f)
+#define glColor3f(a,b,c) glColor4f(a, b, c, 1.0f)
 #endif
 
 #include <stdio.h>			// Header File For Standard Input/Output

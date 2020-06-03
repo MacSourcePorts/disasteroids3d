@@ -16,9 +16,11 @@
 #endif
 
 #include <SDL_opengl.h>
-
-
-#include <SDL_opengl.h>
+#ifdef GLES
+#include <SDL_opengles.h>
+#define GL_LINE                                     0x1B01
+#define GL_FILL                                     0x1B02
+#endif
 
 extern const int render_blend;
 extern const int render_texture;

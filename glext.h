@@ -1419,6 +1419,11 @@ extern "C" {
 #define GL_TEXTURE_COLOR_WRITEMASK_SGIS   0x81EF
 #endif
 
+#ifdef GLES
+typedef double                                      GLdouble;    /* double precision float */
+#define glFrustum glFrustumf
+#endif
+
 
 /*************************************************************/
 
