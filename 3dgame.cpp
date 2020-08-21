@@ -606,8 +606,10 @@ GLint Gen3DObjectList()
 	// Player
 	glNewList(player_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[0]);
-		glBegin (GL_TRIANGLES);
-			for(i=0;i<sizeof(player_face_indicies)/sizeof(player_face_indicies[0]);i++)
+#if 0
+        glBegin (GL_TRIANGLES);
+        int vtxIndex = 0;
+        for(i=0;i<sizeof(player_face_indicies)/sizeof(player_face_indicies[0]);i++)
 			{
 				for(j=0;j<3;j++)
 				{
@@ -616,10 +618,61 @@ GLint Gen3DObjectList()
 					int ti = player_face_indicies[i][j+6];
 					glNormal3f (player_normals[ni][0],player_normals[ni][1],player_normals[ni][2]);
 					glTexCoord2f(player_textures[ti][0],player_textures[ti][1]);
-					glVertex3f (player_verticies[vi][0],player_verticies[vi][1],player_verticies[vi][2]);         
+					glVertex3f (player_verticies[vi][0],player_verticies[vi][1],player_verticies[vi][2]);
 				}
 			}
-		glEnd ();
+    glEnd ();
+#else
+    
+    GLfloat vtxPlayer[sizeof(player_face_indicies)];
+    GLfloat nmlPlayer[sizeof(player_face_indicies)];
+    GLfloat texPlayer[(sizeof(player_face_indicies) / 3) * 2];
+
+    int vtxIndex = 0;
+    int nmlIndex = 0;
+    int texIndex = 0;
+    for(i=0;i<sizeof(player_face_indicies)/sizeof(player_face_indicies[0]);i++)
+    {
+        for(j=0;j<3;j++)
+        {
+            int vi = player_face_indicies[i][j];
+            int ni = player_face_indicies[i][j+3];
+            int ti = player_face_indicies[i][j+6];
+            
+            nmlPlayer[nmlIndex] = player_normals[ni][0];
+            nmlIndex++;
+            nmlPlayer[nmlIndex] = player_normals[ni][1];
+            nmlIndex++;
+            nmlPlayer[nmlIndex] = player_normals[ni][2];
+            nmlIndex++;
+
+            texPlayer[texIndex] = player_textures[ti][0];
+            texIndex++;
+            texPlayer[texIndex] = player_textures[ti][1];
+            texIndex++;
+
+            vtxPlayer[vtxIndex] = player_verticies[vi][0];
+            vtxIndex++;
+            vtxPlayer[vtxIndex] = player_verticies[vi][1];
+            vtxIndex++;
+            vtxPlayer[vtxIndex] = player_verticies[vi][2];
+            vtxIndex++;
+        }
+    }
+    
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlPlayer);
+    glVertexPointer(3, GL_FLOAT, 0, vtxPlayer);
+    glTexCoordPointer(2, GL_FLOAT, 0, texPlayer);
+    glDrawArrays(GL_TRIANGLES,0, (sizeof(player_face_indicies)/sizeof(player_face_indicies[0]) * 3));
+
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+#endif
 	glEndList();
 
 	// Read rock data from arrays
@@ -652,7 +705,6 @@ GLint Gen3DObjectList()
 			glTexCoord2f(0.0f, 1.0f); glVertex3f(-0.5f, 0.5f, 0.0f);
 			glTexCoord2f(1.0f, 0.0f); glVertex3f( 0.5f,-0.5f, 0.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f(-0.5f,-0.5f, 0.0f);
-
 		glEnd();
 #else
     GLfloat vtxRock[] = {
@@ -778,6 +830,7 @@ GLint Gen3DObjectList()
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
     glNormalPointer(GL_FLOAT, 0, nmlBlast);
     glVertexPointer(3, GL_FLOAT, 0, vtxBlast);
@@ -786,6 +839,7 @@ GLint Gen3DObjectList()
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 #endif
 	glEndList();
 		
@@ -820,6 +874,7 @@ GLint Gen3DObjectList()
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
     glNormalPointer(GL_FLOAT, 0, nmlSmoke);
     glVertexPointer(3, GL_FLOAT, 0, vtxSmoke);
@@ -828,6 +883,7 @@ GLint Gen3DObjectList()
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 #endif
 	glEndList();
 
@@ -882,6 +938,7 @@ GLint Gen3DObjectList()
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
     glNormalPointer(GL_FLOAT, 0, nmlSfire);
     glVertexPointer(3, GL_FLOAT, 0, vtxSfire);
@@ -890,6 +947,7 @@ GLint Gen3DObjectList()
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 #endif
 	glEndList();
 
@@ -926,6 +984,7 @@ GLint Gen3DObjectList()
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
     glNormalPointer(GL_FLOAT, 0, nmlUpperLeft);
     glVertexPointer(3, GL_FLOAT, 0, vtxUpperLeft);
@@ -934,6 +993,7 @@ GLint Gen3DObjectList()
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 #endif
 		
 		// Upper right
@@ -965,6 +1025,7 @@ GLint Gen3DObjectList()
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
     glNormalPointer(GL_FLOAT, 0, nmlUpperRight);
     glVertexPointer(3, GL_FLOAT, 0, vtxUpperRight);
@@ -973,6 +1034,7 @@ GLint Gen3DObjectList()
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 #endif
 		
 		// Lower left
@@ -1004,6 +1066,7 @@ GLint Gen3DObjectList()
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
     glNormalPointer(GL_FLOAT, 0, nmlLowerLeft);
     glVertexPointer(3, GL_FLOAT, 0, vtxLowerLeft);
@@ -1012,6 +1075,7 @@ GLint Gen3DObjectList()
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 #endif
 		
 		// Lower right
@@ -1043,6 +1107,7 @@ GLint Gen3DObjectList()
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
     glNormalPointer(GL_FLOAT, 0, nmlLowerRight);
     glVertexPointer(3, GL_FLOAT, 0, vtxLowerRight);
@@ -1051,6 +1116,7 @@ GLint Gen3DObjectList()
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 #endif
 	glEndList();
 
@@ -1092,6 +1158,7 @@ GLint Gen3DObjectList()
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
     glNormalPointer(GL_FLOAT, 0, nmlLogo1);
     glVertexPointer(3, GL_FLOAT, 0, vtxLogo1);
@@ -1100,7 +1167,8 @@ GLint Gen3DObjectList()
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    
+    glDisableClientState(GL_NORMAL_ARRAY);
+
     GLfloat nmlLogo2[] = {
         0.0f, 0.0f, 1.0f
     };
@@ -1119,6 +1187,7 @@ GLint Gen3DObjectList()
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
     glNormalPointer(GL_FLOAT, 0, nmlLogo2);
     glVertexPointer(3, GL_FLOAT, 0, vtxLogo2);
@@ -1127,6 +1196,7 @@ GLint Gen3DObjectList()
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 #endif
 	
 		
@@ -1197,6 +1267,7 @@ GLint Gen3DObjectList()
     
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
     glNormalPointer(GL_FLOAT, 0, nmlExtraShip);
     glVertexPointer(3, GL_FLOAT, 0, vtxExtraShip);
@@ -1205,6 +1276,7 @@ GLint Gen3DObjectList()
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 #endif
 	glEndList();
 
@@ -1239,6 +1311,7 @@ GLint Gen3DObjectList()
         
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glEnableClientState(GL_NORMAL_ARRAY);
 
         glNormalPointer(GL_FLOAT, 0, nmlExtraShip5);
         glVertexPointer(3, GL_FLOAT, 0, vtxExtraShip5);
@@ -1247,6 +1320,7 @@ GLint Gen3DObjectList()
 
         glDisableClientState(GL_VERTEX_ARRAY);
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+        glDisableClientState(GL_NORMAL_ARRAY);
     #endif
     glEndList();
 
