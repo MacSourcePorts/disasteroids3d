@@ -20,6 +20,7 @@
 		A118DA47246E5B2600184600 /* 3dgame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA32246E5B2500184600 /* 3dgame.cpp */; };
 		A118DA4A246E5B2600184600 /* commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA37246E5B2600184600 /* commands.cpp */; };
 		A118DA64246F064800184600 /* Res in Resources */ = {isa = PBXBuildFile; fileRef = A118DA63246F064800184600 /* Res */; };
+		A1ABBF4124E4CF270020F6BD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1ABBF4024E4CF270020F6BD /* OpenGLES.framework */; };
 		A1D0449D24788C6A00A90A5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D0449C24788C6A00A90A5A /* AppDelegate.swift */; };
 		A1D0449F24788C6A00A90A5A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D0449E24788C6A00A90A5A /* SceneDelegate.swift */; };
 		A1D044A124788C6A00A90A5A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D044A024788C6A00A90A5A /* ViewController.swift */; };
@@ -39,7 +40,6 @@
 		A1D044E324788DF900A90A5A /* renderflags.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA2C246E5B2500184600 /* renderflags.cpp */; };
 		A1D044E424788DF900A90A5A /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA1F246E5B2500184600 /* timer.cpp */; };
 		A1D044E524788DF900A90A5A /* tokenize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA23246E5B2500184600 /* tokenize.cpp */; };
-		A1D044F924788FEE00A90A5A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044F824788FEE00A90A5A /* OpenGLES.framework */; };
 		A1D044FA2478900100A90A5A /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044C624788D4800A90A5A /* libSDL2.a */; };
 		A1D044FB2478900100A90A5A /* libSDLmain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044CE24788D4800A90A5A /* libSDLmain.a */; };
 		A1D044FC2478900100A90A5A /* libSDL2_mixer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044D924788D5600A90A5A /* libSDL2_mixer.a */; };
@@ -159,6 +159,7 @@
 		A118DA39246E5B2600184600 /* vec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec.h; sourceTree = "<group>"; };
 		A118DA3A246E5B2600184600 /* dsutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsutil.h; sourceTree = "<group>"; };
 		A118DA63246F064800184600 /* Res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Res; sourceTree = "<group>"; };
+		A1ABBF4024E4CF270020F6BD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		A1D0449A24788C6A00A90A5A /* disasteroids3d-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "disasteroids3d-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1D0449C24788C6A00A90A5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1D0449E24788C6A00A90A5A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -193,7 +194,7 @@
 				A1D044FA2478900100A90A5A /* libSDL2.a in Frameworks */,
 				A1D044FB2478900100A90A5A /* libSDLmain.a in Frameworks */,
 				A1D044FC2478900100A90A5A /* libSDL2_mixer.a in Frameworks */,
-				A1D044F924788FEE00A90A5A /* OpenGLES.framework in Frameworks */,
+				A1ABBF4124E4CF270020F6BD /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				A1D044F824788FEE00A90A5A /* OpenGLES.framework */,
+				A1ABBF4024E4CF270020F6BD /* OpenGLES.framework */,
 				A1D044B824788D1900A90A5A /* iOS */,
 				A1D044AE24788CC800A90A5A /* macOS */,
 			);
