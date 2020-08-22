@@ -623,7 +623,6 @@ GLint Gen3DObjectList()
 			}
     glEnd ();
 #else
-    
     GLfloat vtxPlayer[sizeof(player_face_indicies)];
     GLfloat nmlPlayer[sizeof(player_face_indicies)];
     GLfloat texPlayer[(sizeof(player_face_indicies) / 3) * 2];
@@ -639,24 +638,16 @@ GLint Gen3DObjectList()
             int ni = player_face_indicies[i][j+3];
             int ti = player_face_indicies[i][j+6];
             
-            nmlPlayer[nmlIndex] = player_normals[ni][0];
-            nmlIndex++;
-            nmlPlayer[nmlIndex] = player_normals[ni][1];
-            nmlIndex++;
-            nmlPlayer[nmlIndex] = player_normals[ni][2];
-            nmlIndex++;
+            nmlPlayer[nmlIndex++] = player_normals[ni][0];
+            nmlPlayer[nmlIndex++] = player_normals[ni][1];
+            nmlPlayer[nmlIndex++] = player_normals[ni][2];
 
-            texPlayer[texIndex] = player_textures[ti][0];
-            texIndex++;
-            texPlayer[texIndex] = player_textures[ti][1];
-            texIndex++;
+            texPlayer[texIndex++] = player_textures[ti][0];
+            texPlayer[texIndex++] = player_textures[ti][1];
 
-            vtxPlayer[vtxIndex] = player_verticies[vi][0];
-            vtxIndex++;
-            vtxPlayer[vtxIndex] = player_verticies[vi][1];
-            vtxIndex++;
-            vtxPlayer[vtxIndex] = player_verticies[vi][2];
-            vtxIndex++;
+            vtxPlayer[vtxIndex++] = player_verticies[vi][0];
+            vtxPlayer[vtxIndex++] = player_verticies[vi][1];
+            vtxPlayer[vtxIndex++] = player_verticies[vi][2];
         }
     }
     
@@ -679,6 +670,7 @@ GLint Gen3DObjectList()
 	rock_list = player_list + 1;
 	glNewList(rock_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[6]);
+#if 0
 		glBegin (GL_TRIANGLES);
 			for(i=0;i<sizeof(rock_face_indicies)/sizeof(rock_face_indicies[0]);i++)
 			{
@@ -693,6 +685,48 @@ GLint Gen3DObjectList()
 				}
 			}
 		glEnd ();
+#else
+    GLfloat vtxRock[sizeof(rock_face_indicies)];
+    GLfloat nmlRock[sizeof(rock_face_indicies)];
+    GLfloat texRock[(sizeof(rock_face_indicies) / 3) * 2];
+
+    int vtxRockIndex = 0;
+    int nmlRockIndex = 0;
+    int texRockIndex = 0;
+    for(i=0;i<sizeof(rock_face_indicies)/sizeof(rock_face_indicies[0]);i++)
+    {
+        for(j=0;j<3;j++)
+        {
+            int vi = rock_face_indicies[i][j];
+            int ni = rock_face_indicies[i][j+3];
+            int ti = rock_face_indicies[i][j+6];
+            
+            nmlRock[nmlRockIndex++] = rock_normals[ni][0];
+            nmlRock[nmlRockIndex++] = rock_normals[ni][1];
+            nmlRock[nmlRockIndex++] = rock_normals[ni][2];
+
+            texRock[texRockIndex++] = rock_textures[ti][0];
+            texRock[texRockIndex++] = rock_textures[ti][1];
+
+            vtxRock[vtxRockIndex++] = rock_verticies[vi][0];
+            vtxRock[vtxRockIndex++] = rock_verticies[vi][1];
+            vtxRock[vtxRockIndex++] = rock_verticies[vi][2];
+        }
+    }
+    
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlRock);
+    glVertexPointer(3, GL_FLOAT, 0, vtxRock);
+    glTexCoordPointer(2, GL_FLOAT, 0, texRock);
+    glDrawArrays(GL_TRIANGLES,0, (sizeof(rock_face_indicies)/sizeof(rock_face_indicies[0]) * 3));
+
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+#endif
 	glEndList();
 
 	// Draw shot as textured quad
@@ -707,13 +741,13 @@ GLint Gen3DObjectList()
 			glTexCoord2f(0.0f, 0.0f); glVertex3f(-0.5f,-0.5f, 0.0f);
 		glEnd();
 #else
-    GLfloat vtxRock[] = {
+    GLfloat vtxShot[] = {
       0.5f, 0.5f, 0.0f,
       -0.5f, 0.5f, 0.0f,
        0.5f,-0.5f, 0.0f,
       -0.5f,-0.5f, 0.0f
     };
-    GLfloat texRock[] = {
+    GLfloat texShot[] = {
       1.0f, 1.0f,
       0.0f, 1.0f,
       1.0f, 0.0f,
@@ -723,8 +757,8 @@ GLint Gen3DObjectList()
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-    glVertexPointer(3, GL_FLOAT, 0, vtxRock);
-    glTexCoordPointer(2, GL_FLOAT, 0, texRock);
+    glVertexPointer(3, GL_FLOAT, 0, vtxShot);
+    glTexCoordPointer(2, GL_FLOAT, 0, texShot);
     glDrawArrays(GL_TRIANGLE_STRIP,0,4);
 
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -891,6 +925,7 @@ GLint Gen3DObjectList()
 	lsaucer_list = smoke_list + 1;
 	glNewList(lsaucer_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[11]);
+#if 0
 		glBegin (GL_TRIANGLES);
 		for(i=0;i<sizeof(ufo_face_indicies)/sizeof(ufo_face_indicies[0]);i++)
 			{
@@ -905,6 +940,48 @@ GLint Gen3DObjectList()
 				}
 			}
 		glEnd ();
+#else
+    GLfloat vtxUfo[sizeof(ufo_face_indicies)];
+    GLfloat nmlUfo[sizeof(ufo_face_indicies)];
+    GLfloat texUfo[(sizeof(ufo_face_indicies) / 3) * 2];
+    
+    int vtxUfoIndex = 0;
+    int nmlUfoIndex = 0;
+    int texUfoIndex = 0;
+    for(i=0;i<sizeof(ufo_face_indicies)/sizeof(ufo_face_indicies[0]);i++)
+    {
+        for(j=0;j<3;j++)
+        {
+            int vi = ufo_face_indicies[i][j];
+            int ni = ufo_face_indicies[i][j+3];
+            int ti = ufo_face_indicies[i][j+6];
+            
+            nmlUfo[nmlUfoIndex++] = ufo_normals[ni][0];
+            nmlUfo[nmlUfoIndex++] = ufo_normals[ni][1];
+            nmlUfo[nmlUfoIndex++] = ufo_normals[ni][2];
+
+            texUfo[texUfoIndex++] = ufo_textures[ti][0];
+            texUfo[texUfoIndex++] = ufo_textures[ti][1];
+
+            vtxUfo[vtxUfoIndex++] = ufo_verticies[vi][0];
+            vtxUfo[vtxUfoIndex++] = ufo_verticies[vi][1];
+            vtxUfo[vtxUfoIndex++] = ufo_verticies[vi][2];
+        }
+    }
+    
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlUfo);
+    glVertexPointer(3, GL_FLOAT, 0, vtxUfo);
+    glTexCoordPointer(2, GL_FLOAT, 0, texUfo);
+    glDrawArrays(GL_TRIANGLES,0, (sizeof(ufo_face_indicies)/sizeof(ufo_face_indicies[0]) * 3));
+
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+#endif
 	glEndList();
 
 	// Draw sfire as textured quad
@@ -1207,6 +1284,7 @@ GLint Gen3DObjectList()
 	// Big Space
 	bigspace_list = logo_list + 1;
 	glNewList(bigspace_list, GL_COMPILE);
+#if 0
 		glColor4ub(255, 255, 255, 128);
 		glTranslatef(-SCREEN_WIDTH*2,-SCREEN_HEIGHT*2,0.0f);
 		glCallList(background_list);
@@ -1231,6 +1309,7 @@ GLint Gen3DObjectList()
 		glTranslatef(+SCREEN_WIDTH*2,0.0f,0.0f);
 		glCallList(background_list);
 		glTranslatef(-SCREEN_WIDTH*2,0.0f,0.0f);
+#endif
 	glEndList();
 
 // ******************** Modified By NeHe (04/30/00) ********************
@@ -1325,6 +1404,567 @@ GLint Gen3DObjectList()
     glEndList();
 
 	return player_list;
+}
+
+void draw_blast() {
+    glBindTexture(GL_TEXTURE_2D, texture[3]);
+
+    GLfloat nmlBlast[] = {
+        0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxBlast[] = {
+       1.0f,  1.0f,  0.0f,
+      -1.0f,  1.0f,  0.0f,
+       1.0f, -1.0f,  0.0f,
+      -1.0f, -1.0f,  0.0f
+    };
+    GLfloat texBlast[] = {
+      1.0f, 1.0f,
+      0.0f, 1.0f,
+      1.0f, 0.0f,
+      0.0f, 0.0f
+    };
+    
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlBlast);
+    glVertexPointer(3, GL_FLOAT, 0, vtxBlast);
+    glTexCoordPointer(2, GL_FLOAT, 0, texBlast);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+}
+
+// TODO: why are the shots so huge when called from a function like this?
+void draw_sfire() {
+    glBindTexture(GL_TEXTURE_2D, texture[1]);
+
+    GLfloat nmlSfire[] = {
+            0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxSfire[] = {
+       1.0f, 1.0f, 0.0f,
+      -1.0f, 1.0f, 0.0f,
+       1.0f,-1.0f, 0.0f,
+      -1.0f,-1.0f, 0.0f
+    };
+    GLfloat texSfire[] = {
+      1.0f, 1.0f,
+      0.0f, 1.0f,
+      1.0f, 0.0f,
+      0.0f, 0.0f
+    };
+    
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlSfire);
+    glVertexPointer(3, GL_FLOAT, 0, vtxSfire);
+    glTexCoordPointer(2, GL_FLOAT, 0, texSfire);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+}
+
+void draw_smoke() {
+    // Smoke - textured quad
+    glBindTexture(GL_TEXTURE_2D, texture[4]);
+
+    GLfloat nmlSmoke[] = {
+        0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxSmoke[] = {
+       0.25f,  0.25f,  0.0f,
+      -0.25f,  0.25f,  0.0f,
+       0.25f, -0.25f,  0.0f,
+      -0.25f, -0.25f,  0.0f
+    };
+    GLfloat texSmoke[] = {
+      1.0f, 1.0f,
+      0.0f, 1.0f,
+      1.0f, 0.0f,
+      0.0f, 0.0f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlSmoke);
+    glVertexPointer(3, GL_FLOAT, 0, vtxSmoke);
+    glTexCoordPointer(2, GL_FLOAT, 0, texSmoke);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+}
+
+void draw_shields() {
+    glBindTexture(GL_TEXTURE_2D, texture[2]);
+
+    GLfloat vtxShields[] = {
+       1.0f, 1.0f, 0.0f,
+      -1.0f, 1.0f, 0.0f,
+       1.0f,-1.0f, 0.0f,
+      -1.0f,-1.0f, 0.0f
+    };
+    GLfloat texShields[] = {
+      1.0f, 1.0f,
+      0.0f, 1.0f,
+      1.0f, 0.0f,
+      0.0f, 0.0f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glVertexPointer(3, GL_FLOAT, 0, vtxShields);
+    glTexCoordPointer(2, GL_FLOAT, 0, texShields);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void draw_debris() {
+    GLfloat vtxDebris[] = {
+         0.15f,  0.15f,  0.0f,
+        -0.15f,  0.15f,  0.0f,
+         0.15f, -0.15f,  0.0f,
+        -0.15f, -0.15f,  0.0f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glVertexPointer(3, GL_FLOAT, 0, vtxDebris);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void draw_ufo() {
+    GLfloat vtxUfo[sizeof(ufo_face_indicies)];
+    GLfloat nmlUfo[sizeof(ufo_face_indicies)];
+    GLfloat texUfo[(sizeof(ufo_face_indicies) / 3) * 2];
+    
+    int vtxUfoIndex = 0;
+    int nmlUfoIndex = 0;
+    int texUfoIndex = 0;
+    for(int i=0; i<sizeof(ufo_face_indicies)/sizeof(ufo_face_indicies[0]); i++)
+    {
+        for(int j=0; j<3; j++)
+        {
+            int vi = ufo_face_indicies[i][j];
+            int ni = ufo_face_indicies[i][j+3];
+            int ti = ufo_face_indicies[i][j+6];
+            
+            nmlUfo[nmlUfoIndex++] = ufo_normals[ni][0];
+            nmlUfo[nmlUfoIndex++] = ufo_normals[ni][1];
+            nmlUfo[nmlUfoIndex++] = ufo_normals[ni][2];
+
+            texUfo[texUfoIndex++] = ufo_textures[ti][0];
+            texUfo[texUfoIndex++] = ufo_textures[ti][1];
+
+            vtxUfo[vtxUfoIndex++] = ufo_verticies[vi][0];
+            vtxUfo[vtxUfoIndex++] = ufo_verticies[vi][1];
+            vtxUfo[vtxUfoIndex++] = ufo_verticies[vi][2];
+        }
+    }
+    
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlUfo);
+    glVertexPointer(3, GL_FLOAT, 0, vtxUfo);
+    glTexCoordPointer(2, GL_FLOAT, 0, texUfo);
+    glDrawArrays(GL_TRIANGLES,0, (sizeof(ufo_face_indicies)/sizeof(ufo_face_indicies[0]) * 3));
+
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void draw_player() {
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+
+    GLfloat vtxPlayer[sizeof(player_face_indicies)];
+    GLfloat nmlPlayer[sizeof(player_face_indicies)];
+    GLfloat texPlayer[(sizeof(player_face_indicies) / 3) * 2];
+
+    int vtxIndex = 0;
+    int nmlIndex = 0;
+    int texIndex = 0;
+    for(int i=0; i<sizeof(player_face_indicies)/sizeof(player_face_indicies[0]); i++)
+    {
+        for(int j=0; j<3; j++)
+        {
+            int vi = player_face_indicies[i][j];
+            int ni = player_face_indicies[i][j+3];
+            int ti = player_face_indicies[i][j+6];
+            
+            nmlPlayer[nmlIndex++] = player_normals[ni][0];
+            nmlPlayer[nmlIndex++] = player_normals[ni][1];
+            nmlPlayer[nmlIndex++] = player_normals[ni][2];
+
+            texPlayer[texIndex++] = player_textures[ti][0];
+            texPlayer[texIndex++] = player_textures[ti][1];
+
+            vtxPlayer[vtxIndex++] = player_verticies[vi][0];
+            vtxPlayer[vtxIndex++] = player_verticies[vi][1];
+            vtxPlayer[vtxIndex++] = player_verticies[vi][2];
+        }
+    }
+    
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlPlayer);
+    glVertexPointer(3, GL_FLOAT, 0, vtxPlayer);
+    glTexCoordPointer(2, GL_FLOAT, 0, texPlayer);
+    glDrawArrays(GL_TRIANGLES,0, (sizeof(player_face_indicies)/sizeof(player_face_indicies[0]) * 3));
+
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void draw_rock() {
+    glBindTexture(GL_TEXTURE_2D, texture[6]);
+
+    GLfloat vtxRock[sizeof(rock_face_indicies)];
+    GLfloat nmlRock[sizeof(rock_face_indicies)];
+    GLfloat texRock[(sizeof(rock_face_indicies) / 3) * 2];
+
+    int vtxRockIndex = 0;
+    int nmlRockIndex = 0;
+    int texRockIndex = 0;
+    for(int i=0; i<sizeof(rock_face_indicies)/sizeof(rock_face_indicies[0]); i++)
+    {
+        for(int j=0; j<3; j++)
+        {
+            int vi = rock_face_indicies[i][j];
+            int ni = rock_face_indicies[i][j+3];
+            int ti = rock_face_indicies[i][j+6];
+            
+            nmlRock[nmlRockIndex++] = rock_normals[ni][0];
+            nmlRock[nmlRockIndex++] = rock_normals[ni][1];
+            nmlRock[nmlRockIndex++] = rock_normals[ni][2];
+
+            texRock[texRockIndex++] = rock_textures[ti][0];
+            texRock[texRockIndex++] = rock_textures[ti][1];
+
+            vtxRock[vtxRockIndex++] = rock_verticies[vi][0];
+            vtxRock[vtxRockIndex++] = rock_verticies[vi][1];
+            vtxRock[vtxRockIndex++] = rock_verticies[vi][2];
+        }
+    }
+
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlRock);
+    glVertexPointer(3, GL_FLOAT, 0, vtxRock);
+    glTexCoordPointer(2, GL_FLOAT, 0, texRock);
+    glDrawArrays(GL_TRIANGLES,0, (sizeof(rock_face_indicies)/sizeof(rock_face_indicies[0]) * 3));
+
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void draw_logo() {
+    glBindTexture(GL_TEXTURE_2D, texture[12]);
+    GLfloat nmlLogo1[] = {
+        0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxLogo1[] = {
+      -2.0f,-0.5f, 0.0f,
+       0.0f,-0.5f, 0.0f,
+       0.0f, 0.5f, 0.0f,
+      -2.0f, 0.5f, 0.0f
+    };
+    GLfloat texLogo1[] = {
+      0.0f,-0.5f,
+      1.0f,-0.5f,
+      1.0f, 0.0f,
+      0.0f, 0.0f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlLogo1);
+    glVertexPointer(3, GL_FLOAT, 0, vtxLogo1);
+    glTexCoordPointer(2, GL_FLOAT, 0, texLogo1);
+    glDrawArrays(GL_TRIANGLE_FAN,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+
+    GLfloat nmlLogo2[] = {
+        0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxLogo2[] = {
+      -0.0f,-0.5f, 0.0f,
+       2.0f,-0.5f, 0.0f,
+       2.0f, 0.5f, 0.0f,
+      -0.0f, 0.5f, 0.0f
+    };
+    GLfloat texLogo2[] = {
+      0.0f,-1.0f,
+      1.0f,-1.0f,
+      1.0f,-0.5f,
+      0.0f,-0.5f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlLogo2);
+    glVertexPointer(3, GL_FLOAT, 0, vtxLogo2);
+    glTexCoordPointer(2, GL_FLOAT, 0, texLogo2);
+    glDrawArrays(GL_TRIANGLE_FAN,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+}
+
+void draw_extraship5() {
+    glBindTexture(GL_TEXTURE_2D, texture[13]);
+    GLfloat nmlExtraShip5[] = {
+        0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxExtraShip5[] = {
+      -0.5f, -0.5f,  0.0f,
+       0.5f, -0.5f,  0.0f,
+       0.5f,  0.5f,  0.0f,
+      -0.5f,  0.5f,  0.0f
+    };
+    GLfloat texExtraShip5[] = {
+      0.5f, 0.0f,
+      1.0f, 0.0f,
+      1.0f, 1.0f,
+      0.5f, 1.0f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlExtraShip5);
+    glVertexPointer(3, GL_FLOAT, 0, vtxExtraShip5);
+    glTexCoordPointer(2, GL_FLOAT, 0, texExtraShip5);
+    glDrawArrays(GL_TRIANGLE_FAN,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+}
+
+void draw_extraship() {
+    glBindTexture(GL_TEXTURE_2D, texture[13]);
+
+    GLfloat nmlExtraShip[] = {
+        0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxExtraShip[] = {
+      -0.5f, -0.5f,  0.0f,
+       0.5f, -0.5f,  0.0f,
+       0.5f,  0.5f,  0.0f,
+      -0.5f,  0.5f,  0.0f
+    };
+    GLfloat texExtraShip[] = {
+      0.0f, 0.0f,
+      0.5f, 0.0f,
+      0.5f, 1.0f,
+      0.0f, 1.0f
+    };
+    
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlExtraShip);
+    glVertexPointer(3, GL_FLOAT, 0, vtxExtraShip);
+    glTexCoordPointer(2, GL_FLOAT, 0, texExtraShip);
+    glDrawArrays(GL_TRIANGLE_FAN,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+}
+
+void draw_background() {
+    // Upper left
+    glBindTexture(GL_TEXTURE_2D, texture[7]);
+
+    GLfloat nmlUpperLeft[] = {
+        0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxUpperLeft[] = {
+       0.0f        , SCREEN_HEIGHT * 1.4f, 0.0f,
+      -SCREEN_WIDTH, SCREEN_HEIGHT * 1.4f, 0.0f,
+       0.0f        , 0.0f                , 0.0f,
+      -SCREEN_WIDTH, 0.0f                , 0.0f
+    };
+    GLfloat texUpperLeft[] = {
+      1.0f, 1.0f,
+      0.0f, 1.0f,
+      1.0f, 0.0f,
+      0.0f, 0.0f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlUpperLeft);
+    glVertexPointer(3, GL_FLOAT, 0, vtxUpperLeft);
+    glTexCoordPointer(2, GL_FLOAT, 0, texUpperLeft);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+        
+    // Upper right
+    glBindTexture(GL_TEXTURE_2D, texture[8]);
+
+    GLfloat nmlUpperRight[] = {
+        0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxUpperRight[] = {
+      SCREEN_WIDTH, SCREEN_HEIGHT * 1.4f, 0.0f,
+      0.0f        , SCREEN_HEIGHT * 1.4f, 0.0f,
+      SCREEN_WIDTH, 0.0f                , 0.0f,
+      0.0f        , 0.0f                , 0.0f
+    };
+    GLfloat texUpperRight[] = {
+      1.0f, 1.0f,
+      0.0f, 1.0f,
+      1.0f, 0.0f,
+      0.0f, 0.0f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlUpperRight);
+    glVertexPointer(3, GL_FLOAT, 0, vtxUpperRight);
+    glTexCoordPointer(2, GL_FLOAT, 0, texUpperRight);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+        
+    // Lower left
+    glBindTexture(GL_TEXTURE_2D, texture[9]);
+
+    GLfloat nmlLowerLeft[] = {
+        0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxLowerLeft[] = {
+       0.0f        , 0.0f                , 0.0f,
+      -SCREEN_WIDTH, 0.0f                , 0.0f,
+       0.0f        ,-SCREEN_HEIGHT * 1.4f, 0.0f,
+      -SCREEN_WIDTH,-SCREEN_HEIGHT * 1.4f, 0.0f
+    };
+    GLfloat texLowerLeft[] = {
+      1.0f, 1.0f,
+      0.0f, 1.0f,
+      1.0f, 0.0f,
+      0.0f, 0.0f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlLowerLeft);
+    glVertexPointer(3, GL_FLOAT, 0, vtxLowerLeft);
+    glTexCoordPointer(2, GL_FLOAT, 0, texLowerLeft);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+        
+    // Lower right
+    glBindTexture(GL_TEXTURE_2D, texture[10]);
+    GLfloat nmlLowerRight[] = {
+        0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxLowerRight[] = {
+      SCREEN_WIDTH, 0.0f                , 0.0f,
+      0.0f        , 0.0f                , 0.0f,
+      SCREEN_WIDTH,-SCREEN_HEIGHT * 1.4f, 0.0f,
+      0.0f        ,-SCREEN_HEIGHT * 1.4f, 0.0f
+    };
+    GLfloat texLowerRight[] = {
+      1.0f, 1.0f,
+      0.0f, 1.0f,
+      1.0f, 0.0f,
+      0.0f, 0.0f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlLowerRight);
+    glVertexPointer(3, GL_FLOAT, 0, vtxLowerRight);
+    glTexCoordPointer(2, GL_FLOAT, 0, texLowerRight);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+}
+
+void draw_bigspace() {
+        glColor4ub(255, 255, 255, 128);
+        glTranslatef(-SCREEN_WIDTH*2,-SCREEN_HEIGHT*2,0.0f);
+        draw_background();
+        glTranslatef(+SCREEN_WIDTH*2,0.0f,0.0f);
+        draw_background();
+        glTranslatef(+SCREEN_WIDTH*2,0.0f,0.0f);
+        draw_background();
+        glTranslatef(-SCREEN_WIDTH*2,0.0f,0.0f);
+
+        glTranslatef(-SCREEN_WIDTH*2,+SCREEN_HEIGHT*2,0.0f);
+        draw_background();
+        glTranslatef(+SCREEN_WIDTH*2,0.0f,0.0f);
+        draw_background();
+        glTranslatef(+SCREEN_WIDTH*2,0.0f,0.0f);
+        draw_background();
+        glTranslatef(-SCREEN_WIDTH*2,0.0f,0.0f);
+
+        glTranslatef(-SCREEN_WIDTH*2,+SCREEN_HEIGHT*2,0.0f);
+        draw_background();
+        glTranslatef(+SCREEN_WIDTH*2,0.0f,0.0f);
+        draw_background();
+        glTranslatef(+SCREEN_WIDTH*2,0.0f,0.0f);
+        draw_background();
+        glTranslatef(-SCREEN_WIDTH*2,0.0f,0.0f);
 }
 
 #define SDL_LOCKIFMUST(s) (SDL_MUSTLOCK(s) ? SDL_LockSurface(s) : 0)
@@ -1466,6 +2106,7 @@ GLvoid BuildFont(GLvoid)								// Build Our Font Display List
 		cy=float(loop/16)/16.0f;						// Y Position Of Current Character
 
 		glNewList(font_list+loop,GL_COMPILE);		// Start Building A List
+#if 0
 			glBegin(GL_TRIANGLE_STRIP);				// Use A Triangle Strip For Each Character
 				glTexCoord2f(cx+0.0625f,1-cy);		// Texture Coord (Top Right)
 				glVertex2f(1.0f,1.0f);					// Vertex Coord (Top Right)
@@ -1476,6 +2117,30 @@ GLvoid BuildFont(GLvoid)								// Build Our Font Display List
 				glTexCoord2f(cx,1-cy-0.0625f);		// Texture Coord (Bottom Left)
 				glVertex2f(0.0f,0.0f);					// Vertex Coord (Bottom Left)
 			glEnd();											// Done Building Our Quad (Character)
+#else
+        GLfloat vtx[] = {
+             1.0f, 1.0f,
+             0.0f, 1.0f,
+             1.0f, 0.0f,
+             0.0f, 0.0f
+           };
+           GLfloat tex[] = {
+             cx+0.0625f, 1-cy,
+             cx, 1-cy,
+             cx+0.0625f, 1-cy-0.0625f,
+             cx, 1-cy-0.0625f
+           };
+           
+           glEnableClientState(GL_VERTEX_ARRAY);
+           glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+           glVertexPointer(2, GL_FLOAT, 0, vtx);
+           glTexCoordPointer(2, GL_FLOAT, 0, tex);
+           glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+           glDisableClientState(GL_VERTEX_ARRAY);
+           glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+#endif
 			
 			glTranslatef(0.6f,0.0f,0.0f);				// Move To The Right Of The Character
 		glEndList();										// Done Building The Display List
@@ -2103,14 +2768,17 @@ void DrawGLBackground(GLvoid)
 
 			glTranslatef(g_fBackgroundX, g_fBackgroundY, 0);
 			glColor4ub(255, 255, 255, 255);
-			glCallList(bigspace_list);
+			//glCallList(bigspace_list);
+            draw_bigspace();
 
 			renderenable(render_blend);
 
 			glTranslatef(0, 0, 5.0f);
 			glColor4ub(255, 255, 255, 128);
 			glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
-			glCallList(bigspace_list);
+			//glCallList(bigspace_list);
+            draw_bigspace();
+
 			fScalar = -0.25f * (float)sin(g_fNow * 0.001f);
 // ******************** Modified By NeHe (04/30/00) ********************
 
@@ -2130,7 +2798,8 @@ void DrawGLBackground(GLvoid)
 			glPushMatrix();
 				glTranslatef(fScalar, fScalar, -30.0f - fScalar);
 				glRotatef(fScalar, fScalar, -fScalar, 1.0f);
-				glCallList(background_list);
+				//glCallList(background_list);
+                draw_background();
 			glPopMatrix();
 
 		// Draw stars
@@ -2222,7 +2891,8 @@ void DrawGLBackground(GLvoid)
 			glColor4ub(255,255,255,255);
 			glPushMatrix();
 				glTranslatef(0.0f, 0.0f, -35.0f);
-				glCallList(background_list);
+				//glCallList(background_list);
+                draw_background();
 			glPopMatrix();
 			break;
 		
@@ -2234,7 +2904,8 @@ void DrawGLBackground(GLvoid)
 				fScalar = float(0.25f * sin(g_fNow));
 				glTranslatef(fScalar, fScalar, -30.0f - fScalar);
 				glRotatef(fScalar, fScalar, -fScalar, 1.0f);
-				glCallList(background_list);
+				//glCallList(background_list);
+                draw_background();
 			glPopMatrix();
 			break;
 
@@ -2253,7 +2924,8 @@ void DrawGLBackground(GLvoid)
 			glRotatef(180.0f * float(cos(g_fBackgroundRot/10.0f)), 0.0f, 0.0f, 1.0f);
 			glTranslatef((3.0f*float(cos(g_fBackgroundRot)))+(2.1f*float(sin(g_fBackgroundRot*1.4f))),(2.8f*float(sin(g_fBackgroundRot)))+(1.3f*float(sin(g_fBackgroundRot*1.4f))),0.0f);
 			glRotatef(10.0f*float(sin(g_fBackgroundRot*1.2f)),1.0f,0.0f,0.0f);
-			glCallList(background_list);
+			//glCallList(background_list);
+            draw_background();
 			/* */
 
 			glPopMatrix();
@@ -2573,7 +3245,8 @@ int DrawGLScene(GLvoid)
 						}
 
 						glRotatef(actors[i].rx, 0.0f, 0.0f, 1.0f);
-						glCallList(actors[i].displaylistid);
+						//glCallList(actors[i].displaylistid);
+                        draw_sfire();
 
 						// Draw friendly shots blue, enemy shots red
 						if (b3d)
@@ -2593,7 +3266,8 @@ int DrawGLScene(GLvoid)
 
 						glTranslatef(0.0f, 0.0f, 0.1f);
 						glRotatef(actors[i].rx * -2.0f, 0.0f, 0.0f, 1.0f);
-						glCallList(actors[i].displaylistid);
+						//glCallList(actors[i].displaylistid);
+                        draw_sfire();
 
 						break;
 
@@ -2618,7 +3292,8 @@ int DrawGLScene(GLvoid)
 							glColor4ub(actors[i].color.r, actors[i].color.g, actors[i].color.b, (GLuint)(fRemainingLifePct * 235.0f) + 20);
 
 						glRotatef(actors[i].rx, 1.0f, 0.0f, 0.0f);
-						glCallList(actors[i].displaylistid);
+						//glCallList(actors[i].displaylistid);
+                        draw_blast();
 						
 						glScalef(0.75f, 0.75f, 0.75f);
 
@@ -2627,7 +3302,8 @@ int DrawGLScene(GLvoid)
 						else
 							glColor4ub(	(GLuint)(fRemainingLifePct * 128.0f) + 64, (GLuint)(fRemainingLifePct * 64.0f), 0, (GLuint)((fRemainingLifePct * 235.0f) + 20));
 
-						glCallList(actors[i].displaylistid);
+                        //glCallList(actors[i].displaylistid);
+                        draw_blast();
 						glScalef(1.0f,1.0f,1.0f);
 
 						break;
@@ -2709,7 +3385,8 @@ int DrawGLScene(GLvoid)
 							glColor4ub(actors[i].color.r, actors[i].color.g, actors[i].color.b, (GLuint)((fRemainingLifePct) * 128.0f) + 64);
 
 						// Display object
-						glCallList(actors[i].displaylistid);
+						//glCallList(actors[i].displaylistid);
+                        draw_smoke();
 
 						// If flaming...
 						if (actors[i].type == ACTOR_FLAMINGPARTICLE)
@@ -2722,7 +3399,8 @@ int DrawGLScene(GLvoid)
 							else
 								glColor4ub(255,255,0,64);
 
-							glCallList(actors[i].displaylistid);
+							//glCallList(actors[i].displaylistid);
+                            draw_smoke();
 							glScalef(1.0f, 1.0f, 1.0f);
 						}
 						
@@ -2748,12 +3426,15 @@ int DrawGLScene(GLvoid)
 
 						glRotatef(actors[i].rx, 0.0f, 0.0f, 1.0f);
 						glRotatef(actors[i].rz, 1.0f, 0.0f, 0.0f);
-						glCallList(actors[i].displaylistid);
+						//glCallList(actors[i].displaylistid);
+                        draw_shields();
+                        
 
 						glTranslatef(0.0f, 0.0f, 0.1f);
 						glRotatef(actors[i].rx * -2.0f, 0.0f, 0.0f, 1.0f);
 						glRotatef(actors[i].rz * -2.0f, 1.0f, 0.0f, 0.0f);
-						glCallList(actors[i].displaylistid);
+						//glCallList(actors[i].displaylistid);
+                        draw_shields();
 
 						break;
 				
@@ -2782,7 +3463,8 @@ int DrawGLScene(GLvoid)
 						else
 							glColor4ub(actors[i].color.r, actors[i].color.g, actors[i].color.b, (GLuint)(128 * fRemainingLifePct) + 128);
 						
-						glCallList(actors[i].displaylistid);
+						//glCallList(actors[i].displaylistid);
+                        draw_debris();
 
 						glScalef(1.0f, 1.0f, 1.0f);
 						
@@ -2812,7 +3494,8 @@ int DrawGLScene(GLvoid)
 
 						glRotatef(actors[i].rz, 0.0f, 0.0f, 1.0f);
 
-						glCallList(actors[i].displaylistid);
+						//glCallList(actors[i].displaylistid);
+                        draw_ufo();
 
 						glScalef(1.0f, 1.0f, 1.0f);
 
@@ -2838,7 +3521,8 @@ int DrawGLScene(GLvoid)
 						glRotatef(actors[i].rz, 0.0f, 0.0f, 1.0f);
 						glRotatef(actors[i].rx, 1.0f, 0.0f, 0.0f);
 						glRotatef(actors[i].ry, 0.0f, 1.0f, 0.0f);
-						glCallList(actors[i].displaylistid);
+						//glCallList(actors[i].displaylistid);
+                        draw_player();
 						break;
 
 
@@ -2865,7 +3549,12 @@ int DrawGLScene(GLvoid)
 						glRotatef(actors[i].ry, 0.0f, 1.0f, 0.0f);
 						glRotatef(actors[i].rx, 1.0f, 0.0f, 0.0f);
 						glRotatef(actors[i].rz, 0.0f, 0.0f, 1.0f);
-						glCallList(actors[i].displaylistid);
+                        
+                        // TODO: Are there any other types that get called here?
+                        //glCallList(actors[i].displaylistid);
+                        if (actors[i].type == ACTOR_ROCK)
+                            draw_rock();
+                        
 						break;
 				}
 				
@@ -3015,7 +3704,8 @@ int DrawGLScene(GLvoid)
 						glScalef(2.4f, 2.4f, 1.0f);
 						renderenable(render_blend);
 						renderdisable(render_lighting | render_depthtest | render_texture);
-						glCallList(debris_list);
+						//glCallList(debris_list);
+                        draw_debris();
 						glColor3f(1.0f,1.0f,1.0f);
 
 						// Restore matrix
@@ -3057,7 +3747,8 @@ int DrawGLScene(GLvoid)
 				glTranslatef(0.0f, 0.45f, -4.5f);
 				// glColor4ub(255, 255, 255, 160 + (char)(20.0f * sin(g_fNow / 0.250f)));
 				glColor4ub(255, 255, 255, 255);
-				glCallList(logo_list);
+//				glCallList(logo_list);
+                draw_logo();
 				glPopMatrix();
 			
 
@@ -3095,7 +3786,8 @@ int DrawGLScene(GLvoid)
 		while (i > 6)
 		{
 			glTranslatef(1.0f, 0, 0);
-			glCallList(extraship5_list);
+			//glCallList(extraship5_list);
+            draw_extraship5();
 			i -= 5;
 		}
 	glPopMatrix();
@@ -3104,7 +3796,8 @@ int DrawGLScene(GLvoid)
 		while (i > 1)
 		{
 			glTranslatef(1.0f, 0, 0);
-			glCallList(extraship_list);
+			//glCallList(extraship_list);
+            draw_extraship();
 			i -= 1;
 		}
 	glPopMatrix();
