@@ -596,7 +596,8 @@ float randFloat(const float& min, const float& max) {
 //
 GLint Gen3DObjectList()
 {
- 
+
+#ifndef GLES
 	int i =0;
 	int j =0;
 
@@ -606,7 +607,6 @@ GLint Gen3DObjectList()
 	// Player
 	glNewList(player_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[0]);
-#if 0
         glBegin (GL_TRIANGLES);
         int vtxIndex = 0;
         for(i=0;i<sizeof(player_face_indicies)/sizeof(player_face_indicies[0]);i++)
@@ -622,55 +622,12 @@ GLint Gen3DObjectList()
 				}
 			}
     glEnd ();
-#else
-    GLfloat vtxPlayer[sizeof(player_face_indicies)];
-    GLfloat nmlPlayer[sizeof(player_face_indicies)];
-    GLfloat texPlayer[(sizeof(player_face_indicies) / 3) * 2];
-
-    int vtxIndex = 0;
-    int nmlIndex = 0;
-    int texIndex = 0;
-    for(i=0;i<sizeof(player_face_indicies)/sizeof(player_face_indicies[0]);i++)
-    {
-        for(j=0;j<3;j++)
-        {
-            int vi = player_face_indicies[i][j];
-            int ni = player_face_indicies[i][j+3];
-            int ti = player_face_indicies[i][j+6];
-            
-            nmlPlayer[nmlIndex++] = player_normals[ni][0];
-            nmlPlayer[nmlIndex++] = player_normals[ni][1];
-            nmlPlayer[nmlIndex++] = player_normals[ni][2];
-
-            texPlayer[texIndex++] = player_textures[ti][0];
-            texPlayer[texIndex++] = player_textures[ti][1];
-
-            vtxPlayer[vtxIndex++] = player_verticies[vi][0];
-            vtxPlayer[vtxIndex++] = player_verticies[vi][1];
-            vtxPlayer[vtxIndex++] = player_verticies[vi][2];
-        }
-    }
-    
-    glEnableClientState(GL_NORMAL_ARRAY);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlPlayer);
-    glVertexPointer(3, GL_FLOAT, 0, vtxPlayer);
-    glTexCoordPointer(2, GL_FLOAT, 0, texPlayer);
-    glDrawArrays(GL_TRIANGLES,0, (sizeof(player_face_indicies)/sizeof(player_face_indicies[0]) * 3));
-
-    glDisableClientState(GL_NORMAL_ARRAY);
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-#endif
 	glEndList();
 
 	// Read rock data from arrays
 	rock_list = player_list + 1;
 	glNewList(rock_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[6]);
-#if 0
 		glBegin (GL_TRIANGLES);
 			for(i=0;i<sizeof(rock_face_indicies)/sizeof(rock_face_indicies[0]);i++)
 			{
@@ -685,85 +642,18 @@ GLint Gen3DObjectList()
 				}
 			}
 		glEnd ();
-#else
-    GLfloat vtxRock[sizeof(rock_face_indicies)];
-    GLfloat nmlRock[sizeof(rock_face_indicies)];
-    GLfloat texRock[(sizeof(rock_face_indicies) / 3) * 2];
-
-    int vtxRockIndex = 0;
-    int nmlRockIndex = 0;
-    int texRockIndex = 0;
-    for(i=0;i<sizeof(rock_face_indicies)/sizeof(rock_face_indicies[0]);i++)
-    {
-        for(j=0;j<3;j++)
-        {
-            int vi = rock_face_indicies[i][j];
-            int ni = rock_face_indicies[i][j+3];
-            int ti = rock_face_indicies[i][j+6];
-            
-            nmlRock[nmlRockIndex++] = rock_normals[ni][0];
-            nmlRock[nmlRockIndex++] = rock_normals[ni][1];
-            nmlRock[nmlRockIndex++] = rock_normals[ni][2];
-
-            texRock[texRockIndex++] = rock_textures[ti][0];
-            texRock[texRockIndex++] = rock_textures[ti][1];
-
-            vtxRock[vtxRockIndex++] = rock_verticies[vi][0];
-            vtxRock[vtxRockIndex++] = rock_verticies[vi][1];
-            vtxRock[vtxRockIndex++] = rock_verticies[vi][2];
-        }
-    }
-    
-    glEnableClientState(GL_NORMAL_ARRAY);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlRock);
-    glVertexPointer(3, GL_FLOAT, 0, vtxRock);
-    glTexCoordPointer(2, GL_FLOAT, 0, texRock);
-    glDrawArrays(GL_TRIANGLES,0, (sizeof(rock_face_indicies)/sizeof(rock_face_indicies[0]) * 3));
-
-    glDisableClientState(GL_NORMAL_ARRAY);
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-#endif
 	glEndList();
 
 	// Draw shot as textured quad
 	shot_list = rock_list + 1;
 	glNewList(shot_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[1]);
-#if 0
 		glBegin(GL_TRIANGLE_STRIP);
 			glTexCoord2f(1.0f, 1.0f); glVertex3f( 0.5f, 0.5f, 0.0f);
 			glTexCoord2f(0.0f, 1.0f); glVertex3f(-0.5f, 0.5f, 0.0f);
 			glTexCoord2f(1.0f, 0.0f); glVertex3f( 0.5f,-0.5f, 0.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f(-0.5f,-0.5f, 0.0f);
 		glEnd();
-#else
-    GLfloat vtxShot[] = {
-      0.5f, 0.5f, 0.0f,
-      -0.5f, 0.5f, 0.0f,
-       0.5f,-0.5f, 0.0f,
-      -0.5f,-0.5f, 0.0f
-    };
-    GLfloat texShot[] = {
-      1.0f, 1.0f,
-      0.0f, 1.0f,
-      1.0f, 0.0f,
-      0.0f, 0.0f
-    };
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    glVertexPointer(3, GL_FLOAT, 0, vtxShot);
-    glTexCoordPointer(2, GL_FLOAT, 0, texShot);
-    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-#endif
 
 	glEndList();
 
@@ -771,73 +661,29 @@ GLint Gen3DObjectList()
 	shields_list = shot_list + 1;
 	glNewList(shields_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[2]);
-#if 0
 		glBegin(GL_TRIANGLE_STRIP);
 			glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f, 1.0f, 0.0f);
 			glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 0.0f);
 			glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,-1.0f, 0.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,-1.0f, 0.0f);
 		glEnd();
-#else
-    GLfloat vtxShields[] = {
-       1.0f, 1.0f, 0.0f,
-      -1.0f, 1.0f, 0.0f,
-       1.0f,-1.0f, 0.0f,
-      -1.0f,-1.0f, 0.0f
-    };
-    GLfloat texShields[] = {
-      1.0f, 1.0f,
-      0.0f, 1.0f,
-      1.0f, 0.0f,
-      0.0f, 0.0f
-    };
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    glVertexPointer(3, GL_FLOAT, 0, vtxShields);
-    glTexCoordPointer(2, GL_FLOAT, 0, texShields);
-    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-#endif
 	glEndList();
 
 	// Debris - textured triangle
 	debris_list = shields_list + 1;
 	glNewList(debris_list, GL_COMPILE);
-#if 0
 		glBegin(GL_TRIANGLE_STRIP);
 			glVertex3f( 0.15f,  0.15f,  0.0f);
 			glVertex3f(-0.15f,  0.15f,  0.0f);
 			glVertex3f( 0.15f, -0.15f,  0.0f);
 			glVertex3f(-0.15f, -0.15f,  0.0f);
 		glEnd();
-#else
-    GLfloat vtxDebris[] = {
-       0.15f,  0.15f,  0.0f,
-      -0.15f,  0.15f,  0.0f,
-       0.15f, -0.15f,  0.0f,
-      -0.15f, -0.15f,  0.0f
-    };
-
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    glVertexPointer(3, GL_FLOAT, 0, vtxDebris);
-    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-#endif
 	glEndList();
 
 	// Blast
 	blast_list = debris_list + 1;
 	glNewList(blast_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[3]);
-#if 0
 		glBegin(GL_TRIANGLE_STRIP);
 			glNormal3f( 0.0f, 0.0f, 1.0f);
 			glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  0.0f);
@@ -845,43 +691,12 @@ GLint Gen3DObjectList()
 			glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  0.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  0.0f);
 		glEnd();
-#else
-    GLfloat nmlBlast[] = {
-        0.0f, 0.0f, 1.0f
-    };
-    GLfloat vtxBlast[] = {
-       1.0f,  1.0f,  0.0f,
-      -1.0f,  1.0f,  0.0f,
-       1.0f, -1.0f,  0.0f,
-      -1.0f, -1.0f,  0.0f
-    };
-    GLfloat texBlast[] = {
-      1.0f, 1.0f,
-      0.0f, 1.0f,
-      1.0f, 0.0f,
-      0.0f, 0.0f
-    };
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlBlast);
-    glVertexPointer(3, GL_FLOAT, 0, vtxBlast);
-    glTexCoordPointer(2, GL_FLOAT, 0, texBlast);
-    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-#endif
 	glEndList();
 		
 	// Smoke - textured quad
 	smoke_list = blast_list + 1;
 	glNewList(smoke_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[4]);
-#if 0
 		glBegin(GL_TRIANGLE_STRIP);
 			glNormal3f( 0.0f, 0.0f, 1.0f);
 			glTexCoord2f(1.0f, 1.0f); glVertex3f( 0.25f,  0.25f,  0.0f);
@@ -889,43 +704,12 @@ GLint Gen3DObjectList()
 			glTexCoord2f(1.0f, 0.0f); glVertex3f( 0.25f, -0.25f,  0.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f(-0.25f, -0.25f,  0.0f);
 		glEnd();
-#else
-    GLfloat nmlSmoke[] = {
-        0.0f, 0.0f, 1.0f
-    };
-    GLfloat vtxSmoke[] = {
-       0.25f,  0.25f,  0.0f,
-      -0.25f,  0.25f,  0.0f,
-       0.25f, -0.25f,  0.0f,
-      -0.25f, -0.25f,  0.0f
-    };
-    GLfloat texSmoke[] = {
-      1.0f, 1.0f,
-      0.0f, 1.0f,
-      1.0f, 0.0f,
-      0.0f, 0.0f
-    };
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlSmoke);
-    glVertexPointer(3, GL_FLOAT, 0, vtxSmoke);
-    glTexCoordPointer(2, GL_FLOAT, 0, texSmoke);
-    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-#endif
 	glEndList();
 
 	// Read ufo data from arrays
 	lsaucer_list = smoke_list + 1;
 	glNewList(lsaucer_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[11]);
-#if 0
 		glBegin (GL_TRIANGLES);
 		for(i=0;i<sizeof(ufo_face_indicies)/sizeof(ufo_face_indicies[0]);i++)
 			{
@@ -940,55 +724,12 @@ GLint Gen3DObjectList()
 				}
 			}
 		glEnd ();
-#else
-    GLfloat vtxUfo[sizeof(ufo_face_indicies)];
-    GLfloat nmlUfo[sizeof(ufo_face_indicies)];
-    GLfloat texUfo[(sizeof(ufo_face_indicies) / 3) * 2];
-    
-    int vtxUfoIndex = 0;
-    int nmlUfoIndex = 0;
-    int texUfoIndex = 0;
-    for(i=0;i<sizeof(ufo_face_indicies)/sizeof(ufo_face_indicies[0]);i++)
-    {
-        for(j=0;j<3;j++)
-        {
-            int vi = ufo_face_indicies[i][j];
-            int ni = ufo_face_indicies[i][j+3];
-            int ti = ufo_face_indicies[i][j+6];
-            
-            nmlUfo[nmlUfoIndex++] = ufo_normals[ni][0];
-            nmlUfo[nmlUfoIndex++] = ufo_normals[ni][1];
-            nmlUfo[nmlUfoIndex++] = ufo_normals[ni][2];
-
-            texUfo[texUfoIndex++] = ufo_textures[ti][0];
-            texUfo[texUfoIndex++] = ufo_textures[ti][1];
-
-            vtxUfo[vtxUfoIndex++] = ufo_verticies[vi][0];
-            vtxUfo[vtxUfoIndex++] = ufo_verticies[vi][1];
-            vtxUfo[vtxUfoIndex++] = ufo_verticies[vi][2];
-        }
-    }
-    
-    glEnableClientState(GL_NORMAL_ARRAY);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlUfo);
-    glVertexPointer(3, GL_FLOAT, 0, vtxUfo);
-    glTexCoordPointer(2, GL_FLOAT, 0, texUfo);
-    glDrawArrays(GL_TRIANGLES,0, (sizeof(ufo_face_indicies)/sizeof(ufo_face_indicies[0]) * 3));
-
-    glDisableClientState(GL_NORMAL_ARRAY);
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-#endif
 	glEndList();
 
 	// Draw sfire as textured quad
 	sfire_list = lsaucer_list + 1;
 	glNewList(sfire_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[1]);
-#if 0
 		glBegin(GL_TRIANGLE_STRIP);
 			glNormal3f( 0.0f, 0.0f, 1.0f);
 			glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f, 1.0f, 0.0f);
@@ -996,36 +737,6 @@ GLint Gen3DObjectList()
 			glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,-1.0f, 0.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,-1.0f, 0.0f);
 		glEnd();
-#else
-    GLfloat nmlSfire[] = {
-        0.0f, 0.0f, 1.0f
-    };
-    GLfloat vtxSfire[] = {
-       1.0f, 1.0f, 0.0f,
-      -1.0f, 1.0f, 0.0f,
-       1.0f,-1.0f, 0.0f,
-      -1.0f,-1.0f, 0.0f
-    };
-    GLfloat texSfire[] = {
-      1.0f, 1.0f,
-      0.0f, 1.0f,
-      1.0f, 0.0f,
-      0.0f, 0.0f
-    };
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlSfire);
-    glVertexPointer(3, GL_FLOAT, 0, vtxSfire);
-    glTexCoordPointer(2, GL_FLOAT, 0, texSfire);
-    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-#endif
 	glEndList();
 
 	// Draw background as textured quad
@@ -1034,7 +745,6 @@ GLint Gen3DObjectList()
 		
 		// Upper left
 		glBindTexture(GL_TEXTURE_2D, texture[7]);
-#if 0
 		glBegin(GL_TRIANGLE_STRIP);
 			glNormal3f( 0.0f, 0.0f, 1.0f);
 			glTexCoord2f(1.0f, 1.0f); glVertex3f( 0.0f        , SCREEN_HEIGHT * 1.4f, 0.0f);
@@ -1042,40 +752,8 @@ GLint Gen3DObjectList()
 			glTexCoord2f(1.0f, 0.0f); glVertex3f( 0.0f        , 0.0f                , 0.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f(-SCREEN_WIDTH, 0.0f                , 0.0f);
 		glEnd();
-#else
-    GLfloat nmlUpperLeft[] = {
-        0.0f, 0.0f, 1.0f
-    };
-    GLfloat vtxUpperLeft[] = {
-       0.0f        , SCREEN_HEIGHT * 1.4f, 0.0f,
-      -SCREEN_WIDTH, SCREEN_HEIGHT * 1.4f, 0.0f,
-       0.0f        , 0.0f                , 0.0f,
-      -SCREEN_WIDTH, 0.0f                , 0.0f
-    };
-    GLfloat texUpperLeft[] = {
-      1.0f, 1.0f,
-      0.0f, 1.0f,
-      1.0f, 0.0f,
-      0.0f, 0.0f
-    };
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlUpperLeft);
-    glVertexPointer(3, GL_FLOAT, 0, vtxUpperLeft);
-    glTexCoordPointer(2, GL_FLOAT, 0, texUpperLeft);
-    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-#endif
-		
 		// Upper right
 		glBindTexture(GL_TEXTURE_2D, texture[8]);
-#if 0
 		glBegin(GL_TRIANGLE_STRIP);
 			glNormal3f( 0.0f, 0.0f, 1.0f);
 			glTexCoord2f(1.0f, 1.0f); glVertex3f( SCREEN_WIDTH, SCREEN_HEIGHT * 1.4f, 0.0f);
@@ -1083,40 +761,9 @@ GLint Gen3DObjectList()
 			glTexCoord2f(1.0f, 0.0f); glVertex3f( SCREEN_WIDTH, 0.0f                , 0.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f( 0.0f        , 0.0f                , 0.0f);
 		glEnd();
-#else
-    GLfloat nmlUpperRight[] = {
-        0.0f, 0.0f, 1.0f
-    };
-    GLfloat vtxUpperRight[] = {
-      SCREEN_WIDTH, SCREEN_HEIGHT * 1.4f, 0.0f,
-      0.0f        , SCREEN_HEIGHT * 1.4f, 0.0f,
-      SCREEN_WIDTH, 0.0f                , 0.0f,
-      0.0f        , 0.0f                , 0.0f
-    };
-    GLfloat texUpperRight[] = {
-      1.0f, 1.0f,
-      0.0f, 1.0f,
-      1.0f, 0.0f,
-      0.0f, 0.0f
-    };
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlUpperRight);
-    glVertexPointer(3, GL_FLOAT, 0, vtxUpperRight);
-    glTexCoordPointer(2, GL_FLOAT, 0, texUpperRight);
-    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-#endif
 		
 		// Lower left
 		glBindTexture(GL_TEXTURE_2D, texture[9]);
-#if 0
 		glBegin(GL_TRIANGLE_STRIP);
 			glNormal3f( 0.0f, 0.0f, 1.0f);
 			glTexCoord2f(1.0f, 1.0f); glVertex3f( 0.0f        , 0.0f                , 0.0f);
@@ -1124,40 +771,9 @@ GLint Gen3DObjectList()
 			glTexCoord2f(1.0f, 0.0f); glVertex3f( 0.0f        ,-SCREEN_HEIGHT * 1.4f, 0.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f(-SCREEN_WIDTH,-SCREEN_HEIGHT * 1.4f, 0.0f);
 		glEnd();
-#else
-    GLfloat nmlLowerLeft[] = {
-        0.0f, 0.0f, 1.0f
-    };
-    GLfloat vtxLowerLeft[] = {
-       0.0f        , 0.0f                , 0.0f,
-      -SCREEN_WIDTH, 0.0f                , 0.0f,
-       0.0f        ,-SCREEN_HEIGHT * 1.4f, 0.0f,
-      -SCREEN_WIDTH,-SCREEN_HEIGHT * 1.4f, 0.0f
-    };
-    GLfloat texLowerLeft[] = {
-      1.0f, 1.0f,
-      0.0f, 1.0f,
-      1.0f, 0.0f,
-      0.0f, 0.0f
-    };
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlLowerLeft);
-    glVertexPointer(3, GL_FLOAT, 0, vtxLowerLeft);
-    glTexCoordPointer(2, GL_FLOAT, 0, texLowerLeft);
-    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-#endif
 		
 		// Lower right
 		glBindTexture(GL_TEXTURE_2D, texture[10]);
-#if 0
 		glBegin(GL_TRIANGLE_STRIP);
 			glNormal3f( 0.0f, 0.0f, 1.0f);
 			glTexCoord2f(1.0f, 1.0f); glVertex3f( SCREEN_WIDTH, 0.0f                , 0.0f);
@@ -1165,43 +781,12 @@ GLint Gen3DObjectList()
 			glTexCoord2f(1.0f, 0.0f); glVertex3f( SCREEN_WIDTH,-SCREEN_HEIGHT * 1.4f, 0.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f( 0.0f        ,-SCREEN_HEIGHT * 1.4f, 0.0f);
 		glEnd();
-#else
-    GLfloat nmlLowerRight[] = {
-        0.0f, 0.0f, 1.0f
-    };
-    GLfloat vtxLowerRight[] = {
-      SCREEN_WIDTH, 0.0f                , 0.0f,
-      0.0f        , 0.0f                , 0.0f,
-      SCREEN_WIDTH,-SCREEN_HEIGHT * 1.4f, 0.0f,
-      0.0f        ,-SCREEN_HEIGHT * 1.4f, 0.0f
-    };
-    GLfloat texLowerRight[] = {
-      1.0f, 1.0f,
-      0.0f, 1.0f,
-      1.0f, 0.0f,
-      0.0f, 0.0f
-    };
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlLowerRight);
-    glVertexPointer(3, GL_FLOAT, 0, vtxLowerRight);
-    glTexCoordPointer(2, GL_FLOAT, 0, texLowerRight);
-    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-#endif
 	glEndList();
 
 	// Logo
 	logo_list = background_list + 1;
 	glNewList(logo_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[12]);
-#if 0
 		glBegin(GL_QUADS);
 			glNormal3f( 0.0f, 0.0f, 1.0f);
 			glTexCoord2f(0.0f,-0.5f); glVertex3f(-2.0f,-0.5f, 0.0f);
@@ -1216,66 +801,6 @@ GLint Gen3DObjectList()
 			glTexCoord2f(1.0f,-0.5f); glVertex3f( 2.0f, 0.5f, 0.0f);
 			glTexCoord2f(0.0f,-0.5f); glVertex3f(-0.0f, 0.5f, 0.0f);
 		glEnd();
-#else
-    GLfloat nmlLogo1[] = {
-        0.0f, 0.0f, 1.0f
-    };
-    GLfloat vtxLogo1[] = {
-      -2.0f,-0.5f, 0.0f,
-       0.0f,-0.5f, 0.0f,
-       0.0f, 0.5f, 0.0f,
-      -2.0f, 0.5f, 0.0f
-    };
-    GLfloat texLogo1[] = {
-      0.0f,-0.5f,
-      1.0f,-0.5f,
-      1.0f, 0.0f,
-      0.0f, 0.0f
-    };
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlLogo1);
-    glVertexPointer(3, GL_FLOAT, 0, vtxLogo1);
-    glTexCoordPointer(2, GL_FLOAT, 0, texLogo1);
-    glDrawArrays(GL_TRIANGLE_FAN,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-
-    GLfloat nmlLogo2[] = {
-        0.0f, 0.0f, 1.0f
-    };
-    GLfloat vtxLogo2[] = {
-      -0.0f,-0.5f, 0.0f,
-       2.0f,-0.5f, 0.0f,
-       2.0f, 0.5f, 0.0f,
-      -0.0f, 0.5f, 0.0f
-    };
-    GLfloat texLogo2[] = {
-      0.0f,-1.0f,
-      1.0f,-1.0f,
-      1.0f,-0.5f,
-      0.0f,-0.5f
-    };
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlLogo2);
-    glVertexPointer(3, GL_FLOAT, 0, vtxLogo2);
-    glTexCoordPointer(2, GL_FLOAT, 0, texLogo2);
-    glDrawArrays(GL_TRIANGLE_FAN,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-#endif
-	
 		
 	glEndList();
 	
@@ -1284,7 +809,6 @@ GLint Gen3DObjectList()
 	// Big Space
 	bigspace_list = logo_list + 1;
 	glNewList(bigspace_list, GL_COMPILE);
-#if 0
 		glColor4ub(255, 255, 255, 128);
 		glTranslatef(-SCREEN_WIDTH*2,-SCREEN_HEIGHT*2,0.0f);
 		glCallList(background_list);
@@ -1309,7 +833,6 @@ GLint Gen3DObjectList()
 		glTranslatef(+SCREEN_WIDTH*2,0.0f,0.0f);
 		glCallList(background_list);
 		glTranslatef(-SCREEN_WIDTH*2,0.0f,0.0f);
-#endif
 	glEndList();
 
 // ******************** Modified By NeHe (04/30/00) ********************
@@ -1319,7 +842,6 @@ GLint Gen3DObjectList()
 	extraship_list = bigspace_list + 1;
 	glNewList(extraship_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[13]);
-#if 0
 		glBegin(GL_QUADS);
 			glNormal3f( 0.0f, 0.0f, 1.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f(-0.5f, -0.5f,  0.0f);
@@ -1327,43 +849,12 @@ GLint Gen3DObjectList()
 			glTexCoord2f(0.5f, 1.0f); glVertex3f( 0.5f,  0.5f,  0.0f);
 			glTexCoord2f(0.0f, 1.0f); glVertex3f(-0.5f,  0.5f,  0.0f);
 		glEnd();
-#else
-    GLfloat nmlExtraShip[] = {
-        0.0f, 0.0f, 1.0f
-    };
-    GLfloat vtxExtraShip[] = {
-      -0.5f, -0.5f,  0.0f,
-       0.5f, -0.5f,  0.0f,
-       0.5f,  0.5f,  0.0f,
-      -0.5f,  0.5f,  0.0f
-    };
-    GLfloat texExtraShip[] = {
-      0.0f, 0.0f,
-      0.5f, 0.0f,
-      0.5f, 1.0f,
-      0.0f, 1.0f
-    };
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-
-    glNormalPointer(GL_FLOAT, 0, nmlExtraShip);
-    glVertexPointer(3, GL_FLOAT, 0, vtxExtraShip);
-    glTexCoordPointer(2, GL_FLOAT, 0, texExtraShip);
-    glDrawArrays(GL_TRIANGLE_FAN,0,4);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-#endif
 	glEndList();
 
 	// Five extra ships
 	extraship5_list = extraship_list + 1;
 	glNewList(extraship5_list, GL_COMPILE);
 		glBindTexture(GL_TEXTURE_2D, texture[13]);
-#if 0
 		glBegin(GL_QUADS);
 			glNormal3f( 0.0f, 0.0f, 1.0f);
 			glTexCoord2f(0.5f, 0.0f); glVertex3f(-0.5f, -0.5f,  0.0f);
@@ -1371,37 +862,8 @@ GLint Gen3DObjectList()
 			glTexCoord2f(1.0f, 1.0f); glVertex3f( 0.5f,  0.5f,  0.0f);
 			glTexCoord2f(0.5f, 1.0f); glVertex3f(-0.5f,  0.5f,  0.0f);
 		glEnd();
-#else
-        GLfloat nmlExtraShip5[] = {
-            0.0f, 0.0f, 1.0f
-        };
-        GLfloat vtxExtraShip5[] = {
-          -0.5f, -0.5f,  0.0f,
-           0.5f, -0.5f,  0.0f,
-           0.5f,  0.5f,  0.0f,
-          -0.5f,  0.5f,  0.0f
-        };
-        GLfloat texExtraShip5[] = {
-          0.5f, 0.0f,
-          1.0f, 0.0f,
-          1.0f, 1.0f,
-          0.5f, 1.0f
-        };
-        
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-        glEnableClientState(GL_NORMAL_ARRAY);
-
-        glNormalPointer(GL_FLOAT, 0, nmlExtraShip5);
-        glVertexPointer(3, GL_FLOAT, 0, vtxExtraShip5);
-        glTexCoordPointer(2, GL_FLOAT, 0, texExtraShip5);
-        glDrawArrays(GL_TRIANGLE_FAN,0,4);
-
-        glDisableClientState(GL_VERTEX_ARRAY);
-        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-        glDisableClientState(GL_NORMAL_ARRAY);
-    #endif
     glEndList();
+#endif
 
 	return player_list;
 }
@@ -2098,15 +1560,17 @@ GLvoid BuildFont(GLvoid)								// Build Our Font Display List
 	float	cy;												// Holds Our Y Character Coord
 	int loop = 0;
 
+#if 0
 	font_list=glGenLists(256);							// Creating 256 Display Lists
+#endif
 	glBindTexture(GL_TEXTURE_2D, texture[5]);		// Select Our Font Texture
 	for (loop=0; loop<256; loop++)					// Loop Through All 256 Lists
 	{
 		cx=float(loop%16)/16.0f;						// X Position Of Current Character
 		cy=float(loop/16)/16.0f;						// Y Position Of Current Character
 
-		glNewList(font_list+loop,GL_COMPILE);		// Start Building A List
 #if 0
+		glNewList(font_list+loop,GL_COMPILE);		// Start Building A List
 			glBegin(GL_TRIANGLE_STRIP);				// Use A Triangle Strip For Each Character
 				glTexCoord2f(cx+0.0625f,1-cy);		// Texture Coord (Top Right)
 				glVertex2f(1.0f,1.0f);					// Vertex Coord (Top Right)
@@ -2118,7 +1582,7 @@ GLvoid BuildFont(GLvoid)								// Build Our Font Display List
 				glVertex2f(0.0f,0.0f);					// Vertex Coord (Bottom Left)
 			glEnd();											// Done Building Our Quad (Character)
 #else
-        GLfloat vtx[] = {
+            GLfloat vtx[] = {
              1.0f, 1.0f,
              0.0f, 1.0f,
              1.0f, 0.0f,
@@ -2143,15 +1607,71 @@ GLvoid BuildFont(GLvoid)								// Build Our Font Display List
 #endif
 			
 			glTranslatef(0.6f,0.0f,0.0f);				// Move To The Right Of The Character
+#if 0
 		glEndList();										// Done Building The Display List
+#endif
 	}															// Loop Until All 256 Are Built
 }
 
+void print_character(int i) {
+    float    cx;                                                // Holds Our X Character Coord
+    float    cy;                                                // Holds Our Y Character Coord
+    glBindTexture(GL_TEXTURE_2D, texture[5]);        // Select Our Font Texture
 
+    cx=float(i%16)/16.0f;                        // X Position Of Current Character
+    cy=float(i/16)/16.0f;                        // Y Position Of Current Character
+
+    GLfloat vtx[] = {
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        1.0f, 0.0f,
+        0.0f, 0.0f
+    };
+    GLfloat tex[] = {
+        cx+0.0625f, 1-cy,
+        cx, 1-cy,
+        cx+0.0625f, 1-cy-0.0625f,
+        cx, 1-cy-0.0625f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glVertexPointer(2, GL_FLOAT, 0, vtx);
+    glTexCoordPointer(2, GL_FLOAT, 0, tex);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glTranslatef(0.6f,0.0f,0.0f);                // Move To The Right Of The Character
+}
+
+
+void print_string(char *s, int set) {
+    size_t length = strlen(s);
+    size_t i = 0;
+    for (; i < length; i++) {
+        //glCallList(s[i] - 17);
+        print_character(s[i] - 32 + (128 * set));
+    }
+}
+
+void print_string2(const char s[], int set) {
+    
+    size_t length = strlen(s);
+    size_t i = 0;
+    for (; i < length; i++) {
+//        glCallList(s[i] - 17);
+        print_character(s[i] - 32 + (128 * set));
+    }
+}
 
 GLvoid KillFont(GLvoid)									// Delete The Font From Memory
 {
+#if 0
 	glDeleteLists(font_list,256);						// Delete All 256 Display Lists
+#endif
 }
 
 
@@ -2183,10 +1703,17 @@ GLvoid glPrintVar(int set, const GLfloat& x, const GLfloat& y, const char *strin
 	renderenable(render_blend | render_texture);
 	renderdisable(render_depthtest | render_lighting | render_wireframe);
 
-	glListBase(font_list - 32 + (128 * set));				// Choose The Font Set (0 or 1)
-	glBindTexture(GL_TEXTURE_2D, texture[5]);				// Select Our Font Texture
-	glTranslated(x, y, -30);									// Position The Text
-	glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);	// Write The Text To The Screen
+    #if 0
+        glListBase(font_list - 32 + (128 * set));                // Choose The Font Set (0 or 1)
+    #endif
+        glBindTexture(GL_TEXTURE_2D, texture[5]);                // Select Our Font Texture
+    #if 0
+        glTranslated(x, y, -30);                                    // Position The Text
+        glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);    // Write The Text To The Screen
+    #else
+        glTranslatef(x, y, -30);                                    // Position The Text
+        print_string(text, set);
+    #endif
 
 	glPopMatrix();
 
@@ -2209,10 +1736,17 @@ GLvoid glPrint(int set, const GLfloat& x, const GLfloat& y, const char *text)
 	renderenable(render_blend | render_texture);
 	renderdisable(render_depthtest | render_lighting | render_wireframe);
 
-	glListBase(font_list - 32 + (128 * set));				// Choose The Font Set (0 or 1)
-	glBindTexture(GL_TEXTURE_2D, texture[5]);				// Select Our Font Texture
-	glTranslated(x,y,-30);										// Position The Text
-	glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);	// Write The Text To The Screen
+    #if 0
+        glListBase(font_list - 32 + (128 * set));                // Choose The Font Set (0 or 1)
+    #endif
+        glBindTexture(GL_TEXTURE_2D, texture[5]);                // Select Our Font Texture
+    #if 0
+        glTranslated(x,y,-30);                                        // Position The Text
+        glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);    // Write The Text To The Screen
+    #else
+        glTranslatef(x, y, -30);
+        print_string2(text, set);
+    #endif
 
 	// Restore the matrix
 	glPopMatrix();
@@ -2532,13 +2066,19 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	// Enable Texture Mapping
 	renderenable(render_texture);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	
+    #ifndef GLES
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    #endif
+
 	glShadeModel(GL_FLAT);								// Enable Flat Shading
 	
 	glClearColor(0.0f, 1.0f, 0.0f, 0.0f);			// Black Background
 
-	glClearDepth(1.0f);									// Depth Buffer Setup
+    #ifdef GLES
+        #define glClearDepth glClearDepthf
+    #endif
+
+    glClearDepth(1.0f);									// Depth Buffer Setup
 
 	renderenable(render_depthtest);					// Enables Depth Testing
 	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
@@ -2556,8 +2096,10 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	
 	// Fixed by NeHe
 	glEnable(GL_COLOR_MATERIAL);
+#ifndef GLES
 	glColorMaterial(GL_FRONT,GL_AMBIENT_AND_DIFFUSE);
 	glMateriali(GL_FRONT,GL_SHININESS,128);
+#endif
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
 
 	// Added for drawing transparent objects
@@ -2574,7 +2116,7 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	Gen3DObjectList();
 
 	// Build the font
-	BuildFont();
+	//BuildFont();
 	
 	// Initialization Went OK
 	return TRUE;
@@ -2695,13 +2237,37 @@ GLvoid BlackOutScreen(GLvoid)
 	const float fy = 0;
 	const float fz = -4.0f;
 	const float fs = 3.0f;
-	glBegin(GL_TRIANGLE_STRIP);
-	glTexCoord2d(1,1); glVertex3f(fx + fs, fy + fs, fz);
-	glTexCoord2d(0,1); glVertex3f(fx - fs, fy + fs, fz);
-	glTexCoord2d(1,0); glVertex3f(fx + fs, fy - fs, fz);
-	glTexCoord2d(0,0); glVertex3f(fx - fs, fy - fs, fz);
-	glEnd();
+    #if 0
+        glBegin(GL_TRIANGLE_STRIP);
+        glTexCoord2d(1,1); glVertex3f(fx + fs, fy + fs, fz);
+        glTexCoord2d(0,1); glVertex3f(fx - fs, fy + fs, fz);
+        glTexCoord2d(1,0); glVertex3f(fx + fs, fy - fs, fz);
+        glTexCoord2d(0,0); glVertex3f(fx - fs, fy - fs, fz);
+        glEnd();
+    #else
+        GLfloat vtx[] = {
+            fx + fs, fy + fs, fz,
+            fx - fs, fy + fs, fz,
+            fx + fs, fy - fs, fz,
+            fx - fs, fy - fs, fz
+        };
+        GLfloat tex[] = {
+            1,1,
+            0,1,
+            1,0,
+            0,0
+        };
+        
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
+        glVertexPointer(3, GL_FLOAT, 0, vtx);
+        glTexCoordPointer(2, GL_FLOAT, 0, tex);
+        glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+        glDisableClientState(GL_VERTEX_ARRAY);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    #endif
 	// Restore the blend func for translucency
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 }
@@ -2865,12 +2431,37 @@ void DrawGLBackground(GLvoid)
 				fz = stars[i].z;
 				fs = stars[i].size;
 
-				glBegin(GL_TRIANGLE_STRIP);						// Build Quad From A Triangle Strip
-					glTexCoord2d(1,1); glVertex3f(fx + fs, fy + fs, fz); // Top Right
-					glTexCoord2d(0,1); glVertex3f(fx - fs, fy + fs, fz); // Top Left
-					glTexCoord2d(1,0); glVertex3f(fx + fs, fy - fs, fz); // Bottom Right
-					glTexCoord2d(0,0); glVertex3f(fx - fs, fy - fs, fz); // Bottom Left
-				glEnd();										// Done Building Triangle Strip
+#if 0
+                glBegin(GL_TRIANGLE_STRIP);                        // Build Quad From A Triangle Strip
+                    glTexCoord2d(1,1); glVertex3f(fx + fs, fy + fs, fz); // Top Right
+                    glTexCoord2d(0,1); glVertex3f(fx - fs, fy + fs, fz); // Top Left
+                    glTexCoord2d(1,0); glVertex3f(fx + fs, fy - fs, fz); // Bottom Right
+                    glTexCoord2d(0,0); glVertex3f(fx - fs, fy - fs, fz); // Bottom Left
+                glEnd();                                        // Done Building Triangle Strip
+#else
+                GLfloat vtx[] = {
+                    fx + fs, fy + fs, fz,
+                    fx - fs, fy + fs, fz,
+                    fx + fs, fy - fs, fz,
+                    fx - fs, fy - fs, fz
+                };
+                GLfloat tex[] = {
+                    1,1,
+                    0,1,
+                    1,0,
+                    0,0
+                };
+                
+                glEnableClientState(GL_VERTEX_ARRAY);
+                glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+                glVertexPointer(3, GL_FLOAT, 0, vtx);
+                glTexCoordPointer(2, GL_FLOAT, 0, tex);
+                glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+                glDisableClientState(GL_VERTEX_ARRAY);
+                glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+#endif										// Done Building Triangle Strip
 			}
 
 			break;
@@ -3314,44 +2905,69 @@ int DrawGLScene(GLvoid)
 					// and sent on the fly.  This should be quicker than
 					// the other method because glLoadIdentity is only 
 					// called once.
-					case ACTOR_FLAMES:
-						
-						// Setup rendering options
-						if (nLastType != actors[i].type) {
+					case ACTOR_FLAMES: {
+                        
+                        // Setup rendering options
+                        if (nLastType != actors[i].type) {
 
-							// Setup rendering features
-							renderset(render_blend,		(g_cvBlendingEnabled.value != 0));
-							renderset(render_texture,	(g_cvTexturesEnabled.value != 0));
-							renderdisable(render_lighting | render_depthtest);
-						
-							// Bind texture
-							glBindTexture(GL_TEXTURE_2D, texture[4]);
+                            // Setup rendering features
+                            renderset(render_blend,        (g_cvBlendingEnabled.value != 0));
+                            renderset(render_texture,    (g_cvTexturesEnabled.value != 0));
+                            renderdisable(render_lighting | render_depthtest);
+                        
+                            // Bind texture
+                            glBindTexture(GL_TEXTURE_2D, texture[4]);
 
-						}
+                        }
 
-						// Fade based on age
-						if (b3d)
-							glColor4ub(255, 255, 255, (GLint)(fRemainingLifePct * 180));
-						else
-							glColor4ub(255, (GLint)(fRemainingLifePct * 180), 0, 128);
+                        // Fade based on age
+                        if (b3d)
+                            glColor4ub(255, 255, 255, (GLint)(fRemainingLifePct * 180));
+                        else
+                            glColor4ub(255, (GLint)(fRemainingLifePct * 180), 0, 128);
 
-						// I'm cheating here a little by adding .1 to the z
-						// value.  This will force the flames to appear on top
-						// of the smoke so that the smoke won't fog out the
-						// flame effect.
-						fx = actors[i].x;
-						fy = actors[i].y;
-						fz = actors[i].z + 0.1f;
-						fs = actors[i].size * 0.75f;
+                        // I'm cheating here a little by adding .1 to the z
+                        // value.  This will force the flames to appear on top
+                        // of the smoke so that the smoke won't fog out the
+                        // flame effect.
+                        fx = actors[i].x;
+                        fy = actors[i].y;
+                        fz = actors[i].z + 0.1f;
+                        fs = actors[i].size * 0.75f;
 
-						glBegin(GL_TRIANGLE_STRIP);						
-							glTexCoord2d(1,1); glVertex3f(fx + fs, fy + fs, fz); 
-							glTexCoord2d(0,1); glVertex3f(fx - fs, fy + fs, fz); 
-							glTexCoord2d(1,0); glVertex3f(fx + fs, fy - fs, fz); 
-							glTexCoord2d(0,0); glVertex3f(fx - fs, fy - fs, fz); 
-						glEnd();					
+#if 0
+                        glBegin(GL_TRIANGLE_STRIP);
+                            glTexCoord2d(1,1); glVertex3f(fx + fs, fy + fs, fz);
+                            glTexCoord2d(0,1); glVertex3f(fx - fs, fy + fs, fz);
+                            glTexCoord2d(1,0); glVertex3f(fx + fs, fy - fs, fz);
+                            glTexCoord2d(0,0); glVertex3f(fx - fs, fy - fs, fz);
+                        glEnd();
+#else
+                        GLfloat vtx2[] = {
+                            fx + fs, fy + fs, fz,
+                            fx - fs, fy + fs, fz,
+                            fx + fs, fy - fs, fz,
+                            fx - fs, fy - fs, fz
+                        };
+                        GLfloat tex2[] = {
+                            1,1,
+                            0,1,
+                            1,0,
+                            0,0
+                        };
 
-						break;
+                        glEnableClientState(GL_VERTEX_ARRAY);
+                        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+                        glVertexPointer(3, GL_FLOAT, 0, vtx2);
+                        glTexCoordPointer(2, GL_FLOAT, 0, tex2);
+                        glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+                        glDisableClientState(GL_VERTEX_ARRAY);
+                        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+#endif
+                        break;
+                    }
 
 					case ACTOR_PARTICLE:
 					case ACTOR_FLAMINGPARTICLE:
@@ -3595,12 +3211,28 @@ int DrawGLScene(GLvoid)
 					case ACTOR_SFIRE:
 							glPushMatrix();
 							glTranslatef(actors[i].x, actors[i].y, actors[i].z);
-							glBegin(GL_QUADS);
-								glVertex3f(-actors[i].xcolldist, -actors[i].ycolldist,  0.0f);
-								glVertex3f( actors[i].xcolldist, -actors[i].ycolldist,  0.0f);
-								glVertex3f( actors[i].xcolldist,  actors[i].ycolldist,  0.0f);
-								glVertex3f(-actors[i].xcolldist,  actors[i].ycolldist,  0.0f);
-							glEnd();
+#if 0
+                            glBegin(GL_QUADS);
+                                glVertex3f(-actors[i].xcolldist, -actors[i].ycolldist,  0.0f);
+                                glVertex3f( actors[i].xcolldist, -actors[i].ycolldist,  0.0f);
+                                glVertex3f( actors[i].xcolldist,  actors[i].ycolldist,  0.0f);
+                                glVertex3f(-actors[i].xcolldist,  actors[i].ycolldist,  0.0f);
+                            glEnd();
+#else
+                            GLfloat vtx[] = {
+                              -actors[i].xcolldist, -actors[i].ycolldist,  0.0f,
+                               actors[i].xcolldist, -actors[i].ycolldist,  0.0f,
+                               actors[i].xcolldist,  actors[i].ycolldist,  0.0f,
+                              -actors[i].xcolldist,  actors[i].ycolldist,  0.0f
+                            };
+                            
+                            glEnableClientState(GL_VERTEX_ARRAY);
+
+                            glVertexPointer(3, GL_FLOAT, 0, vtx);
+                            glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+                            glDisableClientState(GL_VERTEX_ARRAY);
+#endif
 							glPopMatrix();
 				}
 			}
@@ -5657,7 +5289,9 @@ void TerminateGame(void)
 	KillFont();
 
 	// Kill display lists
+#if 0
 	glDeleteLists(player_list, NUM_LISTS);
+#endif
 
 	// Kill textures
 	glDeleteTextures(NUM_TEXTURES, &texture[0]);
