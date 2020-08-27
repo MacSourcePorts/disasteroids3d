@@ -1485,6 +1485,19 @@ int invert_surface_vertical(SDL_Surface* surface)
 	return 0;
 }
 
+/*  helper function (used in texture loading)
+    returns next power of two greater than or equal to x
+*/
+int
+nextPowerOfTwo(int x)
+{
+    int val = 1;
+    while (val < x) {
+        val *= 2;
+    }
+    return val;
+}
+
 int LoadGLTextures()		
 {
 /////////////////////
@@ -1521,6 +1534,7 @@ int LoadGLTextures()
 
 	for (loop = 0; loop < NUM_TEXTURES; loop++)
 	{
+        printf("Texture: %s\n", Texture[loop]);
 		Surface = SDL_LoadBMP(Texture[loop]);
 		invert_surface_vertical(Surface);
 
@@ -1530,7 +1544,35 @@ int LoadGLTextures()
 			glBindTexture(GL_TEXTURE_2D, texture[loop]);
 			if ((loop > 6) && (loop < 11) || (loop == 12))
 			{
-				glTexImage2D(GL_TEXTURE_2D, 0, 3, Surface->w, Surface->h, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
+#ifdef GLES
+                int bpp;                    /* texture bits per pixel */
+                Uint32 Rmask, Gmask, Bmask, Amask;  /* masks for pixel format passed into OpenGL */
+                SDL_Surface *bmp_surface_rgba8888;  /* this serves as a destination to convert the BMP
+                                                       to format passed into OpenGL */
+
+                /* Grab info about format that will be passed into OpenGL */
+                SDL_PixelFormatEnumToMasks(SDL_PIXELFORMAT_ABGR8888, &bpp, &Rmask, &Gmask,
+                                           &Bmask, &Amask);
+                /* Create surface that will hold pixels passed into OpenGL */
+                bmp_surface_rgba8888 =
+                    SDL_CreateRGBSurface(0, Surface->w, Surface->h, bpp, Rmask,
+                                         Gmask, Bmask, Amask);
+                /* Blit to this surface, effectively converting the format */
+                SDL_BlitSurface(Surface, NULL, bmp_surface_rgba8888, NULL);
+
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                             nextPowerOfTwo(Surface->w),
+                             nextPowerOfTwo(Surface->h),
+                             0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+                
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Surface->w, Surface->h, 0,
+                             GL_RGBA, GL_UNSIGNED_BYTE, bmp_surface_rgba8888->pixels);
+#else
+                glTexImage2D(GL_TEXTURE_2D, 0, 3, Surface->w, Surface->h, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
+#endif
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
 			}
@@ -1539,7 +1581,35 @@ int LoadGLTextures()
                 glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, true);
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);
+#ifdef GLES
+                int bpp;                    /* texture bits per pixel */
+                Uint32 Rmask, Gmask, Bmask, Amask;  /* masks for pixel format passed into OpenGL */
+                SDL_Surface *bmp_surface_rgba8888;  /* this serves as a destination to convert the BMP
+                                                       to format passed into OpenGL */
+
+                /* Grab info about format that will be passed into OpenGL */
+                SDL_PixelFormatEnumToMasks(SDL_PIXELFORMAT_ABGR8888, &bpp, &Rmask, &Gmask,
+                                           &Bmask, &Amask);
+                /* Create surface that will hold pixels passed into OpenGL */
+                bmp_surface_rgba8888 =
+                    SDL_CreateRGBSurface(0, Surface->w, Surface->h, bpp, Rmask,
+                                         Gmask, Bmask, Amask);
+                /* Blit to this surface, effectively converting the format */
+                SDL_BlitSurface(Surface, NULL, bmp_surface_rgba8888, NULL);
+
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                             nextPowerOfTwo(Surface->w),
+                             nextPowerOfTwo(Surface->h),
+                             0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+                
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Surface->w, Surface->h, 0,
+                             GL_RGBA, GL_UNSIGNED_BYTE, bmp_surface_rgba8888->pixels);
+#else
                 glTexImage2D(GL_TEXTURE_2D, 0, 3, Surface->w, Surface->h, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
+#endif
 //				gluBuild2DMipmaps(GL_TEXTURE_2D, 3, Surface->w, Surface->h, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
 			}
 		}
@@ -3528,6 +3598,13 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 	int x = SDL_WINDOWPOS_UNDEFINED, y = SDL_WINDOWPOS_UNDEFINED;
 	SDL_DisplayMode desktopMode;
 	Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
+    
+#ifdef GLES
+    // todo: figure out scaling so we can use  SDL_WINDOW_ALLOW_HIGHDPI
+    flags = SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS;
+    x = 0;
+    y = 0;
+#endif
 
 	// Destroy existing state if it exists
 	if (SDL_glContext != NULL)
@@ -3545,6 +3622,7 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 
 	memset(&desktopMode, 0, sizeof(SDL_DisplayMode));
 
+#ifndef GLES
 	if (fullscreenflag)
 	{
 		flags |= SDL_WINDOW_FULLSCREEN;
@@ -3553,6 +3631,7 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 	{
 		flags |= SDL_WINDOW_SHOWN;
 	}
+#endif
 
 	int perChannelColorBits;
 
@@ -3574,6 +3653,20 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 	{
 		SDL_GL_SetAttribute(SDL_GL_STEREO, 0);
 	}
+    
+#ifdef GLES
+    // testing something -tkidd
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
+    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
+    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+#endif
 
 	if ((SDL_window = SDL_CreateWindow(title, x, y, width, height, flags)) == NULL)
 	{
@@ -3616,10 +3709,12 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 		glClear(GL_COLOR_BUFFER_BIT);
 		SDL_GL_SwapWindow(SDL_window);
 
+#ifndef GLES
 		if (SDL_GL_SetSwapInterval(0) == -1)
 		{
 			printf("SDL_GL_SetSwapInterval failed: %s\n", SDL_GetError());
 		}
+#endif
 	}
 
 	///------------
@@ -5221,6 +5316,18 @@ BOOL InitializeGame(void)
 		printf("SDL using driver \"%s\"\n", driverName);
 	}
 		
+#ifdef GLES
+    // todo: figure out scaling so we can use  SDL_WINDOW_ALLOW_HIGHDPI
+    SDL_DisplayMode DM;
+    SDL_GetCurrentDisplayMode(0, &DM);
+    int Width = DM.w;
+    int Height = DM.h;
+    
+    printf("SDL Display w: %i h: %i\n", Width, Height);
+    
+    m_screenheight = Height;
+    m_screenwidth = Width;        
+#endif
 
 	// Create Our OpenGL Window -- quit if window was not created
 	if (!CreateGLWindow(APP_TITLE, m_screenwidth, m_screenheight, nColorDepth, (BOOL)g_cvFullscreen.value))
@@ -5631,7 +5738,12 @@ int main(int argc, char* args[])
 #ifdef _WIN32
 		if (MessageBox(NULL,"Would You Like To Run In Fullscreen Mode?", "Start FullScreen?",MB_YESNO|MB_ICONQUESTION) == IDNO)
 #endif
+
+#ifdef GLES
+            Cvar_SetValue("Fullscreen", TRUE);
+#else
 			Cvar_SetValue("Fullscreen", FALSE);
+#endif
 #ifdef _WIN32
 		else
 			Cvar_SetValue("Fullscreen", TRUE);
@@ -5670,7 +5782,9 @@ int main(int argc, char* args[])
 	//Event handler
 	SDL_Event e;
 
+#ifndef GLES // don't want this on iPhone
 	SDL_StartTextInput();
+#endif
 
 	// Main program loop
 	while(!g_bExitApp)
