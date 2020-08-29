@@ -20,6 +20,35 @@
 		A118DA47246E5B2600184600 /* 3dgame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA32246E5B2500184600 /* 3dgame.cpp */; };
 		A118DA4A246E5B2600184600 /* commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA37246E5B2600184600 /* commands.cpp */; };
 		A118DA64246F064800184600 /* Res in Resources */ = {isa = PBXBuildFile; fileRef = A118DA63246F064800184600 /* Res */; };
+		A13BFE8E24FAB05C00073A6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A13BFE8D24FAB05C00073A6B /* Assets.xcassets */; };
+		A13BFE9124FAB05C00073A6B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A13BFE8F24FAB05C00073A6B /* LaunchScreen.storyboard */; };
+		A13BFEA324FAB17600073A6B /* 3dgame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA32246E5B2500184600 /* 3dgame.cpp */; };
+		A13BFEA424FAB17800073A6B /* 3dglasses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA19246E5B2500184600 /* 3dglasses.cpp */; };
+		A13BFEA524FAB19900073A6B /* command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA28246E5B2500184600 /* command.cpp */; };
+		A13BFEA624FAB19900073A6B /* commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA37246E5B2600184600 /* commands.cpp */; };
+		A13BFEA724FAB19900073A6B /* console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA31246E5B2500184600 /* console.cpp */; };
+		A13BFEA824FAB19900073A6B /* cvars.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA26246E5B2500184600 /* cvars.cpp */; };
+		A13BFEA924FAB19900073A6B /* menus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA2D246E5B2500184600 /* menus.cpp */; };
+		A13BFEAA24FAB19900073A6B /* renderflags.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA2C246E5B2500184600 /* renderflags.cpp */; };
+		A13BFEAB24FAB19900073A6B /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA1F246E5B2500184600 /* timer.cpp */; };
+		A13BFEAC24FAB19900073A6B /* tokenize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA23246E5B2500184600 /* tokenize.cpp */; };
+		A13BFEAD24FAB1A600073A6B /* sys_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = A19BD4EE24F749EA00C5F088 /* sys_ios.mm */; };
+		A13BFEAE24FAB1A900073A6B /* SDL_uikitviewcontroller+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19BD4F124F74B0A00C5F088 /* SDL_uikitviewcontroller+Additions.swift */; };
+		A13BFEAF24FAB1AD00073A6B /* JoyStickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19BD4F324F74BC100C5F088 /* JoyStickView.swift */; };
+		A13BFEB024FAB1B000073A6B /* CoreGraphics+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19BD4F524F74BDC00C5F088 /* CoreGraphics+Additions.swift */; };
+		A13BFEB124FAB31100073A6B /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044CA24788D4800A90A5A /* libSDL2.a */; };
+		A13BFEB224FAB31100073A6B /* libSDLmain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044D024788D4800A90A5A /* libSDLmain.a */; };
+		A13BFEB324FAB31100073A6B /* libSDL2_mixer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044DB24788D5600A90A5A /* libSDL2_mixer.a */; };
+		A13BFEBD24FAB34800073A6B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A13BFEB424FAB34700073A6B /* OpenGLES.framework */; };
+		A13BFEBE24FAB34800073A6B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A13BFEB524FAB34700073A6B /* Foundation.framework */; };
+		A13BFEBF24FAB34800073A6B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A13BFEB624FAB34700073A6B /* AVFoundation.framework */; };
+		A13BFEC024FAB34800073A6B /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A13BFEB724FAB34700073A6B /* GameController.framework */; };
+		A13BFEC124FAB34800073A6B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A13BFEB824FAB34700073A6B /* QuartzCore.framework */; };
+		A13BFEC224FAB34800073A6B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A13BFEB924FAB34700073A6B /* UIKit.framework */; };
+		A13BFEC324FAB34800073A6B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A13BFEBA24FAB34800073A6B /* Metal.framework */; };
+		A13BFEC424FAB34800073A6B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A13BFEBB24FAB34800073A6B /* AudioToolbox.framework */; };
+		A13BFEC524FAB34800073A6B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A13BFEBC24FAB34800073A6B /* CoreGraphics.framework */; };
+		A13BFEC624FAB3DC00073A6B /* Res in Resources */ = {isa = PBXBuildFile; fileRef = A118DA63246F064800184600 /* Res */; };
 		A19BD4CC24F4B8B700C5F088 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19BD4BE24F4B8B700C5F088 /* AVFoundation.framework */; };
 		A19BD4CE24F4B8E200C5F088 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19BD4CD24F4B8E200C5F088 /* AudioToolbox.framework */; };
 		A19BD4D024F4B8EA00C5F088 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19BD4CF24F4B8EA00C5F088 /* GameController.framework */; };
@@ -169,6 +198,19 @@
 		A118DA39246E5B2600184600 /* vec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec.h; sourceTree = "<group>"; };
 		A118DA3A246E5B2600184600 /* dsutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsutil.h; sourceTree = "<group>"; };
 		A118DA63246F064800184600 /* Res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Res; sourceTree = "<group>"; };
+		A13BFE8424FAB05700073A6B /* disasteroids3d-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "disasteroids3d-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A13BFE8D24FAB05C00073A6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A13BFE9024FAB05C00073A6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A13BFE9224FAB05C00073A6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A13BFEB424FAB34700073A6B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
+		A13BFEB524FAB34700073A6B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		A13BFEB624FAB34700073A6B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		A13BFEB724FAB34700073A6B /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
+		A13BFEB824FAB34700073A6B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		A13BFEB924FAB34700073A6B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		A13BFEBA24FAB34800073A6B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
+		A13BFEBB24FAB34800073A6B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		A13BFEBC24FAB34800073A6B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A19BD4BE24F4B8B700C5F088 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		A19BD4CD24F4B8E200C5F088 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		A19BD4CF24F4B8EA00C5F088 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
@@ -207,6 +249,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A13BFE8124FAB05700073A6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A13BFEC524FAB34800073A6B /* CoreGraphics.framework in Frameworks */,
+				A13BFEC124FAB34800073A6B /* QuartzCore.framework in Frameworks */,
+				A13BFEC224FAB34800073A6B /* UIKit.framework in Frameworks */,
+				A13BFEC324FAB34800073A6B /* Metal.framework in Frameworks */,
+				A13BFEC424FAB34800073A6B /* AudioToolbox.framework in Frameworks */,
+				A13BFEBE24FAB34800073A6B /* Foundation.framework in Frameworks */,
+				A13BFEC024FAB34800073A6B /* GameController.framework in Frameworks */,
+				A13BFEB324FAB31100073A6B /* libSDL2_mixer.a in Frameworks */,
+				A13BFEBF24FAB34800073A6B /* AVFoundation.framework in Frameworks */,
+				A13BFEB224FAB31100073A6B /* libSDLmain.a in Frameworks */,
+				A13BFEB124FAB31100073A6B /* libSDL2.a in Frameworks */,
+				A13BFEBD24FAB34800073A6B /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A1D0449724788C6A00A90A5A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -237,6 +298,7 @@
 				A118DA17246E5A6400184600 /* disasteroids3d */,
 				A118DA08246E58C000184600 /* disasteroids3d-macOS */,
 				A1D0449B24788C6A00A90A5A /* disasteroids3d-iOS */,
+				A13BFE8524FAB05700073A6B /* disasteroids3d-tvOS */,
 				A118DA07246E58C000184600 /* Products */,
 				A118DA4B246E5BD000184600 /* Frameworks */,
 			);
@@ -247,6 +309,7 @@
 			children = (
 				A118DA06246E58BF00184600 /* disasteroids3d-macOS.app */,
 				A1D0449A24788C6A00A90A5A /* Disasteroids 3D.app */,
+				A13BFE8424FAB05700073A6B /* disasteroids3d-tvOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -310,8 +373,17 @@
 				A19BD4E924F4CC3100C5F088 /* Metal.framework */,
 				A19BD4DB24F4C04400C5F088 /* QuartzCore.framework */,
 				A19BD4D924F4C00300C5F088 /* CoreGraphics.framework */,
+				A13BFEBB24FAB34800073A6B /* AudioToolbox.framework */,
+				A13BFEB624FAB34700073A6B /* AVFoundation.framework */,
+				A13BFEBC24FAB34800073A6B /* CoreGraphics.framework */,
 				A19BD4D724F4BFF400C5F088 /* Foundation.framework */,
 				A19BD4D524F4BFD500C5F088 /* UIKit.framework */,
+				A13BFEB524FAB34700073A6B /* Foundation.framework */,
+				A13BFEB724FAB34700073A6B /* GameController.framework */,
+				A13BFEBA24FAB34800073A6B /* Metal.framework */,
+				A13BFEB424FAB34700073A6B /* OpenGLES.framework */,
+				A13BFEB824FAB34700073A6B /* QuartzCore.framework */,
+				A13BFEB924FAB34700073A6B /* UIKit.framework */,
 				A19BD4D124F4B8F200C5F088 /* CoreMotion.framework */,
 				A19BD4CF24F4B8EA00C5F088 /* GameController.framework */,
 				A19BD4CD24F4B8E200C5F088 /* AudioToolbox.framework */,
@@ -321,6 +393,16 @@
 				A1D044AE24788CC800A90A5A /* macOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A13BFE8524FAB05700073A6B /* disasteroids3d-tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				A13BFE8D24FAB05C00073A6B /* Assets.xcassets */,
+				A13BFE8F24FAB05C00073A6B /* LaunchScreen.storyboard */,
+				A13BFE9224FAB05C00073A6B /* Info.plist */,
+			);
+			path = "disasteroids3d-tvOS";
 			sourceTree = "<group>";
 		};
 		A1D0449B24788C6A00A90A5A /* disasteroids3d-iOS */ = {
@@ -401,6 +483,23 @@
 			productReference = A118DA06246E58BF00184600 /* disasteroids3d-macOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A13BFE8324FAB05700073A6B /* disasteroids3d-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A13BFEA224FAB05C00073A6B /* Build configuration list for PBXNativeTarget "disasteroids3d-tvOS" */;
+			buildPhases = (
+				A13BFE8024FAB05700073A6B /* Sources */,
+				A13BFE8124FAB05700073A6B /* Frameworks */,
+				A13BFE8224FAB05700073A6B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "disasteroids3d-tvOS";
+			productName = "disasteroids3d-tvOS";
+			productReference = A13BFE8424FAB05700073A6B /* disasteroids3d-tvOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 		A1D0449924788C6A00A90A5A /* disasteroids3d-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A1D044AB24788C6C00A90A5A /* Build configuration list for PBXNativeTarget "disasteroids3d-iOS" */;
@@ -424,13 +523,16 @@
 		A118D9FE246E58BF00184600 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1150;
+				LastSwiftUpdateCheck = 1160;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Tom Kidd";
 				TargetAttributes = {
 					A118DA05246E58BF00184600 = {
 						CreatedOnToolsVersion = 11.4.1;
 						LastSwiftMigration = 1140;
+					};
+					A13BFE8324FAB05700073A6B = {
+						CreatedOnToolsVersion = 11.6;
 					};
 					A1D0449924788C6A00A90A5A = {
 						CreatedOnToolsVersion = 11.5;
@@ -463,6 +565,7 @@
 			targets = (
 				A118DA05246E58BF00184600 /* disasteroids3d-macOS */,
 				A1D0449924788C6A00A90A5A /* disasteroids3d-iOS */,
+				A13BFE8324FAB05700073A6B /* disasteroids3d-tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -536,6 +639,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A13BFE8224FAB05700073A6B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A13BFEC624FAB3DC00073A6B /* Res in Resources */,
+				A13BFE9124FAB05C00073A6B /* LaunchScreen.storyboard in Resources */,
+				A13BFE8E24FAB05C00073A6B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A1D0449824788C6A00A90A5A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -567,6 +680,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A13BFE8024FAB05700073A6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A13BFEAC24FAB19900073A6B /* tokenize.cpp in Sources */,
+				A13BFEA324FAB17600073A6B /* 3dgame.cpp in Sources */,
+				A13BFEAD24FAB1A600073A6B /* sys_ios.mm in Sources */,
+				A13BFEA924FAB19900073A6B /* menus.cpp in Sources */,
+				A13BFEA724FAB19900073A6B /* console.cpp in Sources */,
+				A13BFEAF24FAB1AD00073A6B /* JoyStickView.swift in Sources */,
+				A13BFEA524FAB19900073A6B /* command.cpp in Sources */,
+				A13BFEA824FAB19900073A6B /* cvars.cpp in Sources */,
+				A13BFEAA24FAB19900073A6B /* renderflags.cpp in Sources */,
+				A13BFEB024FAB1B000073A6B /* CoreGraphics+Additions.swift in Sources */,
+				A13BFEA424FAB17800073A6B /* 3dglasses.cpp in Sources */,
+				A13BFEA624FAB19900073A6B /* commands.cpp in Sources */,
+				A13BFEAB24FAB19900073A6B /* timer.cpp in Sources */,
+				A13BFEAE24FAB1A900073A6B /* SDL_uikitviewcontroller+Additions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A1D0449624788C6A00A90A5A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -591,6 +725,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		A13BFE8F24FAB05C00073A6B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A13BFE9024FAB05C00073A6B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		A1D044A724788C6C00A90A5A /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -791,6 +933,71 @@
 			};
 			name = Release;
 		};
+		A13BFE9324FAB05C00073A6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					GLES,
+					IOS,
+				);
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/SDL2/include",
+					"${SRCROOT}/SDL2_mixer",
+					"$(PROJECT_DIR)/SDL2/**",
+				);
+				INFOPLIST_FILE = "disasteroids3d-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tomkiddconsulting.disasteroids3d-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-iOS/bridging.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.4;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		A13BFE9424FAB05C00073A6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					GLES,
+					IOS,
+				);
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/SDL2/include",
+					"${SRCROOT}/SDL2_mixer",
+					"$(PROJECT_DIR)/SDL2/**",
+				);
+				INFOPLIST_FILE = "disasteroids3d-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tomkiddconsulting.disasteroids3d-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-iOS/bridging.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.4;
+				USER_HEADER_SEARCH_PATHS = "";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		A1D044AC24788C6C00A90A5A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -876,6 +1083,15 @@
 			buildConfigurations = (
 				A118DA15246E58C400184600 /* Debug */,
 				A118DA16246E58C400184600 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A13BFEA224FAB05C00073A6B /* Build configuration list for PBXNativeTarget "disasteroids3d-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A13BFE9324FAB05C00073A6B /* Debug */,
+				A13BFE9424FAB05C00073A6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
