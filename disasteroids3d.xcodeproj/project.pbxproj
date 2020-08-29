@@ -185,7 +185,7 @@
 		A19BD4F324F74BC100C5F088 /* JoyStickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoyStickView.swift; sourceTree = "<group>"; };
 		A19BD4F524F74BDC00C5F088 /* CoreGraphics+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+Additions.swift"; sourceTree = "<group>"; };
 		A1ABBF4024E4CF270020F6BD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
-		A1D0449A24788C6A00A90A5A /* disasteroids3d-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "disasteroids3d-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1D0449A24788C6A00A90A5A /* Disasteroids 3D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Disasteroids 3D.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1D044A524788C6C00A90A5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1D044A824788C6C00A90A5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A1D044AA24788C6C00A90A5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -246,7 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				A118DA06246E58BF00184600 /* disasteroids3d-macOS.app */,
-				A1D0449A24788C6A00A90A5A /* disasteroids3d-iOS.app */,
+				A1D0449A24788C6A00A90A5A /* Disasteroids 3D.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -415,7 +415,7 @@
 			);
 			name = "disasteroids3d-iOS";
 			productName = "disasteroids3d-iOS";
-			productReference = A1D0449A24788C6A00A90A5A /* disasteroids3d-iOS.app */;
+			productReference = A1D0449A24788C6A00A90A5A /* Disasteroids 3D.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -815,9 +815,10 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tomkiddconsulting.disasteroids3d-iOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Disasteroids 3D";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-iOS/bridging.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "disasteroids3d_iOS-Swift.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -848,9 +849,10 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tomkiddconsulting.disasteroids3d-iOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Disasteroids 3D";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-iOS/bridging.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "disasteroids3d_iOS-Swift.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
