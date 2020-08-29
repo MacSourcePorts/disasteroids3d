@@ -30,6 +30,10 @@
 		A19BD4DC24F4C04400C5F088 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19BD4DB24F4C04400C5F088 /* QuartzCore.framework */; };
 		A19BD4DD24F4C1C100C5F088 /* Res in Resources */ = {isa = PBXBuildFile; fileRef = A118DA63246F064800184600 /* Res */; };
 		A19BD4EA24F4CC3100C5F088 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19BD4E924F4CC3100C5F088 /* Metal.framework */; };
+		A19BD4EF24F749EA00C5F088 /* sys_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = A19BD4EE24F749EA00C5F088 /* sys_ios.mm */; };
+		A19BD4F224F74B0A00C5F088 /* SDL_uikitviewcontroller+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19BD4F124F74B0A00C5F088 /* SDL_uikitviewcontroller+Additions.swift */; };
+		A19BD4F424F74BC100C5F088 /* JoyStickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19BD4F324F74BC100C5F088 /* JoyStickView.swift */; };
+		A19BD4F624F74BDC00C5F088 /* CoreGraphics+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19BD4F524F74BDC00C5F088 /* CoreGraphics+Additions.swift */; };
 		A1ABBF4124E4CF270020F6BD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1ABBF4024E4CF270020F6BD /* OpenGLES.framework */; };
 		A1D044A624788C6C00A90A5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1D044A524788C6C00A90A5A /* Assets.xcassets */; };
 		A1D044A924788C6C00A90A5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1D044A724788C6C00A90A5A /* LaunchScreen.storyboard */; };
@@ -174,6 +178,12 @@
 		A19BD4D924F4C00300C5F088 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A19BD4DB24F4C04400C5F088 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		A19BD4E924F4CC3100C5F088 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
+		A19BD4ED24F7491F00C5F088 /* bridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bridging.h; sourceTree = "<group>"; };
+		A19BD4EE24F749EA00C5F088 /* sys_ios.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = sys_ios.mm; sourceTree = "<group>"; };
+		A19BD4F024F74A4000C5F088 /* sys_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sys_ios.h; sourceTree = "<group>"; };
+		A19BD4F124F74B0A00C5F088 /* SDL_uikitviewcontroller+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDL_uikitviewcontroller+Additions.swift"; sourceTree = "<group>"; };
+		A19BD4F324F74BC100C5F088 /* JoyStickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoyStickView.swift; sourceTree = "<group>"; };
+		A19BD4F524F74BDC00C5F088 /* CoreGraphics+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+Additions.swift"; sourceTree = "<group>"; };
 		A1ABBF4024E4CF270020F6BD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		A1D0449A24788C6A00A90A5A /* disasteroids3d-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "disasteroids3d-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1D044A524788C6C00A90A5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -319,6 +329,12 @@
 				A1D044A524788C6C00A90A5A /* Assets.xcassets */,
 				A1D044A724788C6C00A90A5A /* LaunchScreen.storyboard */,
 				A1D044AA24788C6C00A90A5A /* Info.plist */,
+				A19BD4ED24F7491F00C5F088 /* bridging.h */,
+				A19BD4EE24F749EA00C5F088 /* sys_ios.mm */,
+				A19BD4F024F74A4000C5F088 /* sys_ios.h */,
+				A19BD4F124F74B0A00C5F088 /* SDL_uikitviewcontroller+Additions.swift */,
+				A19BD4F324F74BC100C5F088 /* JoyStickView.swift */,
+				A19BD4F524F74BDC00C5F088 /* CoreGraphics+Additions.swift */,
 			);
 			path = "disasteroids3d-iOS";
 			sourceTree = "<group>";
@@ -418,6 +434,7 @@
 					};
 					A1D0449924788C6A00A90A5A = {
 						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1160;
 					};
 				};
 			};
@@ -559,11 +576,15 @@
 				A1D044DF24788DF900A90A5A /* commands.cpp in Sources */,
 				A1D044E224788DF900A90A5A /* menus.cpp in Sources */,
 				A1D044DC24788DB300A90A5A /* 3dgame.cpp in Sources */,
+				A19BD4F424F74BC100C5F088 /* JoyStickView.swift in Sources */,
+				A19BD4EF24F749EA00C5F088 /* sys_ios.mm in Sources */,
 				A1D044DE24788DF900A90A5A /* command.cpp in Sources */,
 				A1D044E324788DF900A90A5A /* renderflags.cpp in Sources */,
+				A19BD4F624F74BDC00C5F088 /* CoreGraphics+Additions.swift in Sources */,
 				A1D044DD24788DD500A90A5A /* 3dglasses.cpp in Sources */,
 				A1D044E024788DF900A90A5A /* console.cpp in Sources */,
 				A1D044E424788DF900A90A5A /* timer.cpp in Sources */,
+				A19BD4F224F74B0A00C5F088 /* SDL_uikitviewcontroller+Additions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -730,7 +751,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tomkiddconsulting.disasteroids3d;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
@@ -764,7 +785,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tomkiddconsulting.disasteroids3d;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
 			};
@@ -774,15 +795,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					GLES,
+					IOS,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/SDL2/include",
 					"${SRCROOT}/SDL2_mixer",
+					"$(PROJECT_DIR)/SDL2/**",
 				);
 				INFOPLIST_FILE = "disasteroids3d-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
@@ -793,6 +817,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tomkiddconsulting.disasteroids3d-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-iOS/bridging.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -802,15 +828,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					GLES,
+					IOS,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/SDL2/include",
 					"${SRCROOT}/SDL2_mixer",
+					"$(PROJECT_DIR)/SDL2/**",
 				);
 				INFOPLIST_FILE = "disasteroids3d-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
@@ -821,6 +850,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tomkiddconsulting.disasteroids3d-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-iOS/bridging.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

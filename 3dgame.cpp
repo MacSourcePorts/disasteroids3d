@@ -59,6 +59,10 @@ const int channelSaucerFireSound = 7;
 // Lookup table code
 #include "LookupTables.h"
 
+#ifdef IOS
+#include "sys_ios.h"
+#endif
+
 // SDL variables
 SDL_Window* SDL_window = NULL;
 static SDL_GLContext SDL_glContext = NULL;
@@ -1337,6 +1341,137 @@ void draw_background() {
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
+    
+#ifdef IOS
+    // testing something - another background tile -tkidd
+    
+    // Upper left 2
+    glBindTexture(GL_TEXTURE_2D, texture[7]);
+
+    GLfloat nmlUpperLeft2[] = {
+        0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxUpperLeft2[] = {
+       0.0f        , SCREEN_HEIGHT * 1.4f, 0.0f,
+      -SCREEN_WIDTH * 2.0f, SCREEN_HEIGHT * 1.4f, 0.0f,
+       0.0f        , 0.0f                , 0.0f,
+      -SCREEN_WIDTH * 2.0f, 0.0f                , 0.0f
+    };
+    GLfloat texUpperLeft2[] = {
+      1.0f, 1.0f,
+      0.0f, 1.0f,
+      1.0f, 0.0f,
+      0.0f, 0.0f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlUpperLeft2);
+    glVertexPointer(3, GL_FLOAT, 0, vtxUpperLeft2);
+    glTexCoordPointer(2, GL_FLOAT, 0, texUpperLeft2);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+    
+    // Upper right 2
+    glBindTexture(GL_TEXTURE_2D, texture[8]);
+
+    GLfloat nmlUpperRight2[] = {
+        0.0f, 0.0f, 1.0f
+    };
+    GLfloat vtxUpperRight2[] = {
+      SCREEN_WIDTH * 2.0f, SCREEN_HEIGHT * 1.4f, 0.0f,
+      0.0f        , SCREEN_HEIGHT * 1.4f, 0.0f,
+      SCREEN_WIDTH * 2.0f, 0.0f, 0.0f,
+      0.0f        , 0.0f                , 0.0f
+    };
+    GLfloat texUpperRight2[] = {
+      1.0f, 1.0f,
+      0.0f, 1.0f,
+      1.0f, 0.0f,
+      0.0f, 0.0f
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
+    glNormalPointer(GL_FLOAT, 0, nmlUpperRight2);
+    glVertexPointer(3, GL_FLOAT, 0, vtxUpperRight2);
+    glTexCoordPointer(2, GL_FLOAT, 0, texUpperRight2);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+    
+    // Lower left 2
+       glBindTexture(GL_TEXTURE_2D, texture[9]);
+
+       GLfloat nmlLowerLeft2[] = {
+           0.0f, 0.0f, 1.0f
+       };
+       GLfloat vtxLowerLeft2[] = {
+          0.0f        , 0.0f                , 0.0f,
+         -SCREEN_WIDTH  * 2.0f, 0.0f                , 0.0f,
+          0.0f        ,-SCREEN_HEIGHT * 1.4f, 0.0f,
+         -SCREEN_WIDTH  * 2.0f,-SCREEN_HEIGHT * 1.4f, 0.0f
+       };
+       GLfloat texLowerLeft2[] = {
+         1.0f, 1.0f,
+         0.0f, 1.0f,
+         1.0f, 0.0f,
+         0.0f, 0.0f
+       };
+
+       glEnableClientState(GL_VERTEX_ARRAY);
+       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+       glEnableClientState(GL_NORMAL_ARRAY);
+
+       glNormalPointer(GL_FLOAT, 0, nmlLowerLeft2);
+       glVertexPointer(3, GL_FLOAT, 0, vtxLowerLeft2);
+       glTexCoordPointer(2, GL_FLOAT, 0, texLowerLeft2);
+       glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+       glDisableClientState(GL_VERTEX_ARRAY);
+       glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+       glDisableClientState(GL_NORMAL_ARRAY);
+           
+       // Lower right 2
+       glBindTexture(GL_TEXTURE_2D, texture[10]);
+       GLfloat nmlLowerRight2[] = {
+           0.0f, 0.0f, 1.0f
+       };
+       GLfloat vtxLowerRight2[] = {
+           SCREEN_WIDTH  * 2.0f, 0.0f                , 0.0f,
+         0.0f        , 0.0f                , 0.0f,
+         SCREEN_WIDTH  * 2.0f,-SCREEN_HEIGHT * 1.4f, 0.0f,
+         0.0f        ,-SCREEN_HEIGHT * 1.4f, 0.0f
+       };
+       GLfloat texLowerRight2[] = {
+         1.0f, 1.0f,
+         0.0f, 1.0f,
+         1.0f, 0.0f,
+         0.0f, 0.0f
+       };
+
+       glEnableClientState(GL_VERTEX_ARRAY);
+       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+       glEnableClientState(GL_NORMAL_ARRAY);
+
+       glNormalPointer(GL_FLOAT, 0, nmlLowerRight2);
+       glVertexPointer(3, GL_FLOAT, 0, vtxLowerRight2);
+       glTexCoordPointer(2, GL_FLOAT, 0, texLowerRight2);
+       glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+
+       glDisableClientState(GL_VERTEX_ARRAY);
+       glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+       glDisableClientState(GL_NORMAL_ARRAY);
+#endif
         
     // Lower left
     glBindTexture(GL_TEXTURE_2D, texture[9]);
@@ -3715,6 +3850,11 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
 			printf("SDL_GL_SetSwapInterval failed: %s\n", SDL_GetError());
 		}
 #endif
+
+    
+#ifdef IOS
+        Sys_AddControls(SDL_window);
+#endif
 	}
 
 	///------------
@@ -4355,6 +4495,10 @@ void DestroyInput()
 //-----------------------------------------------------------------------------
 BOOL InitializeInput()
 {
+#ifdef IOS
+    SDL_SetHint(SDL_HINT_ACCELEROMETER_AS_JOYSTICK, "0");
+#endif
+    
 	// Initialize SDL Joystick
 	if (SDL_Init(SDL_INIT_JOYSTICK) != 0)
 	{
@@ -5782,7 +5926,7 @@ int main(int argc, char* args[])
 	//Event handler
 	SDL_Event e;
 
-#ifndef GLES // don't want this on iPhone
+#ifndef IOS // don't want this on iPhone
 	SDL_StartTextInput();
 #endif
 
@@ -5807,12 +5951,57 @@ int main(int argc, char* args[])
 			{
 				handleKey(e.key, FALSE);
 			}
-			else if (e.type == SDL_JOYBUTTONDOWN) 
-			{
-
-			}
-		}
-
+            else if (e.type == SDL_JOYBUTTONDOWN)
+            {
+                if (e.cbutton.button == 3) {
+                    keys[int(g_cvKeyThrust[0].value)] = TRUE;
+                }
+            }
+            else if (e.type == SDL_JOYBUTTONUP)
+            {
+                if (e.cbutton.button == 3) {
+                    keys[int(g_cvKeyThrust[0].value)] = FALSE;
+                }
+            }
+            else if (e.type == SDL_JOYDEVICEADDED)
+            {
+                SDL_GameController *toOpen = SDL_GameControllerOpen(e.cdevice.which);
+                printf(
+                    "Opened SDL_GameController ID #%i, %s\n",
+                    e.cdevice.which,
+                    SDL_GameControllerName(toOpen)
+                );
+            }
+            else if (e.type == SDL_JOYAXISMOTION)
+            {
+                int sensitivity = 8000;
+                
+                if (e.jaxis.axis == SDL_CONTROLLER_AXIS_LEFTX)
+                {
+                    if (e.jaxis.value < -sensitivity)
+                    {
+                        keys[int(g_cvKeyRotateLeft[0].value)] = TRUE;
+                        keys[int(g_cvKeyRotateRight[0].value)] = FALSE;
+                    }
+                    else if (e.jaxis.value > sensitivity)
+                    {
+                        keys[int(g_cvKeyRotateLeft[0].value)] = FALSE;
+                        keys[int(g_cvKeyRotateRight[0].value)] = TRUE;
+                    }
+                    else
+                    {
+                        keys[int(g_cvKeyRotateLeft[0].value)] = FALSE;
+                        keys[int(g_cvKeyRotateRight[0].value)] = FALSE;
+                    }
+                }
+                if (e.jaxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
+                    keys[int(g_cvKeyThrust[0].value)] = e.jaxis.value;
+                }
+                if (e.jaxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
+                    keys[int(g_cvKeyFire[0].value)] = e.jaxis.value;
+                }
+            }
+        }
 		// Update time
 		if (!g_bGamePaused)
 		{
