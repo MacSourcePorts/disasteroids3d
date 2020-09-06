@@ -47,7 +47,6 @@ typedef unsigned char BYTE;
 #include "menus.h"
 #include "tokenize.h"
 #include "timer.h"
-#include "mp3control.h"
 #include "console.h"
 #include "command.h"
 #include "commands.h"

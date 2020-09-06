@@ -162,7 +162,6 @@
 		A118DA0B246E58C300184600 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A118DA10246E58C400184600 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A118DA11246E58C400184600 /* disasteroids3d.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = disasteroids3d.entitlements; sourceTree = "<group>"; };
-		A118DA18246E5B2400184600 /* disasteroids3d-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "disasteroids3d-Bridging-Header.h"; sourceTree = "<group>"; };
 		A118DA19246E5B2500184600 /* 3dglasses.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = 3dglasses.cpp; sourceTree = "<group>"; };
 		A118DA1A246E5B2500184600 /* commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commands.h; sourceTree = "<group>"; };
 		A118DA1B246E5B2500184600 /* glext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glext.h; sourceTree = "<group>"; };
@@ -177,26 +176,17 @@
 		A118DA24246E5B2500184600 /* renderflags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = renderflags.h; sourceTree = "<group>"; };
 		A118DA25246E5B2500184600 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resource.h; sourceTree = "<group>"; };
 		A118DA26246E5B2500184600 /* cvars.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cvars.cpp; sourceTree = "<group>"; };
-		A118DA27246E5B2500184600 /* commands.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = commands.c; sourceTree = "<group>"; };
 		A118DA28246E5B2500184600 /* command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = command.cpp; sourceTree = "<group>"; };
-		A118DA29246E5B2500184600 /* game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game.cpp; sourceTree = "<group>"; };
-		A118DA2A246E5B2500184600 /* diutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = diutil.cpp; sourceTree = "<group>"; };
 		A118DA2B246E5B2500184600 /* command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = command.h; sourceTree = "<group>"; };
 		A118DA2C246E5B2500184600 /* renderflags.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = renderflags.cpp; sourceTree = "<group>"; };
 		A118DA2D246E5B2500184600 /* menus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = menus.cpp; sourceTree = "<group>"; };
-		A118DA2E246E5B2500184600 /* mp3control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mp3control.h; sourceTree = "<group>"; };
-		A118DA2F246E5B2500184600 /* diutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = diutil.h; sourceTree = "<group>"; };
-		A118DA30246E5B2500184600 /* font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = font.cpp; sourceTree = "<group>"; };
 		A118DA31246E5B2500184600 /* console.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = console.cpp; sourceTree = "<group>"; };
 		A118DA32246E5B2500184600 /* 3dgame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = 3dgame.cpp; sourceTree = "<group>"; };
 		A118DA33246E5B2500184600 /* menus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menus.h; sourceTree = "<group>"; };
 		A118DA34246E5B2500184600 /* cvars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvars.h; sourceTree = "<group>"; };
-		A118DA35246E5B2600184600 /* dsutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsutil.cpp; sourceTree = "<group>"; };
-		A118DA36246E5B2600184600 /* mp3control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mp3control.cpp; sourceTree = "<group>"; };
 		A118DA37246E5B2600184600 /* commands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commands.cpp; sourceTree = "<group>"; };
 		A118DA38246E5B2600184600 /* tokenize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tokenize.h; sourceTree = "<group>"; };
 		A118DA39246E5B2600184600 /* vec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec.h; sourceTree = "<group>"; };
-		A118DA3A246E5B2600184600 /* dsutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsutil.h; sourceTree = "<group>"; };
 		A118DA63246F064800184600 /* Res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Res; sourceTree = "<group>"; };
 		A13BFE8424FAB05700073A6B /* disasteroids3d-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "disasteroids3d-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A13BFE8D24FAB05C00073A6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -333,27 +323,18 @@
 				A118DA1D246E5B2500184600 /* 3dglasses.h */,
 				A118DA28246E5B2500184600 /* command.cpp */,
 				A118DA2B246E5B2500184600 /* command.h */,
-				A118DA27246E5B2500184600 /* commands.c */,
 				A118DA37246E5B2600184600 /* commands.cpp */,
 				A118DA1A246E5B2500184600 /* commands.h */,
 				A118DA31246E5B2500184600 /* console.cpp */,
 				A118DA20246E5B2500184600 /* console.h */,
 				A118DA26246E5B2500184600 /* cvars.cpp */,
 				A118DA34246E5B2500184600 /* cvars.h */,
-				A118DA2A246E5B2500184600 /* diutil.cpp */,
-				A118DA2F246E5B2500184600 /* diutil.h */,
-				A118DA35246E5B2600184600 /* dsutil.cpp */,
-				A118DA3A246E5B2600184600 /* dsutil.h */,
-				A118DA30246E5B2500184600 /* font.cpp */,
-				A118DA29246E5B2500184600 /* game.cpp */,
 				A118DA1E246E5B2500184600 /* game.h */,
 				A118DA1B246E5B2500184600 /* glext.h */,
 				A118DA21246E5B2500184600 /* LookupTables.h */,
 				A118DA2D246E5B2500184600 /* menus.cpp */,
 				A118DA33246E5B2500184600 /* menus.h */,
 				A118DA1C246E5B2500184600 /* modeldata.h */,
-				A118DA36246E5B2600184600 /* mp3control.cpp */,
-				A118DA2E246E5B2500184600 /* mp3control.h */,
 				A118DA2C246E5B2500184600 /* renderflags.cpp */,
 				A118DA24246E5B2500184600 /* renderflags.h */,
 				A118DA25246E5B2500184600 /* resource.h */,
@@ -362,7 +343,6 @@
 				A118DA23246E5B2500184600 /* tokenize.cpp */,
 				A118DA38246E5B2600184600 /* tokenize.h */,
 				A118DA39246E5B2600184600 /* vec.h */,
-				A118DA18246E5B2400184600 /* disasteroids3d-Bridging-Header.h */,
 			);
 			name = disasteroids3d;
 			sourceTree = SOURCE_ROOT;
@@ -409,14 +389,14 @@
 			isa = PBXGroup;
 			children = (
 				A1D044A524788C6C00A90A5A /* Assets.xcassets */,
-				A1D044A724788C6C00A90A5A /* LaunchScreen.storyboard */,
-				A1D044AA24788C6C00A90A5A /* Info.plist */,
 				A19BD4ED24F7491F00C5F088 /* bridging.h */,
-				A19BD4EE24F749EA00C5F088 /* sys_ios.mm */,
-				A19BD4F024F74A4000C5F088 /* sys_ios.h */,
-				A19BD4F124F74B0A00C5F088 /* SDL_uikitviewcontroller+Additions.swift */,
-				A19BD4F324F74BC100C5F088 /* JoyStickView.swift */,
 				A19BD4F524F74BDC00C5F088 /* CoreGraphics+Additions.swift */,
+				A1D044AA24788C6C00A90A5A /* Info.plist */,
+				A19BD4F324F74BC100C5F088 /* JoyStickView.swift */,
+				A1D044A724788C6C00A90A5A /* LaunchScreen.storyboard */,
+				A19BD4F124F74B0A00C5F088 /* SDL_uikitviewcontroller+Additions.swift */,
+				A19BD4F024F74A4000C5F088 /* sys_ios.h */,
+				A19BD4EE24F749EA00C5F088 /* sys_ios.mm */,
 			);
 			path = "disasteroids3d-iOS";
 			sourceTree = "<group>";
