@@ -1916,6 +1916,32 @@ GLvoid glPrint(int set, const GLfloat& x, const GLfloat& y, const char *text)
 
 }
 
+GLvoid glPrintChar(const GLfloat& x, const GLfloat& y, int c)
+{
+    // Reset The Projection Matrix
+    glPushMatrix();
+
+    // Setup rendering options
+    renderenable(render_blend | render_texture);
+    renderdisable(render_depthtest | render_lighting | render_wireframe);
+
+    #if 0
+        glListBase(font_list - 32 + (128 * set));                // Choose The Font Set (0 or 1)
+    #endif
+        glBindTexture(GL_TEXTURE_2D, texture[5]);                // Select Our Font Texture
+    #if 0
+        glTranslated(x,y,-30);                                        // Position The Text
+        glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);    // Write The Text To The Screen
+    #else
+        glTranslatef(x, y, -30);
+        print_character(c);
+    #endif
+
+    // Restore the matrix
+    glPopMatrix();
+
+}
+
 
 //
 // TCW, but based 99% on code from Jeff
@@ -3431,17 +3457,19 @@ int DrawGLScene(GLvoid)
 				fScalar = float(i + 1) * 0.1f;
 				glColor4f(1.0f - fScalar, fScalar, 0, 1.0f);
 			}
+            
+            int ic = 0;
 
 			if ((float)player->ShieldsPower / 255.0f < (float)i * 0.1f)
 			{
-				c = (char)134;
+				ic = 102;
 			}
 			else
 			{
-				c = (char)135;
+				ic = 103;
 			}
 
-			glPrintVar(0, -16.0f + (i * 0.6f), -11.0f, "%c", c);
+            glPrintChar(-16.0f + (i * 0.6f), -11.0f, ic);
 		}
 	}
 
@@ -3702,7 +3730,7 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
+//    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
     SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
