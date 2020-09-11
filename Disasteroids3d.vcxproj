@@ -144,7 +144,6 @@
     <ClCompile Include="console.cpp" />
     <ClCompile Include="cvars.cpp" />
     <ClCompile Include="menus.cpp" />
-    <ClCompile Include="mp3control.cpp" />
     <ClCompile Include="renderflags.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="tokenize.cpp" />
@@ -160,7 +159,6 @@
     <ClInclude Include="LookupTables.h" />
     <ClInclude Include="menus.h" />
     <ClInclude Include="modeldata.h" />
-    <ClInclude Include="mp3control.h" />
     <ClInclude Include="renderflags.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="tokenize.h" />

@@ -38,9 +38,6 @@
     <ClCompile Include="menus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mp3control.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="renderflags.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -80,9 +77,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="modeldata.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mp3control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="renderflags.h">
