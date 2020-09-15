@@ -5503,9 +5503,36 @@ int main(int argc, char* args[])
 			{
 				g_bExitApp = true;
 			}
+            else if (e.type == SDL_TEXTINPUT) {
+                keys[e.text.text[0]] = TRUE;
+            }
 			//Handle keypress with current mouse position
 			else if (e.type == SDL_KEYDOWN)
 			{
+                // TODO: why is this not handled by the main loop? Maybe factor this out so we don't have to repeat it
+                #ifdef IOS
+                if (e.key.keysym.sym == SDLK_RETURN) {
+                    g_bEnteringHighScoreInitials = FALSE;
+                    playerhighscore = NULL;
+                
+                    // on iOS we can hide the keyboard on a "Return"
+                    SDL_StopTextInput();
+                    
+                    PlayMenuExplosionSound();
+                }
+                else if (e.key.keysym.sym == SDLK_BACKSPACE)
+                {
+                    if (g_nHighScoreInitialsIdx > 0)
+                    {
+                        g_nHighScoreInitialsIdx--;
+                        playerhighscore->Initials[g_nHighScoreInitialsIdx] = ' ';
+
+                        PlayMenuBeepSound();
+                    }
+                }
+                
+                #endif
+
 				handleKey(e.key, TRUE);
 			}
 			else if (e.type == SDL_KEYUP)
@@ -5765,7 +5792,6 @@ int main(int argc, char* args[])
 					{
 						g_bEnteringHighScoreInitials = FALSE;
 						playerhighscore = NULL;
-
 						PlayMenuExplosionSound();
 					}
 					// Check for legal initial chars
@@ -6806,6 +6832,7 @@ int main(int argc, char* args[])
 
 								// Found one!  Initialize variables and exit for loop
 								g_bEnteringHighScoreInitials = TRUE;
+                                                                
 								g_nHighScoreInitialsIdx = 0;
 
 								// Setup delay variables
@@ -6841,7 +6868,11 @@ int main(int argc, char* args[])
 								sprintf(highscores[i].Initials, "   ");
 
 								playerhighscore = &highscores[i];
-
+                                
+#ifdef IOS // on iOS we can show the keyboard now
+                                    SDL_StartTextInput();
+#endif
+                                
 								break;
 							}
 						}
