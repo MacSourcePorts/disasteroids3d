@@ -201,6 +201,7 @@
 		A13BFEBA24FAB34800073A6B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
 		A13BFEBB24FAB34800073A6B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		A13BFEBC24FAB34800073A6B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		A164120125157A1600FD3E1D /* disasteroids3d-tvOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "disasteroids3d-tvOS.entitlements"; sourceTree = "<group>"; };
 		A19BD4BE24F4B8B700C5F088 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		A19BD4CD24F4B8E200C5F088 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		A19BD4CF24F4B8EA00C5F088 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.6.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
@@ -378,6 +379,7 @@
 		A13BFE8524FAB05700073A6B /* disasteroids3d-tvOS */ = {
 			isa = PBXGroup;
 			children = (
+				A164120125157A1600FD3E1D /* disasteroids3d-tvOS.entitlements */,
 				A13BFE8D24FAB05C00073A6B /* Assets.xcassets */,
 				A13BFE8F24FAB05C00073A6B /* LaunchScreen.storyboard */,
 				A13BFE9224FAB05C00073A6B /* Info.plist */,
@@ -917,6 +919,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CODE_SIGN_ENTITLEMENTS = "disasteroids3d-tvOS/disasteroids3d-tvOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -934,7 +937,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tomkiddconsulting.disasteroids3d-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomkiddconsulting.disasteroids3d;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-iOS/bridging.h";
@@ -949,6 +952,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CODE_SIGN_ENTITLEMENTS = "disasteroids3d-tvOS/disasteroids3d-tvOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -966,7 +970,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tomkiddconsulting.disasteroids3d-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomkiddconsulting.disasteroids3d;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-iOS/bridging.h";
@@ -1001,7 +1005,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tomkiddconsulting.disasteroids3d-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomkiddconsulting.disasteroids3d;
 				PRODUCT_NAME = "Disasteroids 3D";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-iOS/bridging.h";
@@ -1035,7 +1039,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tomkiddconsulting.disasteroids3d-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomkiddconsulting.disasteroids3d;
 				PRODUCT_NAME = "Disasteroids 3D";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "disasteroids3d-iOS/bridging.h";
