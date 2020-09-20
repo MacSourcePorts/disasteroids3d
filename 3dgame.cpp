@@ -47,8 +47,14 @@ const int channelSaucerFireSound = 7;
 // Lookup table code
 #include "LookupTables.h"
 
+// Set this to TRUE to use original OpenGL code
+// Set this to FALSE to use new OpenGL ES friendly code
+#define ORIGINAL_PATH TRUE
+
 #ifdef IOS
 #include "sys_ios.h"
+#undef ORIGINAL_PATH
+#define ORIGINAL_PATH FALSE // On iOS/tvOS, always use the new path
 #endif
 
 // SDL variables
@@ -561,7 +567,7 @@ float randFloat(const float& min, const float& max) {
 GLint Gen3DObjectList()
 {
 
-#ifndef GLES
+#if ORIGINAL_PATH
 	int i =0;
 	int j =0;
 
@@ -1639,7 +1645,9 @@ int LoadGLTextures()
 			glBindTexture(GL_TEXTURE_2D, texture[loop]);
 			if ((loop > 6) && (loop < 11) || (loop == 12))
 			{
-#ifdef GLES
+#if ORIGINAL_PATH
+                glTexImage2D(GL_TEXTURE_2D, 0, 3, Surface->w, Surface->h, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
+#else
                 int bpp;                    /* texture bits per pixel */
                 Uint32 Rmask, Gmask, Bmask, Amask;  /* masks for pixel format passed into OpenGL */
                 SDL_Surface *bmp_surface_rgba8888;  /* this serves as a destination to convert the BMP
@@ -1665,8 +1673,6 @@ int LoadGLTextures()
                 
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Surface->w, Surface->h, 0,
                              GL_RGBA, GL_UNSIGNED_BYTE, bmp_surface_rgba8888->pixels);
-#else
-                glTexImage2D(GL_TEXTURE_2D, 0, 3, Surface->w, Surface->h, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
 #endif
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
@@ -1676,7 +1682,10 @@ int LoadGLTextures()
                 glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, true);
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);
-#ifdef GLES
+                
+#if ORIGINAL_PATH
+                glTexImage2D(GL_TEXTURE_2D, 0, 3, Surface->w, Surface->h, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
+#else
                 int bpp;                    /* texture bits per pixel */
                 Uint32 Rmask, Gmask, Bmask, Amask;  /* masks for pixel format passed into OpenGL */
                 SDL_Surface *bmp_surface_rgba8888;  /* this serves as a destination to convert the BMP
@@ -1702,8 +1711,6 @@ int LoadGLTextures()
                 
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Surface->w, Surface->h, 0,
                              GL_RGBA, GL_UNSIGNED_BYTE, bmp_surface_rgba8888->pixels);
-#else
-                glTexImage2D(GL_TEXTURE_2D, 0, 3, Surface->w, Surface->h, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, Surface->pixels);
 #endif
 			}
 		}
@@ -1724,7 +1731,7 @@ GLvoid BuildFont(GLvoid)								// Build Our Font Display List
 	float	cy;												// Holds Our Y Character Coord
 	int loop = 0;
 
-#if 0
+#if ORIGINAL_PATH
 	font_list=glGenLists(256);							// Creating 256 Display Lists
 #endif
 	glBindTexture(GL_TEXTURE_2D, texture[5]);		// Select Our Font Texture
@@ -1733,7 +1740,7 @@ GLvoid BuildFont(GLvoid)								// Build Our Font Display List
 		cx=float(loop%16)/16.0f;						// X Position Of Current Character
 		cy=float(loop/16)/16.0f;						// Y Position Of Current Character
 
-#if 0
+#if ORIGINAL_PATH
 		glNewList(font_list+loop,GL_COMPILE);		// Start Building A List
 			glBegin(GL_TRIANGLE_STRIP);				// Use A Triangle Strip For Each Character
 				glTexCoord2f(cx+0.0625f,1-cy);		// Texture Coord (Top Right)
@@ -1770,7 +1777,7 @@ GLvoid BuildFont(GLvoid)								// Build Our Font Display List
            glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 #endif
            glTranslatef(0.6f,0.0f,0.0f);				// Move To The Right Of The Character
-#if 0
+#if ORIGINAL_PATH
 		glEndList();										// Done Building The Display List
 #endif
 	}															// Loop Until All 256 Are Built
@@ -1815,7 +1822,6 @@ void print_string(char *s, int set) {
     size_t length = strlen(s);
     size_t i = 0;
     for (; i < length; i++) {
-        //glCallList(s[i] - 17);
         print_character(s[i] - 32 + (128 * set));
     }
 }
@@ -1825,14 +1831,13 @@ void print_string2(const char s[], int set) {
     size_t length = strlen(s);
     size_t i = 0;
     for (; i < length; i++) {
-//        glCallList(s[i] - 17);
         print_character(s[i] - 32 + (128 * set));
     }
 }
 
 GLvoid KillFont(GLvoid)									// Delete The Font From Memory
 {
-#if 0
+#if ORIGINAL_PATH
 	glDeleteLists(font_list,256);						// Delete All 256 Display Lists
 #endif
 }
@@ -1866,17 +1871,17 @@ GLvoid glPrintVar(int set, const GLfloat& x, const GLfloat& y, const char *strin
 	renderenable(render_blend | render_texture);
 	renderdisable(render_depthtest | render_lighting | render_wireframe);
 
-    #if 0
+#if ORIGINAL_PATH
         glListBase(font_list - 32 + (128 * set));                // Choose The Font Set (0 or 1)
-    #endif
+#endif
         glBindTexture(GL_TEXTURE_2D, texture[5]);                // Select Our Font Texture
-    #if 0
+#if ORIGINAL_PATH
         glTranslated(x, y, -30);                                    // Position The Text
         glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);    // Write The Text To The Screen
-    #else
+#else
         glTranslatef(x, y, -30);                                    // Position The Text
         print_string(text, set);
-    #endif
+#endif
 
 	glPopMatrix();
 
@@ -1899,23 +1904,24 @@ GLvoid glPrint(int set, const GLfloat& x, const GLfloat& y, const char *text)
 	renderenable(render_blend | render_texture);
 	renderdisable(render_depthtest | render_lighting | render_wireframe);
 
-    #if 0
+#if ORIGINAL_PATH
         glListBase(font_list - 32 + (128 * set));                // Choose The Font Set (0 or 1)
-    #endif
+#endif
         glBindTexture(GL_TEXTURE_2D, texture[5]);                // Select Our Font Texture
-    #if 0
+#if ORIGINAL_PATH
         glTranslated(x,y,-30);                                        // Position The Text
         glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);    // Write The Text To The Screen
-    #else
+#else
         glTranslatef(x, y, -30);
         print_string2(text, set);
-    #endif
+#endif
 
 	// Restore the matrix
 	glPopMatrix();
 
 }
 
+// This is a new function to do the shields without display lists handling characters -tkidd
 GLvoid glPrintChar(const GLfloat& x, const GLfloat& y, int c)
 {
     // Reset The Projection Matrix
@@ -1925,21 +1931,12 @@ GLvoid glPrintChar(const GLfloat& x, const GLfloat& y, int c)
     renderenable(render_blend | render_texture);
     renderdisable(render_depthtest | render_lighting | render_wireframe);
 
-    #if 0
-        glListBase(font_list - 32 + (128 * set));                // Choose The Font Set (0 or 1)
-    #endif
-        glBindTexture(GL_TEXTURE_2D, texture[5]);                // Select Our Font Texture
-    #if 0
-        glTranslated(x,y,-30);                                        // Position The Text
-        glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);    // Write The Text To The Screen
-    #else
-        glTranslatef(x, y, -30);
-        print_character(c);
-    #endif
+    glBindTexture(GL_TEXTURE_2D, texture[5]);                // Select Our Font Texture
+    glTranslatef(x, y, -30);
+    print_character(c);
 
     // Restore the matrix
     glPopMatrix();
-
 }
 
 
@@ -2249,17 +2246,17 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	// Enable Texture Mapping
 	renderenable(render_texture);
 
-    #ifndef GLES
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    #endif
+#if ORIGINAL_PATH
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+#endif
 
 	glShadeModel(GL_FLAT);								// Enable Flat Shading
 	
 	glClearColor(0.0f, 1.0f, 0.0f, 0.0f);			// Black Background
 
-    #ifdef GLES
-        #define glClearDepth glClearDepthf
-    #endif
+#ifdef GLES
+    #define glClearDepth glClearDepthf
+#endif
 
     glClearDepth(1.0f);									// Depth Buffer Setup
 
@@ -2279,7 +2276,7 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	
 	// Fixed by NeHe
 	glEnable(GL_COLOR_MATERIAL);
-#ifndef GLES
+#if ORIGINAL_PATH
 	glColorMaterial(GL_FRONT,GL_AMBIENT_AND_DIFFUSE);
 	glMateriali(GL_FRONT,GL_SHININESS,128);
 #endif
@@ -2298,8 +2295,10 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	// Build ObjectLists of 3d objects
 	Gen3DObjectList();
 
+#if ORIGINAL_PATH
 	// Build the font
-	//BuildFont();
+	BuildFont();
+#endif
 	
 	// Initialization Went OK
 	return TRUE;
@@ -2420,38 +2419,39 @@ GLvoid BlackOutScreen(GLvoid)
 	const float fy = 0;
 	const float fz = -4.0f;
 	const float fs = 3.0f;
-    #if 0
-        glBegin(GL_TRIANGLE_STRIP);
-        glTexCoord2d(1,1); glVertex3f(fx + fs, fy + fs, fz);
-        glTexCoord2d(0,1); glVertex3f(fx - fs, fy + fs, fz);
-        glTexCoord2d(1,0); glVertex3f(fx + fs, fy - fs, fz);
-        glTexCoord2d(0,0); glVertex3f(fx - fs, fy - fs, fz);
-        glEnd();
-    #else
-        GLfloat vtx[] = {
-            fx + fs, fy + fs, fz,
-            fx - fs, fy + fs, fz,
-            fx + fs, fy - fs, fz,
-            fx - fs, fy - fs, fz
-        };
-        GLfloat tex[] = {
-            1,1,
-            0,1,
-            1,0,
-            0,0
-        };
-        
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+#if ORIGINAL_PATH
+    glBegin(GL_TRIANGLE_STRIP);
+    glTexCoord2d(1,1); glVertex3f(fx + fs, fy + fs, fz);
+    glTexCoord2d(0,1); glVertex3f(fx - fs, fy + fs, fz);
+    glTexCoord2d(1,0); glVertex3f(fx + fs, fy - fs, fz);
+    glTexCoord2d(0,0); glVertex3f(fx - fs, fy - fs, fz);
+    glEnd();
+#else
+    GLfloat vtx[] = {
+        fx + fs, fy + fs, fz,
+        fx - fs, fy + fs, fz,
+        fx + fs, fy - fs, fz,
+        fx - fs, fy - fs, fz
+    };
+    GLfloat tex[] = {
+        1,1,
+        0,1,
+        1,0,
+        0,0
+    };
+    
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-        glVertexPointer(3, GL_FLOAT, 0, vtx);
-        glTexCoordPointer(2, GL_FLOAT, 0, tex);
-        glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+    glVertexPointer(3, GL_FLOAT, 0, vtx);
+    glTexCoordPointer(2, GL_FLOAT, 0, tex);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
 
-        glDisableClientState(GL_VERTEX_ARRAY);
-        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    #endif
-	// Restore the blend func for translucency
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+#endif
+
+    // Restore the blend func for translucency
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 }
 
@@ -2517,16 +2517,22 @@ void DrawGLBackground(GLvoid)
 
 			glTranslatef(g_fBackgroundX, g_fBackgroundY, 0);
 			glColor4ub(255, 255, 255, 255);
-			//glCallList(bigspace_list);
+#if ORIGINAL_PATH
+			glCallList(bigspace_list);
+#else
             draw_bigspace();
+#endif
 
 			renderenable(render_blend);
 
 			glTranslatef(0, 0, 5.0f);
 			glColor4ub(255, 255, 255, 128);
 			glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
-			//glCallList(bigspace_list);
+#if ORIGINAL_PATH
+			glCallList(bigspace_list);
+#else
             draw_bigspace();
+#endif
 
 			fScalar = -0.25f * (float)sin(g_fNow * 0.001f);
 // ******************** Modified By NeHe (04/30/00) ********************
@@ -2547,8 +2553,11 @@ void DrawGLBackground(GLvoid)
 			glPushMatrix();
 				glTranslatef(fScalar, fScalar, -30.0f - fScalar);
 				glRotatef(fScalar, fScalar, -fScalar, 1.0f);
-				//glCallList(background_list);
+#if ORIGINAL_PATH
+				glCallList(background_list);
+#else
                 draw_background();
+#endif
 			glPopMatrix();
 
 		// Draw stars
@@ -2614,7 +2623,7 @@ void DrawGLBackground(GLvoid)
 				fz = stars[i].z;
 				fs = stars[i].size;
 
-#if 0
+#if ORIGINAL_PATH
                 glBegin(GL_TRIANGLE_STRIP);                        // Build Quad From A Triangle Strip
                     glTexCoord2d(1,1); glVertex3f(fx + fs, fy + fs, fz); // Top Right
                     glTexCoord2d(0,1); glVertex3f(fx - fs, fy + fs, fz); // Top Left
@@ -2665,8 +2674,11 @@ void DrawGLBackground(GLvoid)
 			glColor4ub(255,255,255,255);
 			glPushMatrix();
 				glTranslatef(0.0f, 0.0f, -35.0f);
-				//glCallList(background_list);
+#if ORIGINAL_PATH
+				glCallList(background_list);
+#else
                 draw_background();
+#endif
 			glPopMatrix();
 			break;
 		
@@ -2678,8 +2690,11 @@ void DrawGLBackground(GLvoid)
 				fScalar = float(0.25f * sin(g_fNow));
 				glTranslatef(fScalar, fScalar, -30.0f - fScalar);
 				glRotatef(fScalar, fScalar, -fScalar, 1.0f);
-				//glCallList(background_list);
+#if ORIGINAL_PATH
+				glCallList(background_list);
+#else
                 draw_background();
+#endif
 			glPopMatrix();
 			break;
 
@@ -2698,8 +2713,11 @@ void DrawGLBackground(GLvoid)
 			glRotatef(180.0f * float(cos(g_fBackgroundRot/10.0f)), 0.0f, 0.0f, 1.0f);
 			glTranslatef((3.0f*float(cos(g_fBackgroundRot)))+(2.1f*float(sin(g_fBackgroundRot*1.4f))),(2.8f*float(sin(g_fBackgroundRot)))+(1.3f*float(sin(g_fBackgroundRot*1.4f))),0.0f);
 			glRotatef(10.0f*float(sin(g_fBackgroundRot*1.2f)),1.0f,0.0f,0.0f);
-			//glCallList(background_list);
+#if ORIGINAL_PATH
+			glCallList(background_list);
+#else
             draw_background();
+#endif
 			/* */
 
 			glPopMatrix();
@@ -3019,8 +3037,11 @@ int DrawGLScene(GLvoid)
 						}
 
 						glRotatef(actors[i].rx, 0.0f, 0.0f, 1.0f);
-						//glCallList(actors[i].displaylistid);
+#if ORIGINAL_PATH
+						glCallList(actors[i].displaylistid);
+#else
                         draw_sfire();
+#endif
 
 						// Draw friendly shots blue, enemy shots red
 						if (b3d)
@@ -3040,8 +3061,11 @@ int DrawGLScene(GLvoid)
 
 						glTranslatef(0.0f, 0.0f, 0.1f);
 						glRotatef(actors[i].rx * -2.0f, 0.0f, 0.0f, 1.0f);
-						//glCallList(actors[i].displaylistid);
+#if ORIGINAL_PATH
+						glCallList(actors[i].displaylistid);
+#else
                         draw_sfire();
+#endif
 
 						break;
 
@@ -3066,8 +3090,11 @@ int DrawGLScene(GLvoid)
 							glColor4ub(actors[i].color.r, actors[i].color.g, actors[i].color.b, (GLuint)(fRemainingLifePct * 235.0f) + 20);
 
 						glRotatef(actors[i].rx, 1.0f, 0.0f, 0.0f);
-						//glCallList(actors[i].displaylistid);
+#if ORIGINAL_PATH
+						glCallList(actors[i].displaylistid);
+#else
                         draw_blast();
+#endif
 						
 						glScalef(0.75f, 0.75f, 0.75f);
 
@@ -3076,8 +3103,11 @@ int DrawGLScene(GLvoid)
 						else
 							glColor4ub(	(GLuint)(fRemainingLifePct * 128.0f) + 64, (GLuint)(fRemainingLifePct * 64.0f), 0, (GLuint)((fRemainingLifePct * 235.0f) + 20));
 
-                        //glCallList(actors[i].displaylistid);
+#if ORIGINAL_PATH
+                        glCallList(actors[i].displaylistid);
+#else
                         draw_blast();
+#endif
 						glScalef(1.0f,1.0f,1.0f);
 
 						break;
@@ -3118,7 +3148,7 @@ int DrawGLScene(GLvoid)
                         fz = actors[i].z + 0.1f;
                         fs = actors[i].size * 0.75f;
 
-#if 0
+#if ORIGINAL_PATH
                         glBegin(GL_TRIANGLE_STRIP);
                             glTexCoord2d(1,1); glVertex3f(fx + fs, fy + fs, fz);
                             glTexCoord2d(0,1); glVertex3f(fx - fs, fy + fs, fz);
@@ -3184,8 +3214,11 @@ int DrawGLScene(GLvoid)
 							glColor4ub(actors[i].color.r, actors[i].color.g, actors[i].color.b, (GLuint)((fRemainingLifePct) * 128.0f) + 64);
 
 						// Display object
-						//glCallList(actors[i].displaylistid);
+#if ORIGINAL_PATH
+						glCallList(actors[i].displaylistid);
+#else
                         draw_smoke();
+#endif
 
 						// If flaming...
 						if (actors[i].type == ACTOR_FLAMINGPARTICLE)
@@ -3198,8 +3231,11 @@ int DrawGLScene(GLvoid)
 							else
 								glColor4ub(255,255,0,64);
 
-							//glCallList(actors[i].displaylistid);
+#if ORIGINAL_PATH
+							glCallList(actors[i].displaylistid);
+#else
                             draw_smoke();
+#endif
 							glScalef(1.0f, 1.0f, 1.0f);
 						}
 						
@@ -3225,15 +3261,21 @@ int DrawGLScene(GLvoid)
 
 						glRotatef(actors[i].rx, 0.0f, 0.0f, 1.0f);
 						glRotatef(actors[i].rz, 1.0f, 0.0f, 0.0f);
-						//glCallList(actors[i].displaylistid);
+#if ORIGINAL_PATH
+						glCallList(actors[i].displaylistid);
+#else
                         draw_shields();
+#endif
                         
 
 						glTranslatef(0.0f, 0.0f, 0.1f);
 						glRotatef(actors[i].rx * -2.0f, 0.0f, 0.0f, 1.0f);
 						glRotatef(actors[i].rz * -2.0f, 1.0f, 0.0f, 0.0f);
-						//glCallList(actors[i].displaylistid);
+#if ORIGINAL_PATH
+						glCallList(actors[i].displaylistid);
+#else
                         draw_shields();
+#endif
 
 						break;
 				
@@ -3262,8 +3304,11 @@ int DrawGLScene(GLvoid)
 						else
 							glColor4ub(actors[i].color.r, actors[i].color.g, actors[i].color.b, (GLuint)(128 * fRemainingLifePct) + 128);
 						
-						//glCallList(actors[i].displaylistid);
+#if ORIGINAL_PATH
+						glCallList(actors[i].displaylistid);
+#else
                         draw_debris();
+#endif
 
 						glScalef(1.0f, 1.0f, 1.0f);
 						
@@ -3293,8 +3338,11 @@ int DrawGLScene(GLvoid)
 
 						glRotatef(actors[i].rz, 0.0f, 0.0f, 1.0f);
 
-						//glCallList(actors[i].displaylistid);
+#if ORIGINAL_PATH
+						glCallList(actors[i].displaylistid);
+#else
                         draw_ufo();
+#endif
 
 						glScalef(1.0f, 1.0f, 1.0f);
 
@@ -3320,8 +3368,11 @@ int DrawGLScene(GLvoid)
 						glRotatef(actors[i].rz, 0.0f, 0.0f, 1.0f);
 						glRotatef(actors[i].rx, 1.0f, 0.0f, 0.0f);
 						glRotatef(actors[i].ry, 0.0f, 1.0f, 0.0f);
-						//glCallList(actors[i].displaylistid);
+#if ORIGINAL_PATH
+						glCallList(actors[i].displaylistid);
+#else
                         draw_player();
+#endif
 						break;
 
 
@@ -3349,10 +3400,13 @@ int DrawGLScene(GLvoid)
 						glRotatef(actors[i].rx, 1.0f, 0.0f, 0.0f);
 						glRotatef(actors[i].rz, 0.0f, 0.0f, 1.0f);
                         
+#if ORIGINAL_PATH
+                        glCallList(actors[i].displaylistid);
+#else
                         // TODO: Are there any other types that get called here?
-                        //glCallList(actors[i].displaylistid);
                         if (actors[i].type == ACTOR_ROCK)
                             draw_rock();
+#endif
                         
 						break;
 				}
@@ -3394,7 +3448,7 @@ int DrawGLScene(GLvoid)
 					case ACTOR_SFIRE:
 							glPushMatrix();
 							glTranslatef(actors[i].x, actors[i].y, actors[i].z);
-#if 0
+#if ORIGINAL_PATH
                             glBegin(GL_QUADS);
                                 glVertex3f(-actors[i].xcolldist, -actors[i].ycolldist,  0.0f);
                                 glVertex3f( actors[i].xcolldist, -actors[i].ycolldist,  0.0f);
@@ -3462,14 +3516,26 @@ int DrawGLScene(GLvoid)
 
 			if ((float)player->ShieldsPower / 255.0f < (float)i * 0.1f)
 			{
+#if ORIGINAL_PATH
+                c = (char)134;
+#else
 				ic = 102;
+#endif
 			}
 			else
 			{
+#if ORIGINAL_PATH
+                c = (char)135;
+#else
 				ic = 103;
+#endif
 			}
 
+#if ORIGINAL_PATH
+            glPrintVar(0, -16.0f + (i * 0.6f), -11.0f, "%c", c);
+#else
             glPrintChar(-16.0f + (i * 0.6f), -11.0f, ic);
+#endif
 		}
 	}
 
@@ -3521,8 +3587,11 @@ int DrawGLScene(GLvoid)
 						glScalef(2.4f, 2.4f, 1.0f);
 						renderenable(render_blend);
 						renderdisable(render_lighting | render_depthtest | render_texture);
-						//glCallList(debris_list);
+#if ORIGINAL_PATH
+						glCallList(debris_list);
+#else
                         draw_debris();
+#endif
 						glColor3f(1.0f,1.0f,1.0f);
 
 						// Restore matrix
@@ -3564,8 +3633,11 @@ int DrawGLScene(GLvoid)
 				glTranslatef(0.0f, 0.45f, -4.5f);
 				// glColor4ub(255, 255, 255, 160 + (char)(20.0f * sin(g_fNow / 0.250f)));
 				glColor4ub(255, 255, 255, 255);
-//				glCallList(logo_list);
+#if ORIGINAL_PATH
+				glCallList(logo_list);
+#else
                 draw_logo();
+#endif
 				glPopMatrix();
 			
 
@@ -3603,8 +3675,11 @@ int DrawGLScene(GLvoid)
 		while (i > 6)
 		{
 			glTranslatef(1.0f, 0, 0);
-			//glCallList(extraship5_list);
+#if ORIGINAL_PATH
+			glCallList(extraship5_list);
+#else
             draw_extraship5();
+#endif
 			i -= 5;
 		}
 	glPopMatrix();
@@ -3613,8 +3688,11 @@ int DrawGLScene(GLvoid)
 		while (i > 1)
 		{
 			glTranslatef(1.0f, 0, 0);
-			//glCallList(extraship_list);
+#if ORIGINAL_PATH
+            glCallList(extraship_list);
+#else
             draw_extraship();
+#endif
 			i -= 1;
 		}
 	glPopMatrix();
@@ -3730,7 +3808,6 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, BOOL fullscree
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
-//    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
     SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
@@ -5107,7 +5184,7 @@ void TerminateGame(void)
 	KillFont();
 
 	// Kill display lists
-#if 0
+#if ORIGINAL_PATH
 	glDeleteLists(player_list, NUM_LISTS);
 #endif
 
@@ -5353,6 +5430,12 @@ void InitActors() {
 
 int main(int argc, char* args[])
 {
+#if ORIGINAL_PATH
+    printf("Original path is true\n");
+#else
+    printf("Original path is false\n");
+#endif
+    
 	int		i				= 0;		// i,j,k are counter variables
 	int		j				= 0;
 	int		k				= 0;
