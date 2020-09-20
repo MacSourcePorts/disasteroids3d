@@ -5541,12 +5541,18 @@ int main(int argc, char* args[])
 			}
             else if (e.type == SDL_JOYBUTTONDOWN)
             {
+                if (e.cbutton.button == 0) {
+                    keys[int(g_cvKeyStartGame[0].value)] = TRUE;
+                }
                 if (e.cbutton.button == 3) {
                     keys[int(g_cvKeyThrust[0].value)] = TRUE;
                 }
             }
             else if (e.type == SDL_JOYBUTTONUP)
             {
+                if (e.cbutton.button == 0) {
+                    keys[int(g_cvKeyStartGame[0].value)] = FALSE;
+                }
                 if (e.cbutton.button == 3) {
                     keys[int(g_cvKeyThrust[0].value)] = FALSE;
                 }
