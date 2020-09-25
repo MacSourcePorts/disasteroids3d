@@ -10,6 +10,7 @@
 
 #include <SDL_syswm.h>
 #include "sys_ios.h"
+//#include "game.h"
 
 #if TARGET_OS_TV
 #import "disasteroids3d_tvOS-Swift.h"
@@ -30,14 +31,23 @@ UIViewController* GetSDLViewController(SDL_Window *sdlWindow) {
 }
 
 void Sys_AddControls(SDL_Window *sdlWindow) {
-    #if !TARGET_OS_TV
-        // adding on-screen controls -tkidd
-        SDL_uikitviewcontroller *rootVC = (SDL_uikitviewcontroller *)GetSDLViewController(sdlWindow);
-        NSLog(@"root VC = %@",rootVC);
+#if !TARGET_OS_TV
+    // adding on-screen controls -tkidd
+    SDL_uikitviewcontroller *rootVC = (SDL_uikitviewcontroller *)GetSDLViewController(sdlWindow);
+    NSLog(@"root VC = %@",rootVC);
 
-        [rootVC.view addSubview:[rootVC actionButtonWithRect:[rootVC.view frame]]];
-        [rootVC.view addSubview:[rootVC joyStickWithRect:[rootVC.view frame]]];
-        [rootVC.view addSubview:[rootVC enterButtonWithRect:[rootVC.view frame]]];
-        [rootVC.view addSubview:[rootVC escapeButtonWithRect:[rootVC.view frame]]];
-    #endif
+    [rootVC.view addSubview:[rootVC fireButtonWithRect:[rootVC.view frame]]];
+    [rootVC.view addSubview:[rootVC thrustButtonWithRect:[rootVC.view frame]]];
+    [rootVC.view addSubview:[rootVC enterButtonWithRect:[rootVC.view frame]]];
+    [rootVC.view addSubview:[rootVC rotateLeftButtonWithRect:[rootVC.view frame]]];
+    [rootVC.view addSubview:[rootVC rotateRightButtonWithRect:[rootVC.view frame]]];
+    [rootVC.view addSubview:[rootVC shieldsButtonWithRect:[rootVC.view frame]]];
+#endif
+}
+
+void Sys_ToggleControls(SDL_Window *sdlWindow, BOOL g_bGameOver) {
+#if !TARGET_OS_TV
+    SDL_uikitviewcontroller *rootVC = (SDL_uikitviewcontroller *)GetSDLViewController(sdlWindow);
+    [rootVC toggleControls:g_bGameOver];
+#endif
 }

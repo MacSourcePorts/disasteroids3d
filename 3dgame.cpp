@@ -5577,7 +5577,10 @@ int main(int argc, char* args[])
 	// Main program loop
 	while(!g_bExitApp)
 	{
-
+        
+#ifdef IOS
+        Sys_ToggleControls(SDL_window, g_bGameOver);fz
+#endif
 		//Handle events on queue
 		while (SDL_PollEvent(&e) != 0)
 		{

@@ -11,5 +11,6 @@
 #   include <SDL_video.h>
 
 void Sys_AddControls(SDL_Window *sdlWindow);
+void Sys_ToggleControls(SDL_Window *sdlWindow, BOOL g_bGameOver);
 
 #endif /* sys_ios_h */

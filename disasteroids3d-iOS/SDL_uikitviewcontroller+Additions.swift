@@ -13,18 +13,58 @@ extension SDL_uikitviewcontroller {
     // A method of getting around the fact that Swift extensions cannot have stored properties
     // https://medium.com/@valv0/computed-properties-and-extensions-a-pure-swift-approach-64733768112c
     struct Holder {
-        static var _actionButton = UIButton()
+        static var _fireButton = UIButton()
+        static var _thrustButton = UIButton()
+        static var _rotateLeftButton = UIButton()
+        static var _rotateRightButton = UIButton()
+        static var _shieldsButton = UIButton()
         static var _joystickView = JoyStickView(frame: .zero)
         static var _escapeButton = UIButton()
         static var _enterButton = UIButton()
     }
     
-    var actionButton:UIButton {
+    var fireButton:UIButton {
         get {
-            return Holder._actionButton
+            return Holder._fireButton
         }
         set(newValue) {
-            Holder._actionButton = newValue
+            Holder._fireButton = newValue
+        }
+    }
+    
+    var thrustButton:UIButton {
+        get {
+            return Holder._thrustButton
+        }
+        set(newValue) {
+            Holder._thrustButton = newValue
+        }
+    }
+    
+    var rotateLeftButton:UIButton {
+        get {
+            return Holder._rotateLeftButton
+        }
+        set(newValue) {
+            Holder._rotateLeftButton = newValue
+        }
+    }
+    
+    var rotateRightButton:UIButton {
+        get {
+            return Holder._rotateRightButton
+        }
+        set(newValue) {
+            Holder._rotateRightButton = newValue
+        }
+    }
+    
+    var shieldsButton:UIButton {
+        get {
+            return Holder._shieldsButton
+        }
+        set(newValue) {
+            Holder._shieldsButton = newValue
         }
     }
     
@@ -55,15 +95,80 @@ extension SDL_uikitviewcontroller {
         }
     }
 
-    @objc func actionButton(rect: CGRect) -> UIButton {
-        actionButton = UIButton(frame: CGRect(x: rect.width - 90, y: rect.height - 135, width: 75, height: 75))
-        actionButton.setTitle("ACTION", for: .normal)
-//        actionButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        actionButton.setBackgroundImage(UIImage(named: "JoyStickBase")!, for: .normal)
-        actionButton.addTarget(self, action: #selector(self.actionPressed), for: .touchDown)
-        actionButton.addTarget(self, action: #selector(self.actionReleased), for: .touchUpInside)
-        actionButton.alpha = 0.5
-        return actionButton
+    @objc func fireButton(rect: CGRect) -> UIButton {
+        fireButton = UIButton(frame: CGRect(x: rect.width - 70, y: rect.height - 90, width: 70, height: 70))
+        fireButton.setTitle("FIRE", for: .normal)
+        fireButton.titleLabel?.font = UIFont(name: "DINCondensed-Bold", size: 20)
+        fireButton.titleLabel?.numberOfLines = 0
+        fireButton.titleLabel?.textAlignment = .center
+        fireButton.setTitleColor(.black, for: .normal)
+        fireButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+        fireButton.setBackgroundImage(UIImage(named: "JoyStickBase")!, for: .normal)
+        fireButton.addTarget(self, action: #selector(self.firePressed), for: .touchDown)
+        fireButton.addTarget(self, action: #selector(self.fireReleased), for: .touchUpInside)
+        fireButton.alpha = 0.5
+        return fireButton
+    }
+    
+    @objc func thrustButton(rect: CGRect) -> UIButton {
+        thrustButton = UIButton(frame: CGRect(x: rect.width - 170, y: rect.height - 90, width: 70, height: 70))
+        thrustButton.setTitle("THRUST", for: .normal)
+        thrustButton.titleLabel?.font = UIFont(name: "DINCondensed-Bold", size: 20)
+        thrustButton.titleLabel?.numberOfLines = 0
+        thrustButton.titleLabel?.textAlignment = .center
+        thrustButton.setTitleColor(.black, for: .normal)
+        thrustButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+        thrustButton.setBackgroundImage(UIImage(named: "JoyStickBase")!, for: .normal)
+        thrustButton.addTarget(self, action: #selector(self.thrustPressed), for: .touchDown)
+        thrustButton.addTarget(self, action: #selector(self.thrustReleased), for: .touchUpInside)
+        thrustButton.alpha = 0.5
+        return thrustButton
+    }
+    
+    @objc func rotateLeftButton(rect: CGRect) -> UIButton {
+        rotateLeftButton = UIButton(frame: CGRect(x: 20, y: rect.height - 90, width: 70, height: 70))
+        rotateLeftButton.setTitle("ROTATE LEFT", for: .normal)
+        rotateLeftButton.titleLabel?.font = UIFont(name: "DINCondensed-Bold", size: 20)
+        rotateLeftButton.titleLabel?.numberOfLines = 0
+        rotateLeftButton.titleLabel?.textAlignment = .center
+        rotateLeftButton.setTitleColor(.black, for: .normal)
+        rotateLeftButton.titleEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
+        rotateLeftButton.setBackgroundImage(UIImage(named: "JoyStickBase")!, for: .normal)
+        rotateLeftButton.addTarget(self, action: #selector(self.rotateLeftPressed), for: .touchDown)
+        rotateLeftButton.addTarget(self, action: #selector(self.rotateLeftReleased), for: .touchUpInside)
+        rotateLeftButton.alpha = 0.5
+        return rotateLeftButton
+    }
+    
+    @objc func rotateRightButton(rect: CGRect) -> UIButton {
+        rotateRightButton = UIButton(frame: CGRect(x: 120, y: rect.height - 90, width: 70, height: 70))
+        rotateRightButton.setTitle("ROTATE RIGHT", for: .normal)
+        rotateRightButton.titleLabel?.font = UIFont(name: "DINCondensed-Bold", size: 20)
+        rotateRightButton.titleLabel?.numberOfLines = 0
+        rotateRightButton.titleLabel?.textAlignment = .center
+        rotateRightButton.setTitleColor(.black, for: .normal)
+        rotateRightButton.titleEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
+        rotateRightButton.setBackgroundImage(UIImage(named: "JoyStickBase")!, for: .normal)
+        rotateRightButton.addTarget(self, action: #selector(self.rotateRightPressed), for: .touchDown)
+        rotateRightButton.addTarget(self, action: #selector(self.rotateRightReleased), for: .touchUpInside)
+        rotateRightButton.alpha = 0.5
+        return rotateRightButton
+    }
+    
+    
+    @objc func shieldsButton(rect: CGRect) -> UIButton {
+        shieldsButton = UIButton(frame: CGRect(x: (rect.width / 2) - 35, y: rect.height - 90, width: 70, height: 70))
+        shieldsButton.setTitle("SHIELDS", for: .normal)
+        shieldsButton.titleLabel?.font = UIFont(name: "DINCondensed-Bold", size: 20)
+        shieldsButton.titleLabel?.numberOfLines = 0
+        shieldsButton.titleLabel?.textAlignment = .center
+        shieldsButton.setTitleColor(.black, for: .normal)
+        shieldsButton.titleEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
+        shieldsButton.setBackgroundImage(UIImage(named: "JoyStickBase")!, for: .normal)
+        shieldsButton.addTarget(self, action: #selector(self.shieldsPressed), for: .touchDown)
+        shieldsButton.addTarget(self, action: #selector(self.shieldsReleased), for: .touchUpInside)
+        shieldsButton.alpha = 0.5
+        return shieldsButton
     }
     
     @objc func escapeButton(rect: CGRect) -> UIButton {
@@ -78,8 +183,8 @@ extension SDL_uikitviewcontroller {
     }
     
     @objc func enterButton(rect: CGRect) -> UIButton {
-        enterButton = UIButton(frame: CGRect(x: rect.width - 70, y: 10, width: 60, height: 30))
-        enterButton.setTitle(" MENU ", for: .normal)
+        enterButton = UIButton(frame: CGRect(x: rect.width - 70, y: 10, width: 30, height: 30))
+        enterButton.setTitle(" 1 ", for: .normal)
         enterButton.addTarget(self, action: #selector(self.enterPressed), for: .touchDown)
         enterButton.addTarget(self, action: #selector(self.enterReleased), for: .touchUpInside)
         enterButton.layer.borderColor = UIColor.white.cgColor
@@ -103,12 +208,44 @@ extension SDL_uikitviewcontroller {
         return joystickView
     }
     
-    @objc func actionPressed(sender: UIButton!) {
+    @objc func firePressed(sender: UIButton!) {
         Key_Event(key: SDLK_SPACE, pressed: true)
     }
     
-    @objc func actionReleased(sender: UIButton!) {
+    @objc func fireReleased(sender: UIButton!) {
         Key_Event(key: SDLK_SPACE, pressed: false)
+    }
+    
+    @objc func thrustPressed(sender: UIButton!) {
+        Scancode_Event(scancode: SDL_SCANCODE_UP, pressed: true)
+    }
+    
+    @objc func thrustReleased(sender: UIButton!) {
+        Scancode_Event(scancode: SDL_SCANCODE_UP, pressed: false)
+    }
+    
+    @objc func rotateLeftPressed(sender: UIButton!) {
+        Scancode_Event(scancode: SDL_SCANCODE_LEFT, pressed: true)
+    }
+    
+    @objc func rotateLeftReleased(sender: UIButton!) {
+        Scancode_Event(scancode: SDL_SCANCODE_LEFT, pressed: false)
+    }
+    
+    @objc func rotateRightPressed(sender: UIButton!) {
+        Scancode_Event(scancode: SDL_SCANCODE_RIGHT, pressed: true)
+    }
+    
+    @objc func rotateRightReleased(sender: UIButton!) {
+        Scancode_Event(scancode: SDL_SCANCODE_RIGHT, pressed: false)
+    }
+    
+    @objc func shieldsPressed(sender: UIButton!) {
+        Scancode_Event(scancode: SDL_SCANCODE_DOWN, pressed: true)
+    }
+    
+    @objc func shieldsReleased(sender: UIButton!) {
+        Scancode_Event(scancode: SDL_SCANCODE_DOWN, pressed: false)
     }
     
     @objc func escapePressed(sender: UIButton!) {
@@ -144,7 +281,11 @@ extension SDL_uikitviewcontroller {
     }
 
     @objc func toggleControls(_ hide: Bool) {
-        self.actionButton.isHidden = hide
+        self.fireButton.isHidden = hide
+        self.thrustButton.isHidden = hide
+        self.rotateLeftButton.isHidden = hide
+        self.rotateRightButton.isHidden = hide
+        self.shieldsButton.isHidden = hide
         self.joystickView.isHidden = hide
     }
     
