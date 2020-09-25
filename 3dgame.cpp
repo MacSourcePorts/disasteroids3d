@@ -4910,10 +4910,19 @@ void CollisionDetection(actorinfo *actor, const int& LBound, const int& UBound)
 						actors[k]		= *obj[i];
 						
 						// Make new rock darker than source rock
-						actors[k].color.r = (GLuint)(actors[k].color.r * 0.75f);
-						actors[k].color.g = (GLuint)(actors[k].color.g * 0.75f);
-						actors[k].color.b = (GLuint)(actors[k].color.b * 0.75f);
-						
+#ifdef IOS
+                        // For some reason this makes negative values be zero on iOS
+                        // int seems to work fine but I'm leaving the old one in place
+                        // just in case -tkidd
+						actors[k].color.r = (int)(actors[k].color.r * 0.75f);
+						actors[k].color.g = (int)(actors[k].color.g * 0.75f);
+						actors[k].color.b = (int)(actors[k].color.b * 0.75f);
+#else
+                        actors[k].color.r = (GLuint)(actors[k].color.r * 0.75f);
+                        actors[k].color.g = (GLuint)(actors[k].color.g * 0.75f);
+                        actors[k].color.b = (GLuint)(actors[k].color.b * 0.75f);
+#endif
+                        
 						// Make sure resulting rock isn't too dark
 						AdjustRockColor(k);
 
@@ -5579,7 +5588,7 @@ int main(int argc, char* args[])
 	{
         
 #ifdef IOS
-        Sys_ToggleControls(SDL_window, g_bGameOver);fz
+        Sys_ToggleControls(SDL_window, g_bGameOver);
 #endif
 		//Handle events on queue
 		while (SDL_PollEvent(&e) != 0)
