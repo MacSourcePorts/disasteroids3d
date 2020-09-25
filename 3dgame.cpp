@@ -5599,6 +5599,22 @@ int main(int argc, char* args[])
 				g_bExitApp = true;
 			}
             else if (e.type == SDL_TEXTINPUT) {
+
+#ifdef IOS
+                // stupid iOS hack: cear everything out first -tkidd
+                for (i = SDLK_0; i <= SDLK_9; i++)
+                {
+                    keys[i] = FALSE;
+                    lastkeys[i] = FALSE;
+                }
+
+                for (i = SDLK_a; i <= SDLK_z; i++)
+                {
+                    keys[i] = FALSE;
+                    lastkeys[i] = FALSE;
+                }
+#endif
+                
                 keys[e.text.text[0]] = TRUE;
             }
 			//Handle keypress with current mouse position
@@ -6971,7 +6987,7 @@ int main(int argc, char* args[])
 								playerhighscore = &highscores[i];
                                 
 #ifdef IOS // on iOS we can show the keyboard now
-                                    SDL_StartTextInput();
+                                SDL_StartTextInput();
 #endif
                                 
 								break;
