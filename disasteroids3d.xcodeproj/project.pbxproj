@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A10812D125205B870031FE55 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10812CF25205B870031FE55 /* SDL2_mixer.framework */; };
+		A10812D225205B870031FE55 /* SDL2_mixer.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = A10812CF25205B870031FE55 /* SDL2_mixer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A10812D325205B870031FE55 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10812D025205B870031FE55 /* SDL2.framework */; };
+		A10812D425205B870031FE55 /* SDL2.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = A10812D025205B870031FE55 /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A118DA0A246E58C000184600 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A118DA09246E58C000184600 /* AppDelegate.swift */; };
 		A118DA0C246E58C300184600 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A118DA0B246E58C300184600 /* Assets.xcassets */; };
 		A118DA3B246E5B2600184600 /* 3dglasses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA19246E5B2500184600 /* 3dglasses.cpp */; };
@@ -66,9 +70,7 @@
 		A1ABBF4124E4CF270020F6BD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1ABBF4024E4CF270020F6BD /* OpenGLES.framework */; };
 		A1D044A624788C6C00A90A5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1D044A524788C6C00A90A5A /* Assets.xcassets */; };
 		A1D044A924788C6C00A90A5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1D044A724788C6C00A90A5A /* LaunchScreen.storyboard */; };
-		A1D044B424788CF100A90A5A /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044B024788CD000A90A5A /* libSDL2-2.0.0.dylib */; };
 		A1D044B524788CF300A90A5A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044B224788CD100A90A5A /* OpenGL.framework */; };
-		A1D044B724788CF700A90A5A /* libSDL2_mixer-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044AF24788CD000A90A5A /* libSDL2_mixer-2.0.0.dylib */; };
 		A1D044DC24788DB300A90A5A /* 3dgame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA32246E5B2500184600 /* 3dgame.cpp */; };
 		A1D044DD24788DD500A90A5A /* 3dglasses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA19246E5B2500184600 /* 3dglasses.cpp */; };
 		A1D044DE24788DF900A90A5A /* command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A118DA28246E5B2500184600 /* command.cpp */; };
@@ -150,6 +152,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				A10812D225205B870031FE55 /* SDL2_mixer.framework in Embed Libraries */,
+				A10812D425205B870031FE55 /* SDL2.framework in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -157,6 +161,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A10812CF25205B870031FE55 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = Frameworks/SDL2_mixer.framework; sourceTree = "<group>"; };
+		A10812D025205B870031FE55 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		A118DA06246E58BF00184600 /* disasteroids3d-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "disasteroids3d-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A118DA09246E58C000184600 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A118DA0B246E58C300184600 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -222,8 +228,6 @@
 		A1D044A524788C6C00A90A5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1D044A824788C6C00A90A5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A1D044AA24788C6C00A90A5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A1D044AF24788CD000A90A5A /* libSDL2_mixer-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libSDL2_mixer-2.0.0.dylib"; sourceTree = "<group>"; };
-		A1D044B024788CD000A90A5A /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
 		A1D044B224788CD100A90A5A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		A1D044B924788D4800A90A5A /* SDL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL.xcodeproj; path = "SDL2/Xcode-iOS/SDL/SDL.xcodeproj"; sourceTree = "<group>"; };
 		A1D044D124788D5600A90A5A /* SDL_mixer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL_mixer.xcodeproj; path = "SDL2_mixer/Xcode-iOS/SDL_mixer.xcodeproj"; sourceTree = "<group>"; };
@@ -234,9 +238,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1D044B424788CF100A90A5A /* libSDL2-2.0.0.dylib in Frameworks */,
-				A1D044B724788CF700A90A5A /* libSDL2_mixer-2.0.0.dylib in Frameworks */,
+				A10812D325205B870031FE55 /* SDL2.framework in Frameworks */,
 				A1D044B524788CF300A90A5A /* OpenGL.framework in Frameworks */,
+				A10812D125205B870031FE55 /* SDL2_mixer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +355,8 @@
 		A118DA4B246E5BD000184600 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A10812CF25205B870031FE55 /* SDL2_mixer.framework */,
+				A10812D025205B870031FE55 /* SDL2.framework */,
 				A19BD4E924F4CC3100C5F088 /* Metal.framework */,
 				A19BD4DB24F4C04400C5F088 /* QuartzCore.framework */,
 				A19BD4D924F4C00300C5F088 /* CoreGraphics.framework */,
@@ -406,8 +412,6 @@
 		A1D044AE24788CC800A90A5A /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				A1D044AF24788CD000A90A5A /* libSDL2_mixer-2.0.0.dylib */,
-				A1D044B024788CD000A90A5A /* libSDL2-2.0.0.dylib */,
 				A1D044B224788CD100A90A5A /* OpenGL.framework */,
 			);
 			name = macOS;
@@ -856,6 +860,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				ENABLE_HARDENED_RUNTIME = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -893,6 +901,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				ENABLE_HARDENED_RUNTIME = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = /opt/local/include/SDL2;
 				INFOPLIST_FILE = "disasteroids3d-macOS/Info.plist";

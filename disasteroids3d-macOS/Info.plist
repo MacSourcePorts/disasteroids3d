@@ -36,5 +36,7 @@
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+    <key>NSHighResolutionCapable</key>
+    <false/>
 </dict>
 </plist>
