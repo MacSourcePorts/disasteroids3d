@@ -14,7 +14,7 @@
 //#include <GL\glu.h>            // Header File For The GLu32 Library
 #endif
 
-#ifdef __APPLE__
+#if defined __APPLE__ || defined __linux__
 //#include <OpenGL/gl.h>
 //#include <OpenGL/glu.h>
 typedef unsigned char BYTE;

@@ -8,7 +8,7 @@
 
 #include <SDL.h>
 
-#ifdef __APPLE__
+#if defined __APPLE__ || defined __linux__
 #define stricmp strcasecmp
 #define strnicmp strncasecmp
 #define TRUE 1

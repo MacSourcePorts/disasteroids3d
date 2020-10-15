@@ -3,7 +3,7 @@
 
 bool bTimerInitialized = false;
 
-timer_t g_timer;
+d3dtimer_t g_timer;
 
 void TimerInit(void)								// Initialize Our Timer (Get It Ready)
 {

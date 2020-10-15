@@ -7,14 +7,14 @@
 #endif
 #include <time.h>
 
-#ifdef __APPLE__
+#if defined __APPLE__ || defined __linux__
 typedef long long __int64;
 #endif
 
 #include <SDL.h>
 
 // Create A Structure For The Timer Information
-typedef struct timer_s
+typedef struct d3dtimer_s
 {
   __int64			frequency;							// Timer Frequency
   float				resolution;							// Timer Resolution
@@ -23,9 +23,9 @@ typedef struct timer_s
   bool				performance_timer;				// Using The Performance Timer?
   __int64			performance_timer_start;		// Performance Timer Start Value
   __int64			performance_timer_elapsed;		// Performance Timer Elapsed Time
-} timer_t;
+} d3dtimer_t;
 
-extern timer_t g_timer;
+extern d3dtimer_t g_timer;
 
 // Timer routines
 void TimerInit(void);
