@@ -266,6 +266,16 @@ extension SDL_uikitviewcontroller {
         self.enterButton.isHidden = !hide
     }
     
+    @objc func hideAllControls(_ hide: Bool) {
+        self.fireButton.isHidden = true
+        self.thrustButton.isHidden = true
+        self.rotateLeftButton.isHidden = true
+        self.rotateRightButton.isHidden = true
+        self.shieldsButton.isHidden = true
+        self.joystickView.isHidden = true
+        self.enterButton.isHidden = !hide
+    }
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
     }

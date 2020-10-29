@@ -52,6 +52,13 @@ void Sys_ToggleControls(SDL_Window *sdlWindow, BOOL g_bGameOver) {
 #endif
 }
 
+void Sys_HideAllControls(SDL_Window *sdlWindow, BOOL g_bGameOver) {
+#if !TARGET_OS_TV
+    SDL_uikitviewcontroller *rootVC = (SDL_uikitviewcontroller *)GetSDLViewController(sdlWindow);
+    [rootVC hideAllControls:g_bGameOver];
+#endif
+}
+
 const char* Sys_GetSaveGamePath() {
     
 #if !TARGET_OS_TV

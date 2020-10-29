@@ -199,6 +199,7 @@ const int ACTOR_LSAUCER				= 9;
 const int ACTOR_SFIRE				= 10;
 const int ACTOR_FLAMES				= 11;
 
+BOOL joysticksConnected = false;
 
 // This is the maximum number of elements
 // in the actor array.
@@ -4205,6 +4206,7 @@ BOOL InitializeInput()
 
 	if (SDL_NumJoysticks() < 1)
 	{
+        joysticksConnected = false;
 		printf("Warning: No joysticks connected!\n");
 	}
 	else
@@ -4217,6 +4219,7 @@ BOOL InitializeInput()
 		}
 		else
 		{
+            joysticksConnected = true;
 			//Get controller haptic device
 			// Try to find and initialize force feedback
 			g_pdidFFJoystick = SDL_HapticOpenFromJoystick(g_pdidJoystick);
@@ -5602,7 +5605,11 @@ int main(int argc, char* args[])
 	{
         
 #ifdef IOS
-        Sys_ToggleControls(SDL_window, g_bGameOver);
+        if (!joysticksConnected) {
+            Sys_ToggleControls(SDL_window, g_bGameOver);
+        } else {
+            Sys_HideAllControls(SDL_window, g_bGameOver);
+        }
 #endif
 		//Handle events on queue
 		while (SDL_PollEvent(&e) != 0)
