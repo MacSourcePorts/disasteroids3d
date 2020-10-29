@@ -1311,23 +1311,23 @@ void draw_background() {
 #ifdef IOS
     // testing something - another background tile -tkidd
     
-    // Upper left 2
+    // Lower right 2 (ignore the variable names)
     glBindTexture(GL_TEXTURE_2D, texture[7]);
 
     GLfloat nmlUpperLeft2[] = {
         0.0f, 0.0f, 1.0f
     };
     GLfloat vtxUpperLeft2[] = {
-       0.0f        , SCREEN_HEIGHT * 1.4f, 0.0f,
+      -SCREEN_WIDTH        , SCREEN_HEIGHT * 1.4f, 0.0f,
       -SCREEN_WIDTH * 2.0f, SCREEN_HEIGHT * 1.4f, 0.0f,
-       0.0f        , 0.0f                , 0.0f,
+      -SCREEN_WIDTH        , 0.0f                , 0.0f,
       -SCREEN_WIDTH * 2.0f, 0.0f                , 0.0f
     };
     GLfloat texUpperLeft2[] = {
-      1.0f, 1.0f,
       0.0f, 1.0f,
+      1.0f, 1.0f,
+      0.0f, 0.0f,
       1.0f, 0.0f,
-      0.0f, 0.0f
     };
 
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -1343,7 +1343,7 @@ void draw_background() {
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     
-    // Upper right 2
+    // Lower left 2 (ignore the variable names)
     glBindTexture(GL_TEXTURE_2D, texture[8]);
 
     GLfloat nmlUpperRight2[] = {
@@ -1351,15 +1351,15 @@ void draw_background() {
     };
     GLfloat vtxUpperRight2[] = {
       SCREEN_WIDTH * 2.0f, SCREEN_HEIGHT * 1.4f, 0.0f,
-      0.0f        , SCREEN_HEIGHT * 1.4f, 0.0f,
+      SCREEN_WIDTH        , SCREEN_HEIGHT * 1.4f, 0.0f,
       SCREEN_WIDTH * 2.0f, 0.0f, 0.0f,
-      0.0f        , 0.0f                , 0.0f
+      SCREEN_WIDTH        , 0.0f                , 0.0f
     };
     GLfloat texUpperRight2[] = {
-      1.0f, 1.0f,
       0.0f, 1.0f,
+      1.0f, 1.0f,
+      0.0f, 0.0f,
       1.0f, 0.0f,
-      0.0f, 0.0f
     };
 
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -1375,23 +1375,23 @@ void draw_background() {
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     
-    // Lower left 2
+    // Upper Right 2 (ignore the variable names)
        glBindTexture(GL_TEXTURE_2D, texture[9]);
 
        GLfloat nmlLowerLeft2[] = {
            0.0f, 0.0f, 1.0f
        };
        GLfloat vtxLowerLeft2[] = {
-          0.0f        , 0.0f                , 0.0f,
+         -SCREEN_WIDTH        , 0.0f                , 0.0f,
          -SCREEN_WIDTH  * 2.0f, 0.0f                , 0.0f,
-          0.0f        ,-SCREEN_HEIGHT * 1.4f, 0.0f,
+         -SCREEN_WIDTH        ,-SCREEN_HEIGHT * 1.4f, 0.0f,
          -SCREEN_WIDTH  * 2.0f,-SCREEN_HEIGHT * 1.4f, 0.0f
        };
        GLfloat texLowerLeft2[] = {
-         1.0f, 1.0f,
          0.0f, 1.0f,
+         1.0f, 1.0f,
+         0.0f, 0.0f,
          1.0f, 0.0f,
-         0.0f, 0.0f
        };
 
        glEnableClientState(GL_VERTEX_ARRAY);
@@ -1406,23 +1406,23 @@ void draw_background() {
        glDisableClientState(GL_VERTEX_ARRAY);
        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
        glDisableClientState(GL_NORMAL_ARRAY);
-           
-       // Lower right 2
+    
+       // Upper left 2 (ignore the variable names)
        glBindTexture(GL_TEXTURE_2D, texture[10]);
        GLfloat nmlLowerRight2[] = {
            0.0f, 0.0f, 1.0f
        };
        GLfloat vtxLowerRight2[] = {
-           SCREEN_WIDTH  * 2.0f, 0.0f                , 0.0f,
-         0.0f        , 0.0f                , 0.0f,
+         SCREEN_WIDTH  * 2.0f, 0.0f                , 0.0f,
+         SCREEN_WIDTH        , 0.0f                , 0.0f,
          SCREEN_WIDTH  * 2.0f,-SCREEN_HEIGHT * 1.4f, 0.0f,
-         0.0f        ,-SCREEN_HEIGHT * 1.4f, 0.0f
+         SCREEN_WIDTH        ,-SCREEN_HEIGHT * 1.4f, 0.0f
        };
        GLfloat texLowerRight2[] = {
-         1.0f, 1.0f,
          0.0f, 1.0f,
+         1.0f, 1.0f,
+         0.0f, 0.0f,
          1.0f, 0.0f,
-         0.0f, 0.0f
        };
 
        glEnableClientState(GL_VERTEX_ARRAY);
@@ -1437,6 +1437,7 @@ void draw_background() {
        glDisableClientState(GL_VERTEX_ARRAY);
        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
        glDisableClientState(GL_NORMAL_ARRAY);
+        
 #endif
         
     // Lower left
@@ -1472,6 +1473,7 @@ void draw_background() {
     glDisableClientState(GL_NORMAL_ARRAY);
         
     // Lower right
+#if 1
     glBindTexture(GL_TEXTURE_2D, texture[10]);
     GLfloat nmlLowerRight[] = {
         0.0f, 0.0f, 1.0f
@@ -1501,6 +1503,7 @@ void draw_background() {
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
+#endif
 }
 
 void draw_bigspace() {
@@ -3614,7 +3617,11 @@ int DrawGLScene(GLvoid)
 			{
 				// Draw text
 				glPrintCentered(0, -1.5f, "GAME OVER");
-				glPrintCentered(0, -2.5f, "PRESS '1' TO START");
+#ifdef IOS
+                glPrintCentered(0, -2.5f, "PRESS START");
+#else
+                glPrintCentered(0, -2.5f, "PRESS '1' TO START");
+#endif
 				
 				glColor4ub(255, 255, 255, 160);
 				glPrintCentered(0, - 7.25f, "PROGRAMMING / MODELS / TEXTURES");
@@ -5561,8 +5568,15 @@ int main(int argc, char* args[])
 	srand((unsigned)time(NULL));
 
 	// Load the highscores
+#ifdef IOS
+    char path[100];
+    strcpy(path, Sys_GetSaveGamePath());
+    strcat(path, "/disasteroids3d.dat");
+    LoadHighScores(path);
+#else
 	LoadHighScores("disasteroids3d.dat");
-
+#endif
+    
 	// Initialze stars
 	for (i = 0; i < NUM_STARS; i++)
 	{
@@ -5628,6 +5642,12 @@ int main(int argc, char* args[])
                 
                     // on iOS we can hide the keyboard on a "Return"
                     SDL_StopTextInput();
+                    
+                    // iOS doesn't have the usual "shutdown", so save the high scores here
+                    char path[100];
+                    strcpy(path, Sys_GetSaveGamePath());
+                    strcat(path, "/disasteroids3d.dat");
+                    SaveHighScores(path);
                     
                     PlayMenuExplosionSound();
                 }
@@ -7206,8 +7226,9 @@ int main(int argc, char* args[])
 	//------------------------------------------------------
 
 	// Save high score records
+#ifndef IOS
 	SaveHighScores("disasteroids3d.dat");
-
+#endif
 	// Save Cvars
 	Cvar_SaveAll(csConfigFilename);
 

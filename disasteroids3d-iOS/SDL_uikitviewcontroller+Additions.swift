@@ -19,7 +19,6 @@ extension SDL_uikitviewcontroller {
         static var _rotateRightButton = UIButton()
         static var _shieldsButton = UIButton()
         static var _joystickView = JoyStickView(frame: .zero)
-        static var _escapeButton = UIButton()
         static var _enterButton = UIButton()
     }
     
@@ -77,15 +76,6 @@ extension SDL_uikitviewcontroller {
         }
     }
     
-    var escapeButton:UIButton {
-        get {
-            return Holder._escapeButton
-        }
-        set(newValue) {
-            Holder._escapeButton = newValue
-        }
-    }
-
     var enterButton:UIButton {
         get {
             return Holder._enterButton
@@ -163,7 +153,7 @@ extension SDL_uikitviewcontroller {
         shieldsButton.titleLabel?.numberOfLines = 0
         shieldsButton.titleLabel?.textAlignment = .center
         shieldsButton.setTitleColor(.black, for: .normal)
-        shieldsButton.titleEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
+        shieldsButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
         shieldsButton.setBackgroundImage(UIImage(named: "JoyStickBase")!, for: .normal)
         shieldsButton.addTarget(self, action: #selector(self.shieldsPressed), for: .touchDown)
         shieldsButton.addTarget(self, action: #selector(self.shieldsReleased), for: .touchUpInside)
@@ -171,24 +161,18 @@ extension SDL_uikitviewcontroller {
         return shieldsButton
     }
     
-    @objc func escapeButton(rect: CGRect) -> UIButton {
-        escapeButton = UIButton(frame: CGRect(x: 10, y: 10, width: 50, height: 30))
-        escapeButton.setTitle(" ESC ", for: .normal)
-        escapeButton.addTarget(self, action: #selector(self.escapePressed), for: .touchDown)
-        escapeButton.addTarget(self, action: #selector(self.escapeReleased), for: .touchUpInside)
-        escapeButton.layer.borderColor = UIColor.white.cgColor
-        escapeButton.layer.borderWidth = CGFloat(1)
-        escapeButton.alpha = 0.5
-        return escapeButton
-    }
-    
     @objc func enterButton(rect: CGRect) -> UIButton {
-        enterButton = UIButton(frame: CGRect(x: rect.width - 70, y: 10, width: 30, height: 30))
-        enterButton.setTitle(" 1 ", for: .normal)
+        enterButton = UIButton(frame: CGRect(x: rect.width - 90, y: 10, width: 50, height: 30))
+        enterButton.setTitle(" START ", for: .normal)
+        enterButton.titleLabel?.font = UIFont(name: "DINCondensed-Bold", size: 20)
+        enterButton.titleLabel?.textAlignment = .center
+        enterButton.setTitleColor(.black, for: .normal)
+        enterButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 4)
         enterButton.addTarget(self, action: #selector(self.enterPressed), for: .touchDown)
         enterButton.addTarget(self, action: #selector(self.enterReleased), for: .touchUpInside)
         enterButton.layer.borderColor = UIColor.white.cgColor
         enterButton.layer.borderWidth = CGFloat(1)
+        enterButton.backgroundColor = UIColor.white
         enterButton.alpha = 0.5
         return enterButton
     }
@@ -248,14 +232,6 @@ extension SDL_uikitviewcontroller {
         Scancode_Event(scancode: SDL_SCANCODE_DOWN, pressed: false)
     }
     
-    @objc func escapePressed(sender: UIButton!) {
-        Scancode_Event(scancode: SDL_SCANCODE_DOWN, pressed: true)
-    }
-    
-    @objc func escapeReleased(sender: UIButton!) {
-        Scancode_Event(scancode: SDL_SCANCODE_DOWN, pressed: false)
-    }
-        
     @objc func enterPressed(sender: UIButton!) {
         Key_Event(key: SDLK_1, pressed: true)
     }
@@ -287,6 +263,7 @@ extension SDL_uikitviewcontroller {
         self.rotateRightButton.isHidden = hide
         self.shieldsButton.isHidden = hide
         self.joystickView.isHidden = hide
+        self.enterButton.isHidden = !hide
     }
     
     open override func viewDidLoad() {

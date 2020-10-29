@@ -51,3 +51,13 @@ void Sys_ToggleControls(SDL_Window *sdlWindow, BOOL g_bGameOver) {
     [rootVC toggleControls:g_bGameOver];
 #endif
 }
+
+const char* Sys_GetSaveGamePath() {
+    
+#if !TARGET_OS_TV
+    const char* path = [[[[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:true error:nil] path] UTF8String];
+#else
+    const char* path = [[[[NSFileManager defaultManager] URLForDirectory:NSCachesDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:true error:nil] path] UTF8String];
+#endif
+    return path;
+}

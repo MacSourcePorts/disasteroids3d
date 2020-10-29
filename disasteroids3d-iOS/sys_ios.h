@@ -12,5 +12,6 @@
 
 void Sys_AddControls(SDL_Window *sdlWindow);
 void Sys_ToggleControls(SDL_Window *sdlWindow, BOOL g_bGameOver);
+const char* Sys_GetSaveGamePath();
 
 #endif /* sys_ios_h */
