@@ -42,6 +42,8 @@ void Sys_AddControls(SDL_Window *sdlWindow) {
     [rootVC.view addSubview:[rootVC rotateLeftButtonWithRect:[rootVC.view frame]]];
     [rootVC.view addSubview:[rootVC rotateRightButtonWithRect:[rootVC.view frame]]];
     [rootVC.view addSubview:[rootVC shieldsButtonWithRect:[rootVC.view frame]]];
+    [rootVC.view addSubview:[rootVC infoButtonWithRect:[rootVC.view frame]]];
+    [rootVC.view addSubview:[rootVC aboutScreenWithRect:[rootVC.view frame]]];
 #endif
 }
 

@@ -44,6 +44,8 @@
 		A13BFEB224FAB31100073A6B /* libSDLmain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044D024788D4800A90A5A /* libSDLmain.a */; };
 		A13BFEB324FAB31100073A6B /* libSDL2_mixer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D044DB24788D5600A90A5A /* libSDL2_mixer.a */; };
 		A13BFEC624FAB3DC00073A6B /* Res in Resources */ = {isa = PBXBuildFile; fileRef = A118DA63246F064800184600 /* Res */; };
+		A13EBDC4256382F300F28BDF /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A13EBDC3256382F300F28BDF /* AboutView.xib */; };
+		A13EBDC8256383AB00F28BDF /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13EBDC7256383AB00F28BDF /* AboutView.swift */; };
 		A1451B5A252580CA00F97692 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1451B4F252580B000F97692 /* UIKit.framework */; };
 		A1451B5B252580CA00F97692 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1451B4D252580AF00F97692 /* QuartzCore.framework */; };
 		A1451B5C252580CA00F97692 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1451B4B252580AF00F97692 /* OpenGLES.framework */; };
@@ -198,6 +200,8 @@
 		A13BFE8D24FAB05C00073A6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A13BFE9024FAB05C00073A6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A13BFE9224FAB05C00073A6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A13EBDC3256382F300F28BDF /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
+		A13EBDC7256383AB00F28BDF /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		A1451B46252580AF00F97692 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = ../../../../iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		A1451B47252580AF00F97692 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = ../../../../iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A1451B48252580AF00F97692 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = ../../../../iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
@@ -392,6 +396,8 @@
 		A1D0449B24788C6A00A90A5A /* disasteroids3d-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				A13EBDC7256383AB00F28BDF /* AboutView.swift */,
+				A13EBDC3256382F300F28BDF /* AboutView.xib */,
 				A1D044A524788C6C00A90A5A /* Assets.xcassets */,
 				A19BD4ED24F7491F00C5F088 /* bridging.h */,
 				A19BD4F524F74BDC00C5F088 /* CoreGraphics+Additions.swift */,
@@ -648,6 +654,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A19BD4DD24F4C1C100C5F088 /* Res in Resources */,
+				A13EBDC4256382F300F28BDF /* AboutView.xib in Resources */,
 				A1D044A924788C6C00A90A5A /* LaunchScreen.storyboard in Resources */,
 				A1D044A624788C6C00A90A5A /* Assets.xcassets in Resources */,
 			);
@@ -703,6 +710,7 @@
 				A1D044E524788DF900A90A5A /* tokenize.cpp in Sources */,
 				A1D044DF24788DF900A90A5A /* commands.cpp in Sources */,
 				A1D044E224788DF900A90A5A /* menus.cpp in Sources */,
+				A13EBDC8256383AB00F28BDF /* AboutView.swift in Sources */,
 				A1D044DC24788DB300A90A5A /* 3dgame.cpp in Sources */,
 				A19BD4F424F74BC100C5F088 /* JoyStickView.swift in Sources */,
 				A19BD4EF24F749EA00C5F088 /* sys_ios.mm in Sources */,
@@ -866,7 +874,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -908,7 +916,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -943,7 +951,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				CODE_SIGN_ENTITLEMENTS = "disasteroids3d-tvOS/disasteroids3d-tvOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -977,7 +985,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				CODE_SIGN_ENTITLEMENTS = "disasteroids3d-tvOS/disasteroids3d-tvOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1012,7 +1020,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1047,7 +1055,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 9UY8SFDNQ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",

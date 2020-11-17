@@ -20,6 +20,8 @@ extension SDL_uikitviewcontroller {
         static var _shieldsButton = UIButton()
         static var _joystickView = JoyStickView(frame: .zero)
         static var _enterButton = UIButton()
+        static var _infoButton = UIButton()
+        static var _aboutScreen = UIView(frame: .zero)
     }
     
     var fireButton:UIButton {
@@ -82,6 +84,24 @@ extension SDL_uikitviewcontroller {
         }
         set(newValue) {
             Holder._enterButton = newValue
+        }
+    }
+
+    var infoButton:UIButton {
+        get {
+            return Holder._infoButton
+        }
+        set(newValue) {
+            Holder._infoButton = newValue
+        }
+    }
+
+    var aboutScreen:UIView {
+        get {
+            return Holder._aboutScreen
+        }
+        set(newValue) {
+            Holder._aboutScreen = newValue
         }
     }
 
@@ -177,6 +197,22 @@ extension SDL_uikitviewcontroller {
         return enterButton
     }
     
+    @objc func infoButton(rect: CGRect) -> UIButton {
+        infoButton = UIButton(type: .infoLight)
+        infoButton.frame = CGRect(x: 10, y: 10, width: 50, height: 30)
+        infoButton.tintColor = .white
+        infoButton.addTarget(self, action: #selector(self.infoPressed), for: .touchDown)
+        infoButton.addTarget(self, action: #selector(self.infoReleased), for: .touchUpInside)
+        infoButton.alpha = 0.5
+        return infoButton
+    }
+    
+    @objc func aboutScreen(rect: CGRect) -> UIView {
+        aboutScreen = AboutView.fromNib()
+        aboutScreen.isHidden = true
+        return aboutScreen
+    }
+    
     @objc func joyStick(rect: CGRect) -> JoyStickView {
         let size = CGSize(width: 100.0, height: 100.0)
         let joystick1Frame = CGRect(origin: CGPoint(x: 50.0,
@@ -240,6 +276,18 @@ extension SDL_uikitviewcontroller {
         Key_Event(key: SDLK_1, pressed: false)
     }
         
+    @objc func infoPressed(sender: UIButton!) {
+        //Key_Event(key: SDLK_1, pressed: true)
+        print("info pressed")
+        
+    }
+    
+    @objc func infoReleased(sender: UIButton!) {
+        //Key_Event(key: SDLK_1, pressed: false)
+        print("info released")
+        aboutScreen.isHidden = false
+    }
+        
     func Key_Event(key: Int, pressed: Bool) {
         var event = SDL_Event()
         event.type = pressed ? SDL_KEYDOWN.rawValue : SDL_KEYUP.rawValue
@@ -264,6 +312,7 @@ extension SDL_uikitviewcontroller {
         self.shieldsButton.isHidden = hide
         self.joystickView.isHidden = hide
         self.enterButton.isHidden = !hide
+        self.infoButton.isHidden = !hide
     }
     
     @objc func hideAllControls(_ hide: Bool) {
@@ -274,6 +323,7 @@ extension SDL_uikitviewcontroller {
         self.shieldsButton.isHidden = true
         self.joystickView.isHidden = true
         self.enterButton.isHidden = !hide
+        self.infoButton.isHidden = !hide
     }
     
     open override func viewDidLoad() {
@@ -313,4 +363,20 @@ extension SDL_uikitviewcontroller: JoystickDelegate {
 //        print("angle: \(angle) displacement: \(displacement)")
     }
     
+}
+
+extension UIView {
+    class func fromNib(named: String? = nil) -> Self {
+        let name = named ?? "\(Self.self)"
+        guard
+            let nib = Bundle.main.loadNibNamed(name, owner: nil, options: nil)
+            else { fatalError("missing expected nib named: \(name)") }
+        guard
+            /// we're using `first` here because compact map chokes compiler on
+            /// optimized release, so you can't use two views in one nib if you wanted to
+            /// and are now looking at this
+            let view = nib.first as? Self
+            else { fatalError("view of type \(Self.self) not found in \(nib)") }
+        return view
+    }    
 }
