@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A118DA05246E58BF00184600"
-               BuildableName = "disasteroids3d-macOS.app"
+               BuildableName = "Disasteroids 3D.app"
                BlueprintName = "disasteroids3d-macOS"
                ReferencedContainer = "container:disasteroids3d.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A118DA05246E58BF00184600"
-            BuildableName = "disasteroids3d-macOS.app"
+            BuildableName = "Disasteroids 3D.app"
             BlueprintName = "disasteroids3d-macOS"
             ReferencedContainer = "container:disasteroids3d.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A118DA05246E58BF00184600"
-            BuildableName = "disasteroids3d-macOS.app"
+            BuildableName = "Disasteroids 3D.app"
             BlueprintName = "disasteroids3d-macOS"
             ReferencedContainer = "container:disasteroids3d.xcodeproj">
          </BuildableReference>

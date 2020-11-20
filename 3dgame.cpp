@@ -5520,10 +5520,11 @@ int main(int argc, char* args[])
 
 	// init console
 	con_init();
-	con_printf(VERSION);
+	//con_printf(VERSION);
 	
-	// Display version info on startup 
-	UpdateMessage(VERSION);
+	// Display version info on startup
+    // Apple doesn't like this, so removing it for now -tkidd
+	//UpdateMessage(VERSION);
 	g_lMessageEndTime = (long)g_fNow + 5;
 
 	// Initialize Cvars
