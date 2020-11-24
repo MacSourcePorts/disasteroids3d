@@ -1,4 +1,19 @@
-# Disasteroids 3D
+# Disasteroids 3D for macOS, iOS and tvOS
+
+![screenshot](https://raw.githubusercontent.com/tomkidd/disasteroids3d/master/ss_d3d_apple.png)
+
+This is my port of ThomW's <a href="https://www.lmnopc.com/disasteroids3d/">Disasteroids 3D</a> to macOS, iOS and tvOS. With his permission and collaboration, we have made it available on the App Store for free <a href="https://apps.apple.com/us/app/disasteroids-3d/id1532311767">here</a>.
+
+A Visual Studio solution is included, it works with Visual Studio 2019 on Windows. In addition, a Makefile is included for compiling on Linux.
+
+Whereas the original game used DirectX for sound and input, this fork swaps that out for SDL to allow for Mac and Linux compatibility. For iOS and tvOS, work was done to make the code friendly with OpenGL ES. With some work this could likely also work on Android or the Raspberry Pi but as of now I haven't done that. 
+
+An article explaining the changes is <a href="https://schnapple.com/disasteroids-3d-for-macos-ios-and-tvos/">here</a>
+
+The original readme is as follows:
+
+-----
+
 Disasteroids 3D is an OpenGL remake of Asteroids I created back in 2000. The source code has always been available for download from my site if you were looking for it, but I figured I'd throw it up on Github for people to poke around with it if they're motivated. 
 
 This thing started from an OpenGL tutorial over on nehe.gamedev.net - it started from his code demonstrating the use of display lists. I realized that instead of rotating all the boxes with the keyboard, I could just use the keys to rotate one, then I spanwned the boxes at random locations and gave them random velocities and the game grew out of that.  
