@@ -12,6 +12,7 @@
 		630FBD8320D52105009867AB /* music_opus.c in Sources */ = {isa = PBXBuildFile; fileRef = 630FBD8220D52105009867AB /* music_opus.c */; };
 		630FBD8520D5211F009867AB /* music_opus.h in Headers */ = {isa = PBXBuildFile; fileRef = 630FBD8420D5211F009867AB /* music_opus.h */; };
 		A10812D725205BCE0031FE55 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10812B925205A9D0031FE55 /* SDL2.framework */; };
+		A1403EC52579490E00DFAD74 /* music_flac.c in Sources */ = {isa = PBXBuildFile; fileRef = AAE405D41F9607C100EDAF53 /* music_flac.c */; };
 		AA6442D3175B181D00A2125A /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA6442D2175B181D00A2125A /* AudioUnit.framework */; };
 		AA6442D5175B185800A2125A /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA6442D4175B185800A2125A /* CoreServices.framework */; };
 		AAE2D4361F90416000057D25 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA6442D0175B181300A2125A /* AudioToolbox.framework */; };
@@ -36,7 +37,6 @@
 		AAE405F51F9607C300EDAF53 /* music_ogg.h in Headers */ = {isa = PBXBuildFile; fileRef = AAE405D11F9607C100EDAF53 /* music_ogg.h */; };
 		AAE405F61F9607C300EDAF53 /* load_aiff.h in Headers */ = {isa = PBXBuildFile; fileRef = AAE405D21F9607C100EDAF53 /* load_aiff.h */; };
 		AAE405F71F9607C300EDAF53 /* music_mpg123.h in Headers */ = {isa = PBXBuildFile; fileRef = AAE405D31F9607C100EDAF53 /* music_mpg123.h */; };
-		AAE405F81F9607C300EDAF53 /* music_flac.c in Sources */ = {isa = PBXBuildFile; fileRef = AAE405D41F9607C100EDAF53 /* music_flac.c */; };
 		AAE405F91F9607C300EDAF53 /* music_nativemidi.c in Sources */ = {isa = PBXBuildFile; fileRef = AAE405D51F9607C100EDAF53 /* music_nativemidi.c */; };
 		AAE405FA1F9607C300EDAF53 /* music_timidity.h in Headers */ = {isa = PBXBuildFile; fileRef = AAE405D61F9607C100EDAF53 /* music_timidity.h */; };
 		AAE405FB1F9607C300EDAF53 /* music_timidity.c in Sources */ = {isa = PBXBuildFile; fileRef = AAE405D71F9607C200EDAF53 /* music_timidity.c */; };
@@ -545,7 +545,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $SYMROOT/$CONFIGURATION/$PUBLIC_HEADERS_FOLDER_PATH\nHEADER=SDL_mixer.h\nsed 's,#include \"\\(.*\\)\",#include <SDL2/\\1>,' <$HEADER >$HEADER.new\nmv $HEADER.new $HEADER";
+			shellScript = "cd $SYMROOT/$CONFIGURATION/$PUBLIC_HEADERS_FOLDER_PATH\nHEADER=SDL_mixer.h\nsed 's,#include \"\\(.*\\)\",#include <SDL2/\\1>,' <$HEADER >$HEADER.new\nmv $HEADER.new $HEADER\n";
 		};
 		BE1FA95707AF96B2004B6283 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -564,6 +564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAE8838B1F97321E007B6569 /* mix.c in Sources */,
+				A1403EC52579490E00DFAD74 /* music_flac.c in Sources */,
 				AAE405E21F9607C300EDAF53 /* load_aiff.c in Sources */,
 				AAE883891F97321E007B6569 /* tables.c in Sources */,
 				AAE8837D1F97321E007B6569 /* timidity.c in Sources */,
@@ -573,7 +574,6 @@
 				AAE405EA1F9607C300EDAF53 /* music_fluidsynth.c in Sources */,
 				AAE405FD1F9607C300EDAF53 /* music_ogg.c in Sources */,
 				AAE405F41F9607C300EDAF53 /* effect_position.c in Sources */,
-				AAE405F81F9607C300EDAF53 /* music_flac.c in Sources */,
 				AAE405F21F9607C300EDAF53 /* effects_internal.c in Sources */,
 				AAE406021F9607C300EDAF53 /* music_cmd.c in Sources */,
 				AAE405FB1F9607C300EDAF53 /* music_timidity.c in Sources */,
@@ -631,14 +631,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					MUSIC_CMD,
 					MUSIC_WAV,
-					MUSIC_MOD_MODPLUG,
 					"MODPLUG_HEADER=\"<modplug.h>\"",
-					MUSIC_MP3_MPG123,
 					MUSIC_MID,
 					MUSIC_MID_NATIVE,
-					MUSIC_OGG,
-					MUSIC_FLAC,
-					MUSIC_OPUS,
 					"OPUS_HEADER=\"<opusfile.h>\"",
 				);
 				HEADER_SEARCH_PATHS = (
@@ -685,14 +680,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					MUSIC_CMD,
 					MUSIC_WAV,
-					MUSIC_MOD_MODPLUG,
 					"MODPLUG_HEADER=\"<modplug.h>\"",
-					MUSIC_MP3_MPG123,
 					MUSIC_MID,
 					MUSIC_MID_NATIVE,
-					MUSIC_OGG,
-					MUSIC_FLAC,
-					MUSIC_OPUS,
 					"OPUS_HEADER=\"<opusfile.h>\"",
 				);
 				HEADER_SEARCH_PATHS = (

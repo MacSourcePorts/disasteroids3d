@@ -229,11 +229,11 @@ extension SDL_uikitviewcontroller {
     }
     
     @objc func firePressed(sender: UIButton!) {
-        Key_Event(key: SDLK_SPACE, pressed: true)
+        Key_Event(key: Int(SDLK_SPACE.rawValue), pressed: true)
     }
     
     @objc func fireReleased(sender: UIButton!) {
-        Key_Event(key: SDLK_SPACE, pressed: false)
+        Key_Event(key: Int(SDLK_SPACE.rawValue), pressed: false)
     }
     
     @objc func thrustPressed(sender: UIButton!) {
@@ -269,11 +269,11 @@ extension SDL_uikitviewcontroller {
     }
     
     @objc func enterPressed(sender: UIButton!) {
-        Key_Event(key: SDLK_1, pressed: true)
+        Key_Event(key: Int(SDLK_1.rawValue), pressed: true)
     }
     
     @objc func enterReleased(sender: UIButton!) {
-        Key_Event(key: SDLK_1, pressed: false)
+        Key_Event(key: Int(SDLK_1.rawValue), pressed: false)
     }
         
     @objc func infoPressed(sender: UIButton!) {
