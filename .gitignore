@@ -456,5 +456,5 @@ fastlane/test_output
 iOSInjectionProject/
 disasteroids3d-Linux
 .DS_Store
-build-arm64/disasteroids3d
-build-x86_64/disasteroids3d
+build-arm64/
+build-x86_64/
