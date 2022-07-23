@@ -458,3 +458,4 @@ disasteroids3d-Linux
 .DS_Store
 build-arm64/
 build-x86_64/
+.vscode/
